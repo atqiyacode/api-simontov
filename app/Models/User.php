@@ -2,8 +2,16 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\v1\Employee;
+use App\Models\v1\GlobalNotificationUser;
+use App\Models\v1\UserFirebaseToken;
+use Haruncpi\LaravelUserActivity\Traits\Loggable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,14 +20,12 @@ use Laravel\Passport\HasApiTokens;
 use ProtoneMedia\LaravelVerifyNewEmail\MustVerifyNewEmail;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
-use Haruncpi\LaravelUserActivity\Traits\Loggable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, Loggable, HasRoles, HasPermissions, MustVerifyNewEmail, SoftDeletes;
 
     protected $guard_name  = 'api';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -27,12 +33,12 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
         'username',
         'avatar',
         'phone',
-        'pin'
+        'email',
+        'password',
+        'pin',
     ];
 
     /**
@@ -102,7 +108,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopePrivate($query)
     {
-        $query->when(!auth()->user()->hasRole(['developer']), function ($q) {
+        $query->when(!auth()->user()->hasRole(['privateAccess']), function ($q) {
             return $q->where('email', '!=', 'atqiya@atqiyacode.com')->where('email', '!=', 'jeksi@sentralnusa.com');
         });
     }
@@ -124,20 +130,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopeCanDelete($query)
     {
-        $query->when(auth()->user()->hasAnyRole(['developer', 'superadmin']), function ($q) {
+        $query->when(auth()->user()->hasAnyRole(['privateAccess', 'superadmin']), function ($q) {
             return $q->withTrashed();
         });
     }
 
-    // public function unread_notifications(): HasMany
-    // {
-    //     return $this->hasMany(GlobalNotificationUser::class, 'user_id', 'id')
-    //         ->where('user_id', auth()->user()->id)
-    //         ->where('status', false);
-    // }
+    public function unread_notifications(): HasMany
+    {
+        return $this->hasMany(GlobalNotificationUser::class, 'user_id', 'id')
+            ->where('user_id', auth()->user()->id)
+            ->where('status', false);
+    }
 
-    // public function firebaseToken(): HasOne
-    // {
-    //     return $this->hasOne(UserFirebaseToken::class, 'user_id', 'id');
-    // }
+    public function firebaseToken(): HasOne
+    {
+        return $this->hasOne(UserFirebaseToken::class, 'user_id', 'id');
+    }
 }

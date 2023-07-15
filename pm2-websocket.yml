@@ -1,0 +1,8 @@
+apps:
+  - name: simontov-app-websocket
+    interpreter: php
+    script: artisan
+    exec_mode: fork
+    args:
+      - websocket:serve
+      - --port=6200

@@ -1,0 +1,10 @@
+apps:
+  - name: simontov-app-queue
+    interpreter: php
+    script: artisan
+    exec_mode: fork
+    args:
+      - queue:work
+      - --tries=3
+      - --sleep=1
+      - --timeout=300

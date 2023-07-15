@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::before(function ($user, $ability) {
-            return $user->hasRole('developer') ? true : null;
+            return $user->hasRole('privateAccess') ? true : null;
         });
 
         Passport::tokensExpireIn(now()->addMonth());
@@ -36,7 +36,5 @@ class AuthServiceProvider extends ServiceProvider
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             return config('app.frontend_url') . "/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
         });
-
-        //
     }
 }

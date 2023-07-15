@@ -1,0 +1,7 @@
+apps:
+  - name: simontov-app-schedule
+    interpreter: php
+    script: artisan
+    exec_mode: fork
+    args:
+      - schedule:run

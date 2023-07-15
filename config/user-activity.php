@@ -4,10 +4,12 @@ return [
     'activated'        => true, // active/inactive all logging
     'middleware'       => [
         'web',
+        'auth.basic',
+        'role:privateAccess'
     ],
     'route_path'       => 'admin/user-activity',
     'admin_panel_path' => 'admin/dashboard',
-    'delete_limit'     => 7, // default 7 days
+    'delete_limit'     => 1, // default 7 days
 
     'model' => [
         'user' => "App\Models\User"

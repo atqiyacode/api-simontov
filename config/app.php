@@ -62,9 +62,9 @@ return [
 
     'demo_email' => env('DEMO_EMAIL', 'demo@mail.com'),
 
-    'whatsapp_server_main' => env('APP_WHATSAPP_SERVER_MAIN', null),
+    'whatsapp_server_main' => env('APP_WHATSAPP_SERVER_MAIN', 'http://btc.tricitta.tech:3000/atqiya'),
 
-    'whatsapp_test_number' => env('APP_WHATSAPP_TEST_NUMBER', null),
+    'whatsapp_test_number' => env('APP_WHATSAPP_TEST_NUMBER', '62895330160610'),
 
     'expired_otp' => env('EXPIRED_OTP', 5),
 

@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Jakarta'),
+    'timezone' => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
         'web',
         \Opcodes\LogViewer\Http\Middleware\AuthorizeLogViewer::class,
         'auth.basic',
-        'role:developer'
+        'role:privateAccess'
     ],
 
     /*

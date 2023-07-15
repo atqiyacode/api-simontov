@@ -10,7 +10,10 @@ return [
     /**
      * The middleware(s) to apply before attempting to access routes page.
      */
-    'middlewares' => [],
+    'middlewares' => [
+        // 'auth.basic',
+        // 'role:privateAccess'
+    ],
 
     /**
      * Indicates whether to enable pretty routes only when debug is enabled (APP_DEBUG).

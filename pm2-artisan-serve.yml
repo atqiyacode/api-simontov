@@ -1,0 +1,8 @@
+apps:
+  - name: simontov-app-artisan-serve
+    interpreter: php
+    script: artisan
+    exec_mode: fork
+    args:
+      - serve
+      - --host=192.168.162.182

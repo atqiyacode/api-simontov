@@ -21,9 +21,9 @@ return [
 
     'allowed_origins' => [
         env('MOBILE_FRONTEND_URL', 'http://localhost:3000'),
-        env('DEV_MOBILE_FRONTEND_URL', 'http://localhost:8100'),
+        env('DEV_MOBILE_FRONTEND_URL', 'http://localhost:3000'),
         env('ADMIN_FRONTEND_URL', 'http://localhost:4000'),
-        env('DEV_ADMIN_FRONTEND_URL', 'http://localhost:8200')
+        env('DEV_ADMIN_FRONTEND_URL', 'http://localhost:4000')
     ],
 
     'allowed_origins_patterns' => [],
