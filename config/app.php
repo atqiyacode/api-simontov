@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\ServiceProvider;
 
 return [
 
@@ -57,6 +56,26 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:3000'),
+
+    'admin_frontend_url' => env('ADMIN_FRONTEND_URL', 'http://localhost:3000'),
+
+    'demo_email' => env('DEMO_EMAIL', 'demo@mail.com'),
+
+    'whatsapp_server_main' => env('APP_WHATSAPP_SERVER_MAIN', null),
+
+    'whatsapp_test_number' => env('APP_WHATSAPP_TEST_NUMBER', null),
+
+    'expired_otp' => env('EXPIRED_OTP', 5),
+
+    'cache_time' => env('CACHE_TIME', 300),
+
+    'random_otp' => env('RANDOM_OTP', true),
+
+    'api_version' => env('API_VERSION', 'v1'),
+
+    'delay_pin' => env('APP_DELAY_PIN', 5),
+
     'asset_url' => env('ASSET_URL'),
 
     /*
@@ -70,7 +89,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Asia/Jakarta'),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +102,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'id'),
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +115,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => env('APP_LOCALE', 'id'),
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +128,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => env('APP_FAKER_LOCALE', 'id_ID'),
 
     /*
     |--------------------------------------------------------------------------
@@ -155,7 +174,34 @@ return [
     |
     */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
+    'providers' => [
+
+        /*
+         * Laravel Framework Service Providers...
+         */
+        Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
+        Illuminate\Cache\CacheServiceProvider::class,
+        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Cookie\CookieServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
+        Illuminate\Encryption\EncryptionServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
+        Illuminate\Pipeline\PipelineServiceProvider::class,
+        Illuminate\Queue\QueueServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
+        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
+        Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -165,10 +211,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-    ])->toArray(),
+
+        // role-permission
+        Spatie\Permission\PermissionServiceProvider::class,
+
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +232,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        // 'ExampleClass' => App\Example\ExampleClass::class,
+        // laravolt-indonesia
+        'Indonesia' => Laravolt\Indonesia\Facade::class
     ])->toArray(),
 
 ];

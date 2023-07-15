@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Schema::disableForeignKeyConstraints();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //disable foreign key check for this connection before running seeders
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Artisan::call('passport:install');
+
+        $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            DeveloperSeeder::class,
+        ]);
     }
 }

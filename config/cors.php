@@ -19,7 +19,12 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        env('MOBILE_FRONTEND_URL', 'http://localhost:3000'),
+        env('DEV_MOBILE_FRONTEND_URL', 'http://localhost:8100'),
+        env('ADMIN_FRONTEND_URL', 'http://localhost:4000'),
+        env('DEV_ADMIN_FRONTEND_URL', 'http://localhost:8200')
+    ],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +34,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];
