@@ -19,9 +19,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/dashboard';
 
-    /** @var string $apiNamespace */
-    protected $apiNamespace = 'App\Http\Controllers\Api';
-
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
@@ -29,21 +26,12 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-            // return Limit::perMinute(60)->by($request->user()->id || $request->ip());
         });
 
         $this->routes(function () {
             Route::middleware('api')
-                ->prefix('api/' . config('app.api_version'))
-                ->group(base_path('routes/api_' . config('app.api_version') . '.php'));
-
-            // Route::middleware('api')
-            //     ->prefix('api/' . config('app.api_version') . '/client')
-            //     ->group(base_path('routes/api_client_' . config('app.api_version') . '.php'));
-
-            // Route::middleware('api')
-            //     ->prefix('api')
-            //     ->group(base_path('routes/api.php'));
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));

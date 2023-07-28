@@ -29,8 +29,8 @@ return [
             'secret' => env('PUSHER_APP_SECRET'),
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
-            'enable_client_messages' => true,
-            'enable_statistics' => env('LARAVEL_WEBSOCKETS_STATISTIC', false),
+            'enable_client_messages' => false,
+            'enable_statistics' => true,
         ],
     ],
 

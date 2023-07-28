@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use App\Models\v1\Employee;
 use App\Models\v1\GlobalNotificationUser;
 use App\Models\v1\UserFirebaseToken;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
@@ -15,8 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
-// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use ProtoneMedia\LaravelVerifyNewEmail\MustVerifyNewEmail;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -33,12 +29,10 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
-        'username',
         'avatar',
         'phone',
         'email',
         'password',
-        'pin',
     ];
 
     /**
@@ -133,13 +127,6 @@ class User extends Authenticatable implements MustVerifyEmail
         $query->when(auth()->user()->hasAnyRole(['privateAccess', 'superadmin']), function ($q) {
             return $q->withTrashed();
         });
-    }
-
-    public function unread_notifications(): HasMany
-    {
-        return $this->hasMany(GlobalNotificationUser::class, 'user_id', 'id')
-            ->where('user_id', auth()->user()->id)
-            ->where('status', false);
     }
 
     public function firebaseToken(): HasOne

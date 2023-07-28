@@ -9,12 +9,12 @@ return [
     /**
      * Here you can specify the path to redirect to after verification.
      */
-    'redirect_to' => env('FRONTEND_URL', 'http://localhost:8100'),
+    'redirect_to' => '/home',
 
     /**
      * Whether to login the user after successfully verifying its email.
      */
-    'login_after_verification' => false,
+    'login_after_verification' => true,
 
     /**
      * Should the user be permanently "remembered" by the application.

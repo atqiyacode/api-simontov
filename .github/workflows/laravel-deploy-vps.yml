@@ -1,4 +1,4 @@
-name: Deploy VPS
+name: Deploy Development Server
 
 # Trigger the workflow on push and
 # pull request events on the development branch
@@ -22,4 +22,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/simontov/api && ./.scripts/deploy.sh"
+          script: "cd /var/www/simontov/api && ./.scripts/development.sh"

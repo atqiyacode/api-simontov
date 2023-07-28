@@ -78,8 +78,6 @@ return [
     'middleware' => [
         'web',
         Authorize::class,
-        'auth.basic',
-        'role:privateAccess'
     ],
 
     /*
@@ -128,9 +126,7 @@ return [
 
         Watchers\CommandWatcher::class => [
             'enabled' => env('TELESCOPE_COMMAND_WATCHER', true),
-            'ignore' => [
-                'migrate', 'db:seed'
-            ],
+            'ignore' => [],
         ],
 
         Watchers\DumpWatcher::class => [
