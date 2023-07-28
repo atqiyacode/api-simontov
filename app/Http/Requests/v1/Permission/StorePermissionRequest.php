@@ -23,7 +23,7 @@ class StorePermissionRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100|unique:permissions,name',
-            'guard_name' => 'required|in:api,web',
+            'guard_name' => 'nullable|in:api,web',
         ];
     }
 }

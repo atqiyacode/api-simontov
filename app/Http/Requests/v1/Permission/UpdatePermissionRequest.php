@@ -23,7 +23,7 @@ class UpdatePermissionRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100|unique:permissions,name,' . $this->permission->id,
-            'guard_name' => 'required|in:api,web',
+            'guard_name' => 'nullable|in:api,web',
         ];
     }
 }

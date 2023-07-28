@@ -26,7 +26,5 @@ class PermissionSeeder extends Seeder
         Permission::updateOrCreate(['guard_name' => 'api', 'name' => 'download-file']);
 
         // special
-        Permission::updateOrCreate(['guard_name' => 'api', 'name' => 'can-see-payroll']);
-        Permission::updateOrCreate(['guard_name' => 'api', 'name' => 'can-see-sallary']);
     }
 }

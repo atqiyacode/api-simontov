@@ -31,7 +31,7 @@ class LoginController extends Controller
 
     public function store(LoginCheckRequest $request)
     {
-        $user = User::withTrashed()->where('username', $request->username)
+        $user = User::withTrashed()->where('email', $request->email)
             ->firstOrFail();
 
         if (!Hash::check($request->password, $user->password)) {
@@ -49,7 +49,7 @@ class LoginController extends Controller
                 'title' => trans('auth.deleted_user'),
                 'message' => trans('auth.deleted_user'),
                 'errors' => [
-                    'username' => [trans('auth.deleted_user')]
+                    'email' => [trans('auth.deleted_user')]
                 ],
             ]);
         }
@@ -71,8 +71,8 @@ class LoginController extends Controller
             'hasDevice'   => (bool) $user->firebaseToken,
             'hasEmail' => (bool) !Str::contains($user->email, ['@fakemail.com'])
         ];
-        // return $this->doLogin($user, $request->password);
-        return $this->respondWithSuccess($defaultResponse);
+        return $this->doLogin($user, $request->password);
+        // return $this->respondWithSuccess($defaultResponse);
         // // device token
         // $hasDeviceToken = UserFirebaseToken::where('user_id', $user->id)->first();
         // if ($hasDeviceToken) {

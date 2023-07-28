@@ -22,7 +22,7 @@ class LoginCheckRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|alpha_num|exists:users,username',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required|string|min:5',
         ];
     }
@@ -30,8 +30,8 @@ class LoginCheckRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.exists' => trans('validation.exists', ['attribute' => trans('client.employee_code')]),
-            'username.alpha_num' => trans('validation.alpha_num', ['attribute' => trans('client.employee_code')]),
+            'email.exists' => trans('validation.exists'),
+            'email.alpha_num' => trans('validation.alpha_num'),
         ];
     }
 }
