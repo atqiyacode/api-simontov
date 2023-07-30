@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Resources\CurrentUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api'])->get('/session', function (Request $request) {
+    return new CurrentUserResource($request->user());
 });
+
+require __DIR__ . '/v1/auth.php';
+require __DIR__ . '/v1/master.php';

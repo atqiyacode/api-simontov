@@ -84,7 +84,7 @@ class GenerateCustomApiComponent extends Command
             $this->info('The Event was Created');
         }
 
-        if ($this->confirm('Do you want to generate policy?', true)) {
+        if ($this->confirm('Do you want to generate policy?', false)) {
             Artisan::call('make:policy ' . 'v' . $versionName . '/' . $modelName . 'Policy --model=v' . $versionName . '/' . $modelName);
             $this->info('The Policy was Created');
         }

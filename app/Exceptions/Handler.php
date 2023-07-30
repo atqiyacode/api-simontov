@@ -33,31 +33,30 @@ class Handler extends ExceptionHandler
     {
         if (app()->isProduction()) {
             $this->renderable(function (NotFoundHttpException $e, $request) {
-                if ($request->is('api/*')) {
+                if ($request->wantsJson() || $request->is('api/*')) {
                     return $this->respondNotFound(trans('alert.error-not-found'));
                 }
             });
-
             $this->renderable(function (UnauthorizedException $e, $request) {
-                if ($request->is('api/*')) {
+                if ($request->wantsJson() || $request->is('api/*')) {
                     return $this->respondForbidden(trans('alert.error-forbidden'));
                 }
             });
 
             $this->renderable(function (SpatieUnauthorizedException $e, $request) {
-                if ($request->is('api/*')) {
+                if ($request->wantsJson() || $request->is('api/*')) {
                     return $this->respondForbidden(trans('alert.error-forbidden'));
                 }
             });
 
             $this->renderable(function (AccessDeniedHttpException $e, $request) {
-                if ($request->is('api/*')) {
+                if ($request->wantsJson() || $request->is('api/*')) {
                     return $this->respondForbidden(trans('alert.error-forbidden'));
                 }
             });
 
             $this->renderable(function (TooManyRequestsHttpException $e, $request) {
-                if ($request->is('api/*')) {
+                if ($request->wantsJson() || $request->is('api/*')) {
                     return response()->json([
                         'title' => trans('alert.error-too-many-attempts-title'),
                         'message' => trans('alert.error-too-many-attempts-message'),
