@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    return [
+        'Framework Laravel Version' => app()->version(),
+        'Status' => app()->isProduction() ? 'Production' : 'Developement',
+        'Developer' => 'VEPRO APP DEVELOPER',
+    ];
 });
