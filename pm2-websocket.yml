@@ -5,4 +5,4 @@ apps:
     exec_mode: fork
     args:
       - websocket:serve
-      - --port=6200
+      - --port=6003
