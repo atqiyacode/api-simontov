@@ -21,3 +21,4 @@ Route::middleware(['auth:api'])->get('/session', function (Request $request) {
 
 require __DIR__ . '/v1/auth.php';
 require __DIR__ . '/v1/master.php';
+require __DIR__ . '/v1/feature.php';

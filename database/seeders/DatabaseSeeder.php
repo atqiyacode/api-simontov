@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\v1\FlowrateSeeder;
+use Database\Seeders\v1\StatusAlarmSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
@@ -34,5 +36,10 @@ class DatabaseSeeder extends Seeder
                 VillagesSeeder::class,
             ]);
         }
+
+        $this->call([
+            StatusAlarmSeeder::class,
+            FlowrateSeeder::class,
+        ]);
     }
 }

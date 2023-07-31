@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserEvent implements ShouldBroadcast
+class FlowrateEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -32,12 +32,12 @@ class UserEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('user-channel'),
+            new Channel('flowrate-channel'),
         ];
     }
 
     public function broadcastAs()
     {
-        return 'user-event';
+        return 'flowrate-event';
     }
 }

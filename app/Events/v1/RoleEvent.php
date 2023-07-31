@@ -10,16 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RoleEvent
+class RoleEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $data;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->dontBroadcastToCurrentUser();
+        $this->data = $data;
     }
 
     /**
@@ -30,7 +32,12 @@ class RoleEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new Channel('role-channel'),
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'role-event';
     }
 }

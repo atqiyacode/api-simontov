@@ -10,16 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PermissionEvent
+class PermissionEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $data;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->dontBroadcastToCurrentUser();
+        $this->data = $data;
     }
 
     /**
@@ -30,7 +32,12 @@ class PermissionEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new Channel('permission-channel'),
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'permission-event';
     }
 }

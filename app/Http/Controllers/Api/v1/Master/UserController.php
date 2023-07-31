@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1\Master;
 
+use App\Events\v1\UserEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\User\StoreUserRequest;
 use App\Http\Requests\v1\User\UpdateUserRequest;
@@ -59,6 +60,10 @@ class UserController extends Controller
             return $user;
         });
         $data = new UserResource($user);
+        UserEvent::dispatch([
+            "message" => 'Add New User',
+            "user" => auth()->user()->name
+        ]);
         return $this->respondWithSuccess([
             'message' => trans('alert.success-save'),
             'data' => $data
@@ -92,6 +97,10 @@ class UserController extends Controller
             return $user;
         });
         $data = new UserResource($user);
+        UserEvent::dispatch([
+            "message" => 'Update User',
+            "user" => auth()->user()->name
+        ]);
         return $this->respondWithSuccess([
             'message' => trans('alert.success-update'),
             'data' => $data
@@ -104,6 +113,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        UserEvent::dispatch([
+            "message" => 'Delete User',
+            "user" => auth()->user()->name
+        ]);
         return $this->respondWithSuccess([
             'message' => trans('alert.success-delete'),
         ]);
@@ -112,6 +125,10 @@ class UserController extends Controller
     public function restore($id)
     {
         User::onlyTrashed()->whereId($id)->firstOrFail()->restore();
+        UserEvent::dispatch([
+            "message" => 'Restore User',
+            "user" => auth()->user()->name
+        ]);
         return response()->json([
             'message' => trans('alert.success-restored'),
         ], 200);
@@ -120,6 +137,10 @@ class UserController extends Controller
     public function delete($id)
     {
         User::onlyTrashed()->whereId($id)->firstOrFail()->forceDelete();
+        UserEvent::dispatch([
+            "message" => 'Delete Permanent User',
+            "user" => auth()->user()->name
+        ]);
         return response()->json([
             'message' => trans('alert.success-deleted-permanent'),
         ], 200);
@@ -136,6 +157,10 @@ class UserController extends Controller
     public function clearPendingEmail($id)
     {
         User::whereId($id)->firstOrFail()->clearPendingEmail();
+        UserEvent::dispatch([
+            "message" => 'Clear Pending User Email Verification',
+            "user" => auth()->user()->name
+        ]);
         return response()->json([
             'message' => trans('alert.success'),
         ], 200);
