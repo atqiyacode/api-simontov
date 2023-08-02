@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\v1\FlowrateSeeder;
+use Database\Seeders\v1\RangeCostSeeder;
 use Database\Seeders\v1\RangeTypeSeeder;
 use Database\Seeders\v1\StatusAlarmSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
