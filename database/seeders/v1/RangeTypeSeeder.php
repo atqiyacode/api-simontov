@@ -27,16 +27,22 @@ class RangeTypeSeeder extends Seeder
             'upper_limit' => 250,
         ]);
         RangeType::create([
-            'slug' => Str::slug('sample 2'),
-            'label' => 'sample 2',
+            'slug' => Str::slug('sample 3'),
+            'label' => 'sample 3',
             'lower_limit' => 250,
             'upper_limit' => 500,
         ]);
         RangeType::create([
-            'slug' => Str::slug('sample 2'),
-            'label' => 'sample 2',
+            'slug' => Str::slug('sample 4'),
+            'label' => 'sample 4',
             'lower_limit' => 500,
             'upper_limit' => 1000,
+        ]);
+        RangeType::create([
+            'slug' => Str::slug('sample 5'),
+            'label' => 'sample 5',
+            'lower_limit' => 1000,
+            'upper_limit' => 2000,
         ]);
     }
 }
