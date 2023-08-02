@@ -23,7 +23,8 @@ class RangeTypeController extends Controller
         $keyword = $request->search;
         $rows = $request->rows ?? 10;
         $query = RangeType::canDelete()->when($request->has('search'), function ($query) use ($keyword) {
-            $query->where('name', 'LIKE', "%{$keyword}%");
+            $query->where('lower_limit', 'LIKE', "%{$keyword}%")
+                ->where('upper_limit', 'LIKE', "%{$keyword}%");
         })
             ->orderBy('id', 'DESC');
         $data = RangeTypeResource::collection($request->has('all') ? $query->get() : $query->paginate($rows));

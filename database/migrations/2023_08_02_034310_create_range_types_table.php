@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('range_types', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
-            $table->string('name');
+            $table->string('label')->unique();
+            $table->string('lower_limit');
+            $table->string('upper_limit');
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

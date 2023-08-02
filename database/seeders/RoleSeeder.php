@@ -22,12 +22,8 @@ class RoleSeeder extends Seeder
 
         Role::updateOrCreate(['guard_name' => 'api', 'name' => 'developer']);
 
-        Role::updateOrCreate(['guard_name' => 'api', 'name' => 'demo']);
-
         Role::updateOrCreate(['guard_name' => 'api', 'name' => 'admin']);
 
         Role::updateOrCreate(['guard_name' => 'api', 'name' => 'client']);
-
-        Role::updateOrCreate(['guard_name' => 'api', 'name' => 'employee']);
     }
 }

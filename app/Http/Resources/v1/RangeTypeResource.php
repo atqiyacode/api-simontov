@@ -16,8 +16,9 @@ class RangeTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
+            'label' => $this->label,
+            'lower_limit' => $this->lower_limit,
+            'upper_limit' => $this->upper_limit,
             'trashed' => (bool) $this->deleted_at,
         ];
     }

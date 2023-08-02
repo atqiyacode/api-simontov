@@ -22,7 +22,10 @@ class UpdateRangeTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:30|min:3|unique:range_types,name,' . $this->rangeType->id
+            'label' => 'required|string|max:100|unique:range_types,label,' . $this->rangeType->id,
+            'lower_limit' => 'required|numeric',
+            'upper_limit' => 'required|numeric|gt:lower_limit',
+            'description' => 'nullable|string|max:144',
         ];
     }
 }

@@ -22,7 +22,10 @@ class StoreRangeTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:30|min:3|unique:range_types,name'
+            'label' => 'required|string|max:100|unique:range_types,label',
+            'lower_limit' => 'required|numeric',
+            'upper_limit' => 'required|numeric|gt:lower_limit',
+            'description' => 'nullable|string|max:144',
         ];
     }
 }
