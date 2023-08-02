@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             StatusAlarmSeeder::class,
             FlowrateSeeder::class,
             RangeTypeSeeder::class,
+            RangeCostSeeder::class,
         ]);
     }
 }

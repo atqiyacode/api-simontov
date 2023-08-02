@@ -14,12 +14,29 @@ class RangeTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
-            $sample = fake()->userName();
-            RangeType::create([
-                'slug' => Str::slug($sample),
-                'name' => $sample,
-            ]);
-        }
+        RangeType::create([
+            'slug' => Str::slug('sample 1'),
+            'label' => 'sample 1',
+            'lower_limit' => 10,
+            'upper_limit' => 100,
+        ]);
+        RangeType::create([
+            'slug' => Str::slug('sample 2'),
+            'label' => 'sample 2',
+            'lower_limit' => 100,
+            'upper_limit' => 250,
+        ]);
+        RangeType::create([
+            'slug' => Str::slug('sample 2'),
+            'label' => 'sample 2',
+            'lower_limit' => 250,
+            'upper_limit' => 500,
+        ]);
+        RangeType::create([
+            'slug' => Str::slug('sample 2'),
+            'label' => 'sample 2',
+            'lower_limit' => 500,
+            'upper_limit' => 1000,
+        ]);
     }
 }
