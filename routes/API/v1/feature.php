@@ -3,10 +3,16 @@
 use App\Http\Controllers\Api\v1\Features\FlowrateController;
 use App\Http\Controllers\Api\v1\Features\RangeCostController;
 use App\Http\Controllers\Api\v1\Features\RangeTypeController;
+use App\Http\Controllers\Api\v1\Features\SiteController;
 use App\Http\Controllers\Api\v1\Features\StatusAlarmController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:api', 'role:superadmin'])->prefix('feature')->group(function () {
+    // site
+    Route::apiResource('site', SiteController::class);
+    Route::post('site/restore/{id}', [SiteController::class, 'restore']);
+    Route::delete('site/delete/{id}', [SiteController::class, 'delete']);
+
     // flowrates
     Route::apiResource('flowrate', FlowrateController::class);
     Route::post('flowrate/restore/{id}', [FlowrateController::class, 'restore']);

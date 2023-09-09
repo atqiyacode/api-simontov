@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Database\Seeders\v1\FlowrateSeeder;
 use Database\Seeders\v1\RangeCostSeeder;
 use Database\Seeders\v1\RangeTypeSeeder;
+use Database\Seeders\v1\SiteSeeder;
 use Database\Seeders\v1\StatusAlarmSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([
+            SiteSeeder::class,
             StatusAlarmSeeder::class,
             FlowrateSeeder::class,
             RangeTypeSeeder::class,
