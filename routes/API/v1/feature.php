@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\Features\FlowrateController;
+use App\Http\Controllers\Api\v1\Features\MasterTaxController;
 use App\Http\Controllers\Api\v1\Features\RangeCostController;
 use App\Http\Controllers\Api\v1\Features\RangeTypeController;
 use App\Http\Controllers\Api\v1\Features\SiteController;
@@ -32,4 +33,7 @@ Route::middleware(['auth:api', 'role:superadmin'])->prefix('feature')->group(fun
     Route::apiResource('rangeCost', RangeCostController::class);
     Route::post('rangeCost/restore/{id}', [RangeCostController::class, 'restore']);
     Route::delete('rangeCost/delete/{id}', [RangeCostController::class, 'delete']);
+
+    // masterTax
+    Route::apiResource('masterTax', MasterTaxController::class)->only(['index', 'update']);
 });

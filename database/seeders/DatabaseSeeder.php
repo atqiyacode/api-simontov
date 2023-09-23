@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\v1\FlowrateSeeder;
+use Database\Seeders\v1\MasterTaxSeeder;
 use Database\Seeders\v1\RangeCostSeeder;
 use Database\Seeders\v1\RangeTypeSeeder;
 use Database\Seeders\v1\SiteSeeder;
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             FlowrateSeeder::class,
             RangeTypeSeeder::class,
             RangeCostSeeder::class,
+            MasterTaxSeeder::class,
         ]);
     }
 }
