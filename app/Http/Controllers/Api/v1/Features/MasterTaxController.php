@@ -8,13 +8,11 @@ use App\Http\Requests\v1\MasterTax\StoreMasterTaxRequest;
 use App\Http\Requests\v1\MasterTax\UpdateMasterTaxRequest;
 use App\Http\Resources\v1\MasterTaxResource;
 use App\Models\v1\MasterTax;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MasterTaxController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

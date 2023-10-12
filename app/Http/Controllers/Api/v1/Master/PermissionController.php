@@ -7,13 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Permission\StorePermissionRequest;
 use App\Http\Requests\v1\Permission\UpdatePermissionRequest;
 use App\Http\Resources\v1\PermissionResource;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

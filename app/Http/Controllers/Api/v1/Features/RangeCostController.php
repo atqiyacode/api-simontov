@@ -8,13 +8,11 @@ use App\Http\Requests\v1\RangeCost\StoreRangeCostRequest;
 use App\Http\Requests\v1\RangeCost\UpdateRangeCostRequest;
 use App\Http\Resources\v1\RangeCostResource;
 use App\Models\v1\RangeCost;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RangeCostController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

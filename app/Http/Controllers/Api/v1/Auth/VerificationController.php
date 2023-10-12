@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ class VerificationController extends Controller
     public function verify($user_id, Request $request)
     {
         if (!$request->hasValidSignature()) {
-            return response()->json(["msg" => "Invalid/Expired url provided."], 401);
+            return response()->json(["message" => "Invalid/Expired url provided."], 401);
         }
 
         $user = User::findOrFail($user_id);
@@ -19,17 +19,17 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return response()->json(["msg" => "Email verification link sent on your email id"]);
+        return response()->json(["message" => "Email verification link sent on your email id"]);
     }
 
     public function resend()
     {
         if (auth()->user()->hasVerifiedEmail()) {
-            return response()->json(["msg" => "Email already verified."], 400);
+            return response()->json(["message" => "Email already verified."], 400);
         }
 
         auth()->user()->sendEmailVerificationNotification();
 
-        return response()->json(["msg" => "Email verification link sent on your email id"]);
+        return response()->json(["message" => "Email verification link sent on your email id"]);
     }
 }

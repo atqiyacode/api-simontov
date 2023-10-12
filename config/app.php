@@ -63,6 +63,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'mqtt_topic' => env('MQTT_TOPIC', 'laravel'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -8,13 +8,11 @@ use App\Http\Requests\v1\Site\StoreSiteRequest;
 use App\Http\Requests\v1\Site\UpdateSiteRequest;
 use App\Http\Resources\v1\SiteResource;
 use App\Models\v1\Site;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

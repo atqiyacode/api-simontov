@@ -8,13 +8,11 @@ use App\Http\Requests\v1\StatusAlarm\StoreStatusAlarmRequest;
 use App\Http\Requests\v1\StatusAlarm\UpdateStatusAlarmRequest;
 use App\Http\Resources\v1\StatusAlarmResource;
 use App\Models\v1\StatusAlarm;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StatusAlarmController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

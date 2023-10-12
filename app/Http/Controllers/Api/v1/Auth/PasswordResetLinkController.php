@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -34,6 +34,6 @@ class PasswordResetLinkController extends Controller
             ]);
         }
 
-        return response()->json(['status' => __($status)]);
+        return response()->json(['message' => __($status)]);
     }
 }

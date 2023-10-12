@@ -8,13 +8,11 @@ use App\Http\Requests\v1\User\StoreUserRequest;
 use App\Http\Requests\v1\User\UpdateUserRequest;
 use App\Http\Resources\v1\UserResource;
 use App\Models\User;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

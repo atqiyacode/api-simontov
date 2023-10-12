@@ -8,13 +8,11 @@ use App\Http\Requests\v1\RangeType\StoreRangeTypeRequest;
 use App\Http\Requests\v1\RangeType\UpdateRangeTypeRequest;
 use App\Http\Resources\v1\RangeTypeResource;
 use App\Models\v1\RangeType;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RangeTypeController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

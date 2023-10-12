@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\v1\GlobalNotificationUser;
 use App\Models\v1\UserFirebaseToken;
+use App\Notifications\v1\CustomResetPasswordNotification;
+use App\Notifications\v1\EmailVerificationNotification;
 use Haruncpi\LaravelUserActivity\Traits\Loggable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,6 +57,20 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Method to send email verification
+    public function sendEmailVerificationNotification()
+    {
+        $prefix = request()->header('Origin') . '/verify-email?url=';
+        // We override the default notification and will use our own
+        $this->notify(new EmailVerificationNotification($prefix));
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $host = request()->header('Origin');
+        $this->notify(new CustomResetPasswordNotification($host, $token));
+    }
 
     public function getAvatarImageAttribute()
     {

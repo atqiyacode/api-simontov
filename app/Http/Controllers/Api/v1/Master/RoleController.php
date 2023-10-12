@@ -7,14 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Role\StoreRoleRequest;
 use App\Http\Requests\v1\Role\UpdateRoleRequest;
 use App\Http\Resources\v1\RoleResource;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */

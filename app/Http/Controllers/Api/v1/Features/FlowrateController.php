@@ -8,12 +8,10 @@ use App\Http\Requests\v1\Flowrate\StoreFlowrateRequest;
 use App\Http\Requests\v1\Flowrate\UpdateFlowrateRequest;
 use App\Http\Resources\v1\FlowrateResource;
 use App\Models\v1\Flowrate;
-use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
 
 class FlowrateController extends Controller
 {
-    use ApiResponseHelpers;
     /**
      * Display a listing of the resource.
      */
