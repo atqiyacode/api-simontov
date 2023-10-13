@@ -19,7 +19,7 @@ class Flowrate extends Model
         'totalizer_1',
         'totalizer_2',
         'totalizer_3',
-        'unittotalizer',
+        'unit_totalizer',
         'analog_1',
         'analog_2',
         'status_battery',

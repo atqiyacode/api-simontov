@@ -23,7 +23,7 @@ class FlowrateResource extends JsonResource
             'totalizer_1' => $this->totalizer_1 . ' m3',
             'totalizer_2' => $this->totalizer_2 . ' m3',
             'totalizer_3' => $this->totalizer_3 . ' m3',
-            'unittotalizer' => $this->unittotalizer,
+            'unit_totalizer' => $this->unit_totalizer,
             'analog_1' => $this->analog_1,
             'analog_2' => $this->analog_2,
             'status_battery' => $this->status_battery,

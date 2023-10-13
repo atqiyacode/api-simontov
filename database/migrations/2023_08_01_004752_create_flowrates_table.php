@@ -20,7 +20,7 @@ return new class extends Migration
             $table->decimal('totalizer_1');
             $table->decimal('totalizer_2');
             $table->decimal('totalizer_3');
-            $table->string('unittotalizer');
+            $table->string('unit_totalizer');
             $table->decimal('analog_1');
             $table->decimal('analog_2');
             $table->integer('status_battery');

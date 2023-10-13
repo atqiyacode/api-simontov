@@ -28,7 +28,7 @@ class FlowrateSeeder extends Seeder
                 'totalizer_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'totalizer_2' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'totalizer_3' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
-                'unittotalizer' => 'm3',
+                'unit_totalizer' => 'm3',
                 'analog_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 5),
                 'analog_2' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 5),
                 'status_battery' => fake()->numberBetween($min = 10, $max = 100),
