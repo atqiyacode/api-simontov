@@ -3,7 +3,7 @@
 namespace App\Jobs\v1;
 
 use App\Events\v1\FlowrateEvent;
-use App\Http\Resources\v1\FlowrateResource;
+use App\Http\Resources\v1\FlowrateMqttResource;
 use App\Models\v1\Flowrate;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -50,7 +50,7 @@ class FlowrateMqttJob implements ShouldQueue
             'updated_at' => now(),
         ]);
 
-        $data = new FlowrateResource($query);
+        $data = new FlowrateMqttResource($query);
         FlowrateEvent::dispatch([
             "message" => 'New Data',
             "data" => $data
