@@ -30,6 +30,8 @@ class FlowrateMqttResource extends JsonResource
             'alarm' => $this->alarm,
             'bin_alarm' => $this->bin_alarm,
             'file_name' => $this->file_name,
+            'ph' => $this->ph,
+            'cod' => $this->cod,
         ];
     }
 }

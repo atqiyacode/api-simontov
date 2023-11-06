@@ -1,0 +1,9 @@
+apps:
+  - name: simontov-dummy-flowrate
+    interpreter: php
+    script: artisan
+    exec_mode: fork
+    args:
+      - generate:dummy-data 18000
+      - --sleep=5
+      - --timeout=300

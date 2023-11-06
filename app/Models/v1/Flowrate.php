@@ -26,6 +26,8 @@ class Flowrate extends Model
         'alarm',
         'bin_alarm',
         'file_name',
+        'ph',
+        'cod',
         'created_at',
         'updated_at'
     ];

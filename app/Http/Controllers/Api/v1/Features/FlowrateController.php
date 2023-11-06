@@ -7,8 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\v1\Flowrate\StoreFlowrateRequest;
 use App\Http\Requests\v1\Flowrate\UpdateFlowrateRequest;
 use App\Http\Resources\v1\FlowrateResource;
+use App\Jobs\v1\FlowrateMqttJob;
 use App\Models\v1\Flowrate;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class FlowrateController extends Controller
 {
@@ -110,5 +113,10 @@ class FlowrateController extends Controller
         return response()->json([
             'message' => trans('alert.success-deleted-permanent'),
         ], 200);
+    }
+
+    public function dummy(Request $request)
+    {
+        Artisan::call('generate:dummy-data ' . $request->count);
     }
 }

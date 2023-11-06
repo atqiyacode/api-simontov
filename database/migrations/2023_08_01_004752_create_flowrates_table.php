@@ -27,6 +27,8 @@ return new class extends Migration
             $table->integer('alarm');
             $table->string('bin_alarm', 15)->nullable();
             $table->string('file_name');
+            $table->string('ph')->nullable();
+            $table->string('cod')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

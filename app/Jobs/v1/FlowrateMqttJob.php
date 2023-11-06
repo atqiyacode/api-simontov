@@ -46,6 +46,8 @@ class FlowrateMqttJob implements ShouldQueue
             'alarm' => $this->data['alarm'],
             'bin_alarm' => $this->data['bin_alarm'],
             'file_name' => $this->data['file_name'],
+            'ph' => $this->data['ph'],
+            'cod' => $this->data['cod'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);

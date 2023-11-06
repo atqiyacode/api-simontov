@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SiteSeeder::class,
             StatusAlarmSeeder::class,
-            FlowrateSeeder::class,
+            // FlowrateSeeder::class,
             RangeTypeSeeder::class,
             RangeCostSeeder::class,
             MasterTaxSeeder::class,
