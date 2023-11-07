@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 
 class GenerateDummyFlowrateData extends Command
 {
-    protected $signature = 'generate:dummy-data {count}';
+    protected $signature = 'generate:dummy-data';
     protected $description = 'Generate and dispatch dummy data with a 5-second delay between batches';
 
     public function __construct()
@@ -18,7 +18,8 @@ class GenerateDummyFlowrateData extends Command
 
     public function handle()
     {
-        $count = $this->argument('count');
+        // $count = $this->argument('count');
+        $count = 18000;
         $batchSize = 1; // Adjust the batch size as needed
 
         for ($i = 0; $i < $count; $i += $batchSize) {
