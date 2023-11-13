@@ -2,28 +2,64 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    use WithoutModelEvents;
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
     public function run(): void
     {
-        // all access
-        $allPermissions = Permission::all()->pluck('id');
-        $superadmin = Role::updateOrCreate(['guard_name' => 'api', 'name' => 'superadmin']);
-        $superadmin->syncPermissions($allPermissions);
+        // Fetch all permissions and store their IDs
+        $allPermissionIds = Permission::pluck('id')->all();
 
-        Role::updateOrCreate(['guard_name' => 'api', 'name' => 'developer']);
+        // Prepare the role data
+        $roleData = [
+            [
+                'guard_name' => 'api',
+                'name' => 'superman',
+                'permission_ids' => $allPermissionIds,
+            ],
+            [
+                'guard_name' => 'api',
+                'name' => 'superadmin',
+                'permission_ids' => $allPermissionIds,
+            ],
+            [
+                'guard_name' => 'api',
+                'name' => 'developer',
+                'permission_ids' => [],
+            ],
+            [
+                'guard_name' => 'api',
+                'name' => 'demo',
+                'permission_ids' => [],
+            ],
+            [
+                'guard_name' => 'api',
+                'name' => 'admin',
+                'permission_ids' => [],
+            ],
+            [
+                'guard_name' => 'api',
+                'name' => 'client',
+                'permission_ids' => [],
+            ],
+        ];
 
-        Role::updateOrCreate(['guard_name' => 'api', 'name' => 'admin']);
+        // Create or update roles along with syncing permissions
+        foreach ($roleData as $roleItem) {
+            $role = Role::updateOrCreate(
+                ['guard_name' => 'api', 'name' => $roleItem['name']]
+            );
 
-        Role::updateOrCreate(['guard_name' => 'api', 'name' => 'client']);
+            // Sync permissions
+            $role->syncPermissions($roleItem['permission_ids']);
+        }
     }
 }

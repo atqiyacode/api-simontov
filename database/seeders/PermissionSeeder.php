@@ -43,5 +43,23 @@ class PermissionSeeder extends Seeder
         Permission::updateOrCreate(['name' => 'delete-permission', 'guard_name' => 'api']);
         Permission::updateOrCreate(['name' => 'restore-permission', 'guard_name' => 'api']);
         Permission::updateOrCreate(['name' => 'force-delete-permission', 'guard_name' => 'api']);
+
+        // verification-code-type
+        Permission::updateOrCreate(['name' => 'show-list-verification-code-type', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'show-detail-verification-code-type', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'create-verification-code-type', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'update-verification-code-type', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'delete-verification-code-type', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'restore-verification-code-type', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'force-delete-verification-code-type', 'guard_name' => 'api']);
+
+        // verification-code-type
+        Permission::updateOrCreate(['name' => 'show-list-user-verification-code', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'show-detail-user-verification-code', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'create-user-verification-code', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'update-user-verification-code', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'delete-user-verification-code', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'restore-user-verification-code', 'guard_name' => 'api']);
+        Permission::updateOrCreate(['name' => 'force-delete-user-verification-code', 'guard_name' => 'api']);
     }
 }

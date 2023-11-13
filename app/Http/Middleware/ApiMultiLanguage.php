@@ -16,7 +16,7 @@ class ApiMultiLanguage
      */
     public function handle(Request $request, Closure $next)
     {
-        $local = ($request->hasHeader('language')) ? $request->header('language') : config('app.locale');
+        $local = ($request->hasHeader('x-language')) ? $request->header('x-language') : config('app.locale');
         app()->setLocale($local);
         return $next($request);
     }

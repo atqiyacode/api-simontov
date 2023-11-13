@@ -2,29 +2,28 @@
 
 namespace App\Models;
 
-use App\Models\v1\GlobalNotificationUser;
-use App\Models\v1\UserFirebaseToken;
-use App\Notifications\v1\CustomResetPasswordNotification;
-use App\Notifications\v1\EmailVerificationNotification;
-use Haruncpi\LaravelUserActivity\Traits\Loggable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Filters\UserFilters;
+use Essa\APIToolKit\Filters\Filterable;
+use Essa\APIToolKit\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Scopes\CanDeleteScope;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Sanctum\HasApiTokens;
 use ProtoneMedia\LaravelVerifyNewEmail\MustVerifyNewEmail;
-use ProtoneMedia\LaravelVerifyNewEmail\PendingUserEmail;
-use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, Loggable, HasRoles, HasPermissions, MustVerifyNewEmail, SoftDeletes;
+    use HasApiTokens, HasRoles, HasPermissions, MustVerifyNewEmail, HasFactory, Notifiable, Filterable, SoftDeletes, CanDeleteScope;
+
+    protected string $default_filters = UserFilters::class;
 
     protected $guard_name  = 'api';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -32,9 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name',
-        'avatar',
-        'phone',
         'email',
+        'username',
         'password',
     ];
 
@@ -58,96 +56,24 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    // Method to send email verification
-    public function sendEmailVerificationNotification()
+
+    /**
+     * The locations that belong to the Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function locations(): BelongsToMany
     {
-        $prefix = request()->header('Origin') . '/verify-email?url=';
-        // We override the default notification and will use our own
-        $this->notify(new EmailVerificationNotification($prefix));
+        return $this->belongsToMany(Location::class);
     }
 
-    public function sendPasswordResetNotification($token)
+    /**
+     * The dashboardCharts that belong to the Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function dashboardCharts(): BelongsToMany
     {
-        $host = request()->header('Origin');
-        $this->notify(new CustomResetPasswordNotification($host, $token));
-    }
-
-    public function getAvatarImageAttribute()
-    {
-        return $this->avatar ?? (new \Laravolt\Avatar\Avatar)->create($this->name)
-            ->setDimension(150)
-            ->toBase64();
-    }
-
-    public function getGreetingAttribute()
-    {
-        $greetings = "";
-
-        $time = date("H");
-
-        $timezone = date("e");
-
-        if ($time < "12") {
-            $greetings = trans('client.good_morning');
-        } elseif ($time >= "12" && $time < "17") {
-            $greetings = trans('client.good_afternoon');
-        } elseif ($time >= "17" && $time < "19") {
-            $greetings = trans('client.good_evening');
-        } elseif ($time >= "19") {
-            $greetings = trans('client.good_night');
-        } else {
-            $greetings = trans('client.welcome');
-        }
-
-        return $greetings;
-    }
-
-    public function scopeActive($query)
-    {
-        return $query->where('email_verified_at', '!=', null);
-    }
-
-    public function scopeHasEmail($query)
-    {
-        return $query->where('email', '!=', null)->where('email', 'NOT LIKE', "%@fakemail.com%");
-    }
-
-    public function scopeHasPhone($query)
-    {
-        return $query->where('phone', '!=', null);
-    }
-
-    public function scopePrivate($query)
-    {
-        $query->when(!auth()->user()->hasRole(['privateAccess']), function ($q) {
-            return $q->where('email', '!=', 'atqiya@atqiyacode.com')->where('email', '!=', 'jeksi@sentralnusa.com');
-        });
-    }
-
-    public function scopeNotCurrent($query)
-    {
-        return $query->where('email', '!=', auth()->user()->email);
-    }
-
-    public function scopeVerified($query)
-    {
-        return $query->whereNotNull('email_verified_at');
-    }
-
-    public function scopeNotVerified($query)
-    {
-        return $query->whereNull('email_verified_at');
-    }
-
-    public function scopeCanDelete($query)
-    {
-        $query->when(auth()->user()->hasAnyRole(['privateAccess', 'superadmin']), function ($q) {
-            return $q->withTrashed();
-        });
-    }
-
-    public function firebaseToken(): HasOne
-    {
-        return $this->hasOne(UserFirebaseToken::class, 'user_id', 'id');
+        return $this->belongsToMany(DashboardChart::class);
     }
 }

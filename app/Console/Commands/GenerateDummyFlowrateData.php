@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\v1\FlowrateMqttJob;
+use App\Jobs\FlowrateMqttJob;
+use App\Models\Location;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -29,11 +30,12 @@ class GenerateDummyFlowrateData extends Command
                 $randpattern = '';
                 while (strlen($randpattern) < fake()->numberBetween($min = 0, $max = 14))
                     $randpattern .= rand(0, 1);
+
+                $locationId = Location::pluck('id')->random();
                 // Generate dummy data and dispatch it as a job with a 5-second delay
                 dispatch(new FlowrateMqttJob([
-                    'mag_date' => Carbon::now()->format('Y-m-d H:i'),
-                    'mag_date_time' => Carbon::now()->timestamp,
-                    'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 50),
+                    'mag_date' => now(),
+                    'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'unit_flowrate' => 'm3/h',
                     'totalizer_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'totalizer_2' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
@@ -49,8 +51,12 @@ class GenerateDummyFlowrateData extends Command
                     'created_at' => now(),
                     'updated_at' => now(),
 
-                    'ph' => fake()->numberBetween($min = 1, $max = 10),
-                    'cod' => fake()->numberBetween($min = 1, $max = 10),
+                    'location_id' => $locationId,
+
+                    'ph' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 6, $max = 8),
+                    'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 10),
+                    'cond' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+                    'level' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 ]))->delay(5);
             }
 

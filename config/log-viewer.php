@@ -188,8 +188,8 @@ return [
              * $matches[7] - the log text, the rest of the text.
              */
             'log_parsing_regex' => '/^\[(\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}\.?(\d{6}([\+-]\d\d:\d\d)?)?)\](.*?(\w+)\.|.*?)('
-                . implode('|', array_filter(Level::caseValues()))
-                . ')?: (.*?)( in [\/].*?:[0-9]+)?$/is',
+                .implode('|', array_filter(Level::caseValues()))
+                .')?: (.*?)( in [\/].*?:[0-9]+)?$/is',
         ],
     ],
 
@@ -213,4 +213,6 @@ return [
     */
 
     'lazy_scan_chunk_size_in_mb' => 50,
+
+    'strip_extracted_context' => true,
 ];

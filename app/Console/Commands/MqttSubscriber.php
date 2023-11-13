@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Events\v1\MqttEvent;
-use App\Jobs\v1\FlowrateMqttJob;
+use App\Jobs\FlowrateMqttJob;
 use Illuminate\Console\Command;
 use PhpMqtt\Client\Facades\MQTT;
 

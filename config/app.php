@@ -57,13 +57,35 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'frontend_url' => env('ADMIN_FRONTEND_URL', 'http://localhost:3000'),
-
-    'api_version' => env('API_VERSION', 'v1'),
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:3000'),
 
     'asset_url' => env('ASSET_URL'),
 
-    'mqtt_topic' => env('MQTT_TOPIC', 'laravel'),
+    'mobile_app_url' => env('MOBILE_APP_URL', 'http://localhost:8100'),
+
+    'whatsapp_server_main' => env('APP_WHATSAPP_SERVER_MAIN', null),
+
+    'whatsapp_server_key' => env('APP_WHATSAPP_SERVER_API_KEY', null),
+
+    'whatsapp_test_number' => env('APP_WHATSAPP_TEST_NUMBER', null),
+
+    'expired_otp' => env('EXPIRED_OTP', 5),
+
+    'cache_time' => env('CACHE_TIME', 300),
+
+    'random_otp' => env('RANDOM_OTP', true),
+
+    'bypass_verification' => env('BYPASS_VERIFICATION', false),
+
+    'api_version' => env('API_VERSION', 'v1'),
+
+    'disable_cors' => env('DISABLE_CORS', false),
+
+    'logo_email' => env('LOGO_EMAIL', ''),
+    'fcm_image' => env('FCM_IMAGE', ''),
+    'fcm_icon' => env('FCM_ICON', ''),
+
+    'token_cookie' => env('TOKEN_COOKIE', 'JAKARTA_SMARTTAX'),
 
     /*
     |--------------------------------------------------------------------------
@@ -147,7 +169,7 @@ return [
 
     'maintenance' => [
         'driver' => 'file',
-        // 'store'  => 'redis',
+        // 'store' => 'redis',
     ],
 
     /*
@@ -165,8 +187,6 @@ return [
         /*
          * Package Service Providers...
          */
-        // role-permission
-        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -176,6 +196,12 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
+
+        // role-permission
+        Spatie\Permission\PermissionServiceProvider::class,
+
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -190,7 +216,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Indonesia' => Laravolt\Indonesia\Facade::class
+        'Indonesia' => Laravolt\Indonesia\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
 ];
