@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Events\UserEvent;
+use App\Events\UserLocationEvent;
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
@@ -51,7 +52,8 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $query = $this->service->update($id, $request->all());
-        UserEvent::dispatch($query->getResult());
+        // UserEvent::dispatch($query->getResult());
+        UserLocationEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 

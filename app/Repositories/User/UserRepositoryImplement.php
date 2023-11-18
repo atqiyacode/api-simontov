@@ -37,12 +37,18 @@ class UserRepositoryImplement extends Eloquent implements UserRepository
 
     public function create($data)
     {
-        return $this->model->create($data);
+        $query =  $this->model->create($data);
+        $query->locations()->sync($data['locations']);
+        $query->dashboardCharts()->sync($data['dashboardCharts']);
+        return $query;
     }
 
     public function update($id, $data)
     {
         $query = $this->model->findOrFail($id);
+        if (!$data['password']) {
+            $data['password'] = $query->password;
+        }
         $query->update($data);
         $query->locations()->sync($data['locations']);
         $query->dashboardCharts()->sync($data['dashboardCharts']);

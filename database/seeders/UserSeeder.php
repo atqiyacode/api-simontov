@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\DashboardChart;
+use App\Models\Location;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +35,8 @@ class UserSeeder extends Seeder
         $superman->save();
         $superman->assignRole([$supermanRole]);
         $superman->givePermissionTo($superadminPermissions);
+        $superman->locations()->attach(Location::all()->pluck('id'));
+        $superman->dashboardCharts()->attach(DashboardChart::all()->pluck('id'));
 
         // superadmin
         $superadmin = new User();

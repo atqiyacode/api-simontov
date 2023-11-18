@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionSeeder::class,
             RoleSeeder::class,
-            UserSeeder::class,
             LocationSeeder::class,
             StatusAlarmSeeder::class,
             TaxSeeder::class,
@@ -24,6 +23,8 @@ class DatabaseSeeder extends Seeder
             RangeCostSeeder::class,
             FlowrateSeeder::class,
             DashboardChartSeeder::class,
+
+            UserSeeder::class,
         ]);
     }
 }
