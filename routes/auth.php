@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Resources\Location\LocationUserResource;
 use App\Http\Resources\User\CurrentUserResource;
 use Illuminate\Support\Facades\Route;
 
@@ -40,5 +41,9 @@ Route::prefix('auth')->group(function () {
 
     Route::get('/session', function () {
         return new CurrentUserResource(auth()->user());
+    })->middleware(['auth:sanctum', 'verified']);
+
+    Route::get('/session-location', function () {
+        return LocationUserResource::collection(auth()->user()->locations);
     })->middleware(['auth:sanctum', 'verified']);
 });

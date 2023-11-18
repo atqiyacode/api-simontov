@@ -21,7 +21,7 @@ class FlowrateResource extends JsonResource
             'totalizer_3' => floatval($this->totalizer_3),
             'unit_totalizer' => $this->unit_totalizer,
             'analog_1' => floatval($this->analog_1),
-            'analog_2' => floatval($this->analog_2),
+            'pressure' => floatval($this->pressure),
             'status_battery' => floatval($this->status_battery),
             'alarm' => $this->alarm,
             'bin_alarm' => $this->bin_alarm,

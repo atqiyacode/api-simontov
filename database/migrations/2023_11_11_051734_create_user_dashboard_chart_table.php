@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_dashboard_chart', function (Blueprint $table) {
+        Schema::create('dashboard_chart_user', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('dashboard_chart_id');

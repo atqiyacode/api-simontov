@@ -19,7 +19,7 @@ class FlowrateExportResource extends JsonResource
             'totalizer_2' => $this->totalizer_2 . ' m3',
             'totalizer_3' => $this->totalizer_3 . ' m3',
             'analog_1' => $this->analog_1,
-            'analog_2' => $this->analog_2,
+            'pressure' => $this->pressure,
             'status_battery' => $this->status_battery,
             'alarm' => $this->alarm,
             'bin_alarm' => (string) $this->bin_alarm,

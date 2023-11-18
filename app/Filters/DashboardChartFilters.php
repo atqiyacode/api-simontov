@@ -6,7 +6,17 @@ use Essa\APIToolKit\Filters\QueryFilters;
 
 class DashboardChartFilters extends QueryFilters
 {
-    protected array $allowedFilters = [];
+    protected array $allowedFilters = [
+        'status'
+    ];
 
-    protected array $columnSearch = [];
+    protected array $allowedSorts = [
+        'id',
+        'name',
+    ];
+
+    protected array $columnSearch = [
+        'code',
+        'name',
+    ];
 }

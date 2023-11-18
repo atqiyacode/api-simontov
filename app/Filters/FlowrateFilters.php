@@ -20,10 +20,11 @@ class FlowrateFilters extends QueryFilters
         'totalizer_2',
         'totalizer_3',
         'analog_1',
-        'analog_2',
+        'pressure',
         'alarm',
         'flowrate',
-        'created_at'
+        'created_at',
+        'mag_date'
     ];
 
     protected array $columnSearch = [
@@ -35,7 +36,7 @@ class FlowrateFilters extends QueryFilters
         'totalizer_2',
         'totalizer_3',
         'analog_1',
-        'analog_2',
+        'pressure',
         'alarm',
         'flowrate',
     ];

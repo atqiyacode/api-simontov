@@ -39,7 +39,7 @@ class FlowrateMqttJob implements ShouldQueue
             'totalizer_3' => $this->data['totalizer_3'],
             'unit_totalizer' => $this->data['unit_totalizer'],
             'analog_1' => $this->data['analog_1'],
-            'analog_2' => $this->data['analog_2'],
+            'pressure' => $this->data['pressure'],
             'status_battery' => $this->data['status_battery'],
             'alarm' => $this->data['alarm'],
             'bin_alarm' => $this->data['bin_alarm'],

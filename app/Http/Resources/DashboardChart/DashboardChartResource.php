@@ -10,8 +10,10 @@ class DashboardChartResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'code' => $this->code,
             'name' => $this->name,
-            'status' => $this->status,
+            'description' => $this->description,
+            'status' => (bool) $this->status,
             'created_at' => dateTimeFormat($this->created_at),
             'updated_at' => dateTimeFormat($this->updated_at),
             'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {

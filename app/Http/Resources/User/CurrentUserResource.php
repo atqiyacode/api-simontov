@@ -23,6 +23,9 @@ class CurrentUserResource extends JsonResource
             'is_verified' => (bool) $this->email_verified_at,
             'avatar' => $this->avatar_image,
             'roles' => $this->roles->pluck('name'),
+
+            'locations' => $this->locations->pluck('id'),
+            'dashboardCharts' => $this->dashboardCharts->pluck('code'),
             // 'permissions' => $this->permissions->pluck('name'),
             'newEmail' => (bool) $this->getPendingEmail(),
             'pendingEmail' => $this->getPendingEmail(),

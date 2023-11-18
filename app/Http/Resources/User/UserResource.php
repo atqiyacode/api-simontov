@@ -14,6 +14,9 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'username' => $this->username,
 
+            'locations' => $this->locations->pluck('id'),
+            'dashboardCharts' => $this->dashboardCharts->pluck('id'),
+
             'created_at' => dateTimeFormat($this->created_at),
             'updated_at' => dateTimeFormat($this->updated_at),
             'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {

@@ -44,6 +44,8 @@ class UserRepositoryImplement extends Eloquent implements UserRepository
     {
         $query = $this->model->findOrFail($id);
         $query->update($data);
+        $query->locations()->sync($data['locations']);
+        $query->dashboardCharts()->sync($data['dashboardCharts']);
         return $query;
     }
 

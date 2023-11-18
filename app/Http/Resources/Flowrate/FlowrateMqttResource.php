@@ -10,7 +10,6 @@ class FlowrateMqttResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'mag_date' => Carbon::parse($this->mag_date)->isoFormat('LLL'),
             'flowrate' => $this->flowrate,
             'unit_flowrate' => $this->unit_flowrate,
             'totalizer_1' => $this->totalizer_1,
@@ -18,7 +17,7 @@ class FlowrateMqttResource extends JsonResource
             'totalizer_3' => $this->totalizer_3,
             'unit_totalizer' => $this->unit_totalizer,
             'analog_1' => $this->analog_1,
-            'analog_2' => $this->analog_2,
+            'pressure' => $this->pressure,
             'status_battery' => $this->status_battery,
             'alarm' => $this->alarm,
             'bin_alarm' => $this->bin_alarm,
@@ -28,6 +27,7 @@ class FlowrateMqttResource extends JsonResource
             'cond' => $this->cond,
             'level' => $this->level,
             'location_id' => $this->location_id,
+            'mag_date' => Carbon::parse($this->mag_date)->format('m/d/Y, g:i:s A'),
         ];
     }
 }

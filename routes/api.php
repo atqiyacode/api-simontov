@@ -30,8 +30,8 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth:sanctum'])->group(function () {
     /*===========================
-=           roles           =
-=============================*/
+    =           roles           =
+    =============================*/
 
     Route::apiResource('/roles', RoleController::class);
 
@@ -50,8 +50,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of roles   ======*/
 
     /*===========================
-=           permissions           =
-=============================*/
+    =           permissions           =
+    =============================*/
 
     Route::apiResource('/permissions', PermissionController::class);
 
@@ -70,16 +70,29 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of permissions   ======*/
 
     /*===========================
-=           users           =
-=============================*/
+    =           users           =
+    =============================*/
 
     Route::apiResource('/users', UserController::class);
+
+    Route::group([
+        'prefix' => 'users',
+    ], function () {
+        Route::post('{id}/restore', [UserController::class, 'restore']);
+        Route::delete('{id}/force-delete', [UserController::class, 'forceDelete']);
+        Route::post('destroy-multiple', [UserController::class, 'destroyMultiple']);
+        Route::post('restore-multiple', [UserController::class, 'restoreMultiple']);
+        Route::post('force-delete-multiple', [UserController::class, 'forceDeleteMultiple']);
+        Route::get('export/csv', [UserController::class, 'exportCsv']);
+        Route::get('export/pdf', [UserController::class, 'exportPdf']);
+        Route::get('export/excel', [UserController::class, 'exportExcel']);
+    });
 
     /*=====  End of users   ======*/
 
     /*===========================
-=           locations           =
-=============================*/
+    =           locations           =
+    =============================*/
 
     Route::apiResource('/locations', LocationController::class);
 
@@ -94,12 +107,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('export/csv', [LocationController::class, 'exportCsv']);
         Route::get('export/pdf', [LocationController::class, 'exportPdf']);
         Route::get('export/excel', [LocationController::class, 'exportExcel']);
+
+        Route::get('myLocations', [LocationController::class, 'myLocations']);
     });
     /*=====  End of locations   ======*/
 
     /*===========================
-=           statusAlarms           =
-=============================*/
+    =           statusAlarms           =
+    =============================*/
 
     Route::apiResource('/statusAlarms', StatusAlarmController::class);
 
@@ -118,8 +133,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of statusAlarms   ======*/
 
     /*===========================
-=           taxes           =
-=============================*/
+    =           taxes           =
+    =============================*/
 
     Route::apiResource('/taxes', TaxController::class);
 
@@ -138,8 +153,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of taxes   ======*/
 
     /*===========================
-=           rangeTypes           =
-=============================*/
+    =           rangeTypes           =
+    =============================*/
 
     Route::apiResource('/rangeTypes', RangeTypeController::class);
 
@@ -158,8 +173,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of rangeTypes   ======*/
 
     /*===========================
-=           rangeCosts           =
-=============================*/
+    =           rangeCosts           =
+    =============================*/
 
     Route::apiResource('/rangeCosts', RangeCostController::class);
 
@@ -178,8 +193,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of rangeCosts   ======*/
 
     /*===========================
-=           flowrates           =
-=============================*/
+    =           flowrates           =
+    =============================*/
 
     Route::apiResource('/flowrates', FlowrateController::class);
 
@@ -198,26 +213,38 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of flowrates   ======*/
 
     /*===========================
-=           failedJobs           =
-=============================*/
+    =           failedJobs           =
+    =============================*/
 
     Route::apiResource('/failedJobs', FailedJobController::class);
 
     /*=====  End of failedJobs   ======*/
 
     /*===========================
-=           userLogActivities           =
-=============================*/
+    =           userLogActivities           =
+    =============================*/
 
     Route::apiResource('/userLogActivities', UserLogActivityController::class);
 
     /*=====  End of userLogActivities   ======*/
 
     /*===========================
-=           dashboardCharts           =
-=============================*/
+    =           dashboardCharts           =
+    =============================*/
 
     Route::apiResource('/dashboardCharts', DashboardChartController::class);
+    Route::group([
+        'prefix' => 'dashboardCharts',
+    ], function () {
+        Route::post('{id}/restore', [DashboardChartController::class, 'restore']);
+        Route::delete('{id}/force-delete', [DashboardChartController::class, 'forceDelete']);
+        Route::post('destroy-multiple', [DashboardChartController::class, 'destroyMultiple']);
+        Route::post('restore-multiple', [DashboardChartController::class, 'restoreMultiple']);
+        Route::post('force-delete-multiple', [DashboardChartController::class, 'forceDeleteMultiple']);
+        Route::get('export/csv', [DashboardChartController::class, 'exportCsv']);
+        Route::get('export/pdf', [DashboardChartController::class, 'exportPdf']);
+        Route::get('export/excel', [DashboardChartController::class, 'exportExcel']);
+    });
 
     /*=====  End of dashboardCharts   ======*/
 });

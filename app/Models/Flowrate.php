@@ -30,7 +30,7 @@ class Flowrate extends Model
         'totalizer_3',
         'unit_totalizer',
         'analog_1',
-        'analog_2',
+        'pressure',
         'status_battery',
         'alarm',
         'bin_alarm',

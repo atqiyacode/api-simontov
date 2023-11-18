@@ -42,6 +42,7 @@ class DashboardChartRepositoryImplement extends Eloquent implements DashboardCha
 
     public function update($id, $data)
     {
+        $data['code'] = '';
         $query = $this->model->findOrFail($id);
         $query->update($data);
         return $query;
