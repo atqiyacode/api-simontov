@@ -12,23 +12,22 @@ class FlowrateExportResource extends JsonResource
         return [
             'id' => $this->id,
             'location_id' => $this->location_id,
-            'flowrate' => $this->flowrate,
             'mag_date' => dateTimeFormat($this->mag_date),
-            'flowrate' => $this->flowrate . ' m3/h',
-            'totalizer_1' => $this->totalizer_1 . ' m3',
-            'totalizer_2' => $this->totalizer_2 . ' m3',
-            'totalizer_3' => $this->totalizer_3 . ' m3',
-            'analog_1' => $this->analog_1,
-            'pressure' => $this->pressure,
+            'flowrate' => floatval($this->flowrate) . ' m3/h',
+            'totalizer_1' => floatval($this->totalizer_1) . ' m3',
+            'totalizer_2' => floatval($this->totalizer_2) . ' m3',
+            'totalizer_3' => floatval($this->totalizer_3) . ' m3',
+            'analog_1' => floatval($this->analog_1),
+            'pressure' => floatval($this->pressure),
             'status_battery' => $this->status_battery,
             'alarm' => $this->alarm,
             'bin_alarm' => (string) $this->bin_alarm,
             'file_name' => $this->file_name,
-            'ph' => $this->ph,
-            'cod' => $this->cod,
-            'cond' => $this->cond,
-            'level' => $this->level,
-            'do' => $this->do,
+            'ph' => floatval($this->ph),
+            'cod' => floatval($this->cod),
+            'cond' => floatval($this->cond),
+            'level' => floatval($this->level),
+            'do' => floatval($this->do),
 
             'do_alarm_hi' => (bool)$this->do_alarm_hi,
             'do_alarm_lo' => (bool)$this->do_alarm_lo,
@@ -42,6 +41,9 @@ class FlowrateExportResource extends JsonResource
 
             'pln_stat' => (bool)$this->pln_stat,
             'panel_stat' => (bool)$this->panel_stat,
+
+            'created_at' => Carbon::parse($this->created_at)->format('m/d/Y, g:i:s A'),
+
         ];
     }
 }

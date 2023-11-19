@@ -14,15 +14,16 @@ class MqttSubscriber extends Command
 
     public function handle()
     {
-        $mqtt = MQTT::connection();
-        $mqtt->subscribe(config('app.mqtt_topic'), function ($topic, $data) {
-            $value = json_decode($data, true);
-            dispatch(new FlowrateMqttJob($value));
-            // MqttEvent::dispatch([
-            //     "topic" => $topic,
-            //     "data" => $value
-            // ]);
-        }, 1);
-        $mqtt->loop(true);
+        while (true) {
+            $this->info('Subscribing to MQTT topic...');
+            $mqtt = MQTT::connection();
+            $mqtt->subscribe(config('app.mqtt_topic'), function ($topic, $data) {
+                $value = json_decode($data, true);
+                $this->info('Received MQTT message data:' . $data);
+                dispatch(new FlowrateMqttJob($value));
+                $this->info('Success Push to database');
+            }, 1);
+            $mqtt->loop(true);
+        }
     }
 }

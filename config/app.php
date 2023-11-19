@@ -87,6 +87,8 @@ return [
 
     'token_cookie' => env('TOKEN_COOKIE', 'JAKARTA_SMARTTAX'),
 
+    'mqtt_topic' => env('MQTT_TOPIC', 'laravel'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -63,7 +63,7 @@ class FlowrateMqttJob implements ShouldQueue
             'pln_stat' => $this->data['pln_stat'],
             'panel_stat' => $this->data['panel_stat'],
 
-            'location_id' => $this->data['location_id'],
+            'location_id' => $this->data['loc_id'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);

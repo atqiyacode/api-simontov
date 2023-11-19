@@ -51,7 +51,7 @@ class GenerateDummyFlowrateData extends Command
                     'created_at' => now(),
                     'updated_at' => now(),
 
-                    'location_id' => $locationId,
+                    'loc_id' => $locationId,
 
                     'ph' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 6, $max = 8),
                     'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 10),
