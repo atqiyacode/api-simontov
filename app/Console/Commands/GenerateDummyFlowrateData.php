@@ -57,6 +57,20 @@ class GenerateDummyFlowrateData extends Command
                     'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 10),
                     'cond' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'level' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+                    'do' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+
+                    'do_alarm_hi' => fake()->boolean(),
+                    'do_alarm_lo' => fake()->boolean(),
+                    'pres_alarm_hi' => fake()->boolean(),
+                    'pres_alarm_lo' => fake()->boolean(),
+                    'ph_alarm_hi' => fake()->boolean(),
+                    'ph_alarm_lo' => fake()->boolean(),
+
+                    'fm_status' => $randpattern,
+                    'fm_err_code' => $randpattern,
+
+                    'pln_stat' => fake()->boolean(),
+                    'panel_stat' => fake()->boolean(),
                 ]));
             }
 

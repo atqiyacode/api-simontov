@@ -48,6 +48,21 @@ class FlowrateMqttJob implements ShouldQueue
             'cod' => $this->data['cod'],
             'cond' => $this->data['cond'],
             'level' => $this->data['level'],
+            'do' => $this->data['do'],
+
+            'do_alarm_hi' => $this->data['do_alarm_hi'],
+            'do_alarm_lo' => $this->data['do_alarm_lo'],
+            'pres_alarm_hi' => $this->data['pres_alarm_hi'],
+            'pres_alarm_lo' => $this->data['pres_alarm_lo'],
+            'ph_alarm_hi' => $this->data['ph_alarm_hi'],
+            'ph_alarm_lo' => $this->data['ph_alarm_lo'],
+
+            'fm_status' => $this->data['fm_status'],
+            'fm_err_code' => $this->data['fm_err_code'],
+
+            'pln_stat' => $this->data['pln_stat'],
+            'panel_stat' => $this->data['panel_stat'],
+
             'location_id' => $this->data['location_id'],
             'created_at' => now(),
             'updated_at' => now(),

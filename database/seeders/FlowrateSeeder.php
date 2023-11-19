@@ -27,7 +27,7 @@ class FlowrateSeeder extends Seeder
             $list[] = [
                 'mag_date' => Carbon::now()->subDay()->addMinutes(-1 * $i)->format('Y-m-d H:i'),
                 // 'mag_date_time' => Carbon::now()->subDay()->addMinutes(-1 * $i)->timestamp,
-                'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 50),
+                'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'unit_flowrate' => 'm3/h',
                 'totalizer_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'totalizer_2' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
@@ -43,10 +43,26 @@ class FlowrateSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
 
-                'ph' => fake()->numberBetween($min = 1, $max = 10),
-                'cod' => fake()->numberBetween($min = 1, $max = 10),
-                'cond' => fake()->numberBetween($min = 1, $max = 100),
-                'level' => fake()->numberBetween($min = 1, $max = 100),
+                'location_id' => $locationId,
+
+                'ph' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 6, $max = 8),
+                'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 10),
+                'cond' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+                'level' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+                'do' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+
+                'do_alarm_hi' => fake()->boolean(),
+                'do_alarm_lo' => fake()->boolean(),
+                'pres_alarm_hi' => fake()->boolean(),
+                'pres_alarm_lo' => fake()->boolean(),
+                'ph_alarm_hi' => fake()->boolean(),
+                'ph_alarm_lo' => fake()->boolean(),
+
+                'fm_status' => $randpattern,
+                'fm_err_code' => $randpattern,
+
+                'pln_stat' => fake()->boolean(),
+                'panel_stat' => fake()->boolean(),
 
                 'location_id' => $locationId,
             ];

@@ -23,6 +23,7 @@ class Location extends Model
      */
     protected $fillable = [
         'code',
+        'company_name',
         'name',
         'longitude',
         'lattitude',

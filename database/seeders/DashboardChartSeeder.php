@@ -20,12 +20,19 @@ class DashboardChartSeeder extends Seeder
             ['code' => 'realtime-ph', 'name' => 'REALTIME - PH', 'status' => true],
             ['code' => 'realtime-cond', 'name' => 'REALTIME - COND', 'status' => true],
             ['code' => 'realtime-level', 'name' => 'REALTIME - LEVEL', 'status' => true],
+            ['code' => 'realtime-do', 'name' => 'REALTIME - DO', 'status' => true],
+
             ['code' => 'radial-flowrate', 'name' => 'RADIAL - Flowrate', 'status' => true],
             ['code' => 'radial-pressure', 'name' => 'RADIAL - Pressure', 'status' => true],
             ['code' => 'radial-cod', 'name' => 'RADIAL - COD', 'status' => true],
             ['code' => 'radial-ph', 'name' => 'RADIAL - PH', 'status' => true],
             ['code' => 'radial-cond', 'name' => 'RADIAL - COND', 'status' => true],
             ['code' => 'radial-level', 'name' => 'RADIAL - LEVEL', 'status' => true],
+            ['code' => 'radial-do', 'name' => 'RADIAL - DO', 'status' => true],
+
+            ['code' => 'totalizer-1', 'name' => 'TOTALIZER 1', 'status' => true],
+            ['code' => 'totalizer-2', 'name' => 'TOTALIZER 2', 'status' => true],
+            ['code' => 'totalizer-3', 'name' => 'TOTALIZER 3', 'status' => true],
         ];
         DashboardChart::insert($lists);
     }

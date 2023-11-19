@@ -28,6 +28,20 @@ class FlowrateExportResource extends JsonResource
             'cod' => $this->cod,
             'cond' => $this->cond,
             'level' => $this->level,
+            'do' => $this->do,
+
+            'do_alarm_hi' => (bool)$this->do_alarm_hi,
+            'do_alarm_lo' => (bool)$this->do_alarm_lo,
+            'pres_alarm_hi' => (bool)$this->pres_alarm_hi,
+            'pres_alarm_lo' => (bool)$this->pres_alarm_lo,
+            'ph_alarm_hi' => (bool)$this->ph_alarm_hi,
+            'ph_alarm_lo' => (bool)$this->ph_alarm_lo,
+
+            'fm_status' => $this->fm_status,
+            'fm_err_code' => $this->fm_err_code,
+
+            'pln_stat' => (bool)$this->pln_stat,
+            'panel_stat' => (bool)$this->panel_stat,
         ];
     }
 }

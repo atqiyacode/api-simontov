@@ -22,23 +22,46 @@ class Flowrate extends Model
      */
     protected $fillable = [
         'location_id',
+
         'mag_date',
-        'flowrate',
-        'unit_flowrate',
+
         'totalizer_1',
         'totalizer_2',
         'totalizer_3',
+
+        'unit_flowrate',
         'unit_totalizer',
-        'analog_1',
+
+        'flowrate',
         'pressure',
+
+        'analog_1',
         'status_battery',
         'alarm',
+
         'bin_alarm',
+
         'file_name',
+
         'ph',
         'cod',
         'cond',
         'level',
+        'do',
+
+        'do_alarm_hi',
+        'do_alarm_lo',
+        'pres_alarm_hi',
+        'pres_alarm_lo',
+        'ph_alarm_hi',
+        'ph_alarm_lo',
+
+        'fm_status',
+        'fm_err_code',
+
+        'pln_stat',
+        'panel_stat',
+
         'created_at',
         'updated_at'
     ];
