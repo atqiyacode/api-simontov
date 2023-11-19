@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepositoryImplement extends Eloquent implements UserRepository
 {
@@ -38,18 +39,26 @@ class UserRepositoryImplement extends Eloquent implements UserRepository
     public function create($data)
     {
         $query =  $this->model->create($data);
-        $query->locations()->sync($data['locations']);
-        $query->dashboardCharts()->sync($data['dashboardCharts']);
+        $query->roles()->attach($data['roles']);
+        $query->permissions()->attach($data['permissions']);
+        $query->locations()->attach($data['locations']);
+        $query->dashboardCharts()->attach($data['dashboardCharts']);
         return $query;
     }
 
     public function update($id, $data)
     {
         $query = $this->model->findOrFail($id);
-        // if (!$data['password']) {
-        //     $data['password'] = $query->password;
-        // }
+        // If the password is provided, hash it; otherwise, keep the existing password
+        if (!empty($data['password'])) {
+            $data['password'] = $data['password'];
+        } else {
+            // Remove the password from the data array to prevent it from being updated to null
+            unset($data['password']);
+        }
         $query->update($data);
+        $query->roles()->sync($data['roles']);
+        $query->permissions()->sync($data['permissions']);
         $query->locations()->sync($data['locations']);
         $query->dashboardCharts()->sync($data['dashboardCharts']);
         return $query;

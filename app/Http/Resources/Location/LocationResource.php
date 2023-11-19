@@ -11,7 +11,7 @@ class LocationResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'comapany_name' => $this->comapany_name,
+            'company_name' => $this->company_name,
             'name' => $this->name,
             'longitude' => floatval($this->longitude),
             'lattitude' => floatval($this->lattitude),

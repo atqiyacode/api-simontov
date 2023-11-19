@@ -19,6 +19,11 @@ class UserResource extends JsonResource
             'locations' => $this->locations->pluck('id'),
             'dashboardCharts' => $this->dashboardCharts->pluck('id'),
 
+            'roles_name' => $this->roles->pluck('name'),
+            'permissions_name' => $this->permissions->pluck('name'),
+            'locations_name' => $this->locations->pluck('name'),
+            'dashboardCharts_name' => $this->dashboardCharts->pluck('name'),
+
             'created_at' => dateTimeFormat($this->created_at),
             'updated_at' => dateTimeFormat($this->updated_at),
             'trashed' => $this->when(auth()->user(), function () {

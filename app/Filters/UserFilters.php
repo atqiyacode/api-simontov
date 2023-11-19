@@ -8,5 +8,16 @@ class UserFilters extends QueryFilters
 {
     protected array $allowedFilters = [];
 
-    protected array $columnSearch = [];
+    protected array $columnSearch = [
+        'name',
+        'username',
+        'email',
+    ];
+
+    protected array $allowedSorts = [
+        'id',
+        'name',
+        'username',
+        'email',
+    ];
 }
