@@ -17,14 +17,16 @@ class FlowrateSeeder extends Seeder
     public function run(): void
     {
         $list = [];
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             $randpattern = '';
             while (strlen($randpattern) < fake()->numberBetween($min = 0, $max = 14))
                 $randpattern .= rand(0, 1);
 
-            $locationId = Location::pluck('id')->random();
+            $locationId = 1;
+            // $locationId = Location::pluck('id')->random();
 
             $list[] = [
+                'created_at' => Carbon::now()->subDay()->addMinutes(-1 * $i)->format('Y-m-d H:i'),
                 'mag_date' => Carbon::now()->subDay()->addMinutes(-1 * $i)->format('Y-m-d H:i'),
                 // 'mag_date_time' => Carbon::now()->subDay()->addMinutes(-1 * $i)->timestamp,
                 'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
@@ -39,9 +41,7 @@ class FlowrateSeeder extends Seeder
                 'alarm' => fake()->numberBetween($min = 10, $max = 150),
                 'bin_alarm' => $randpattern,
                 // 'file_name' => 'FILE-' . fake()->numberBetween($min = 1, $max = 5),
-                'file_name' => 'FILE-1',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'file_name' => 'MEDAN',
 
                 'location_id' => $locationId,
 

@@ -11,6 +11,7 @@ class CreateLocationRequest extends FormRequest
         return [
             'code' => ['required', 'string', 'unique:locations,code'],
             'name' => ['required', 'string'],
+            'company_name' => ['required', 'string'],
             'longitude' => ['required', 'numeric'],
             'lattitude' => ['required', 'numeric'],
             'description' => ['nullable'],

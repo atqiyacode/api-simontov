@@ -5,16 +5,13 @@ namespace App\Http\Resources\Flowrate;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FlowrateResource extends JsonResource
+class FlowrateStaticResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
             'mag_date_chart' => Carbon::parse($this->mag_date)->format('Y-m-d H:i') . ':00',
 
-            'id' => $this->id,
-            'location_id' => $this->location_id,
-            'location' => $this->location,
             'flowrate' => floatval($this->flowrate),
             'mag_date' => Carbon::parse($this->mag_date)->format('m/d/Y, g:i:s A'),
             'unit_flowrate' => $this->unit_flowrate,
@@ -47,11 +44,6 @@ class FlowrateResource extends JsonResource
             'pln_stat' => (bool)$this->pln_stat,
             'panel_stat' => (bool)$this->panel_stat,
 
-            'created_at' => Carbon::parse($this->created_at)->format('m/d/Y, g:i:s A'),
-            'updated_at' => dateTimeFormat($this->updated_at),
-            'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {
-                return (bool) $this->deleted_at;
-            }),
         ];
     }
 }

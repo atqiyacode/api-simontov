@@ -15,4 +15,5 @@ interface FlowrateService extends BaseService
     public function destroyMultiple($ids);
     public function restoreMultiple($ids);
     public function forceDeleteMultiple($ids);
+    public function getDataRange($locationId, $start, $end);
 }

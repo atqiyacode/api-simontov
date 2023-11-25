@@ -8,5 +8,16 @@ class LocationFilters extends QueryFilters
 {
     protected array $allowedFilters = [];
 
-    protected array $columnSearch = [];
+    protected array $columnSearch = [
+        'code',
+        'name',
+        'company_name',
+    ];
+
+    protected array $allowedSorts = [
+        'id',
+        'code',
+        'name',
+        'company_name',
+    ];
 }

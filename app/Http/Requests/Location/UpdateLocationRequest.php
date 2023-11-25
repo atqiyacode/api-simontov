@@ -9,11 +9,12 @@ class UpdateLocationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['sometimes', 'string', 'unique:locations,code,' . $this->id],
-            'name' => ['sometimes', 'string'],
-            'longitude' => ['sometimes', 'numeric'],
-            'lattitude' => ['sometimes', 'numeric'],
-            'description' => ['sometimes'],
+            'code' => ['required', 'string', 'unique:locations,code,' . $this->id],
+            'name' => ['required', 'string'],
+            'company_name' => ['required', 'string'],
+            'longitude' => ['required', 'numeric'],
+            'lattitude' => ['required', 'numeric'],
+            'description' => ['nullable', 'string'],
         ];
     }
 }

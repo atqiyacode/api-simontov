@@ -3,6 +3,7 @@
 namespace App\Services\Flowrate;
 
 use App\Http\Resources\Flowrate\FlowrateResource;
+use App\Http\Resources\Flowrate\FlowrateStaticResource;
 use LaravelEasyRepository\ServiceApi;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Flowrate\FlowrateRepository;
@@ -57,6 +58,15 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
     public function getAll()
     {
         $response = $this->mainRepository->getAll();
+        return $this->setMessage($this->found_message)
+            ->setStatus(true)
+            ->setCode(200)
+            ->setResult(FlowrateResource::collection($response));
+    }
+
+    public function getDataRange($locationId, $start, $end)
+    {
+        $response = $this->mainRepository->findByLocation($locationId, $start, $end);
         return $this->setMessage($this->found_message)
             ->setStatus(true)
             ->setCode(200)

@@ -209,6 +209,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('export/csv', [FlowrateController::class, 'exportCsv']);
         Route::get('export/pdf', [FlowrateController::class, 'exportPdf']);
         Route::get('export/excel', [FlowrateController::class, 'exportExcel']);
+        Route::get('{id}/range', [FlowrateController::class, 'range']);
     });
     /*=====  End of flowrates   ======*/
 
