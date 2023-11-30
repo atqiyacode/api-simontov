@@ -2,14 +2,14 @@ set -e
 
 echo "Deploying Aplication Development ..."
 
+# install package
+composer install
+
 # enter maintenance mode
 php artisan down
 
 # update codebase
 git pull origin development
-
-# install package
-composer install
 
 php artisan migrate:fresh --seed
 
