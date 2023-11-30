@@ -10,6 +10,7 @@ use App\Http\Controllers\API\RangeTypeController;
 use App\Http\Controllers\API\RoleController;
 use App\Http\Controllers\API\StatusAlarmController;
 use App\Http\Controllers\API\TaxController;
+use App\Http\Controllers\API\TopicController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserLogActivityController;
 use Illuminate\Http\Request;
@@ -28,12 +29,14 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     /*===========================
     =           roles           =
     =============================*/
 
-    Route::apiResource('/roles', RoleController::class);
+    Route::apiResource('/roles', RoleController::class)->parameters([
+        'roles' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'roles',
@@ -53,7 +56,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           permissions           =
     =============================*/
 
-    Route::apiResource('/permissions', PermissionController::class);
+    Route::apiResource('/permissions', PermissionController::class)->parameters([
+        'permissions' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'permissions',
@@ -73,7 +78,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           users           =
     =============================*/
 
-    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/users', UserController::class)->parameters([
+        'users' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'users',
@@ -94,7 +101,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           locations           =
     =============================*/
 
-    Route::apiResource('/locations', LocationController::class);
+    Route::apiResource('/locations', LocationController::class)->parameters([
+        'locations' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'locations',
@@ -116,7 +125,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           statusAlarms           =
     =============================*/
 
-    Route::apiResource('/statusAlarms', StatusAlarmController::class);
+    Route::apiResource('/statusAlarms', StatusAlarmController::class)->parameters([
+        'statusAlarms' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'statusAlarms',
@@ -136,7 +147,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           taxes           =
     =============================*/
 
-    Route::apiResource('/taxes', TaxController::class);
+    Route::apiResource('/taxes', TaxController::class)->parameters([
+        'taxes' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'taxes',
@@ -156,7 +169,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           rangeTypes           =
     =============================*/
 
-    Route::apiResource('/rangeTypes', RangeTypeController::class);
+    Route::apiResource('/rangeTypes', RangeTypeController::class)->parameters([
+        'rangeTypes' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'rangeTypes',
@@ -176,7 +191,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           rangeCosts           =
     =============================*/
 
-    Route::apiResource('/rangeCosts', RangeCostController::class);
+    Route::apiResource('/rangeCosts', RangeCostController::class)->parameters([
+        'rangeCosts' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'rangeCosts',
@@ -196,7 +213,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           flowrates           =
     =============================*/
 
-    Route::apiResource('/flowrates', FlowrateController::class);
+    Route::apiResource('/flowrates', FlowrateController::class)->parameters([
+        'flowrates' => 'id'
+    ]);
 
     Route::group([
         'prefix' => 'flowrates',
@@ -217,7 +236,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           failedJobs           =
     =============================*/
 
-    Route::apiResource('/failedJobs', FailedJobController::class);
+    Route::apiResource('/failedJobs', FailedJobController::class)->parameters([
+        'failedJobs' => 'id'
+    ]);
 
     /*=====  End of failedJobs   ======*/
 
@@ -225,7 +246,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           userLogActivities           =
     =============================*/
 
-    Route::apiResource('/userLogActivities', UserLogActivityController::class);
+    Route::apiResource('/userLogActivities', UserLogActivityController::class)->parameters([
+        'userLogActivities' => 'id'
+    ]);
 
     /*=====  End of userLogActivities   ======*/
 
@@ -233,7 +256,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           dashboardCharts           =
     =============================*/
 
-    Route::apiResource('/dashboardCharts', DashboardChartController::class);
+    Route::apiResource('/dashboardCharts', DashboardChartController::class)->parameters([
+        'dashboardCharts' => 'id'
+    ]);
     Route::group([
         'prefix' => 'dashboardCharts',
     ], function () {
@@ -248,4 +273,26 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     /*=====  End of dashboardCharts   ======*/
+
+    /*===========================
+    =           topics           =
+    =============================*/
+
+    Route::apiResource('/topics', TopicController::class)->parameters([
+        'topics' => 'id'
+    ]);
+    Route::group([
+        'prefix' => 'topics',
+    ], function () {
+        Route::post('{id}/restore', [TopicController::class, 'restore']);
+        Route::delete('{id}/force-delete', [TopicController::class, 'forceDelete']);
+        Route::post('destroy-multiple', [TopicController::class, 'destroyMultiple']);
+        Route::post('restore-multiple', [TopicController::class, 'restoreMultiple']);
+        Route::post('force-delete-multiple', [TopicController::class, 'forceDeleteMultiple']);
+        Route::get('export/csv', [TopicController::class, 'exportCsv']);
+        Route::get('export/pdf', [TopicController::class, 'exportPdf']);
+        Route::get('export/excel', [TopicController::class, 'exportExcel']);
+    });
+
+    /*=====  End of topics   ======*/
 });

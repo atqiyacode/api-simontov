@@ -18,25 +18,25 @@ return new class extends Migration
             $table->foreignId('location_id')->constrained('locations');
             $table->dateTime('mag_date')->nullable();
 
-            $table->decimal('totalizer_1')->nullable();
-            $table->decimal('totalizer_2')->nullable();
-            $table->decimal('totalizer_3')->nullable();
+            $table->decimal('totalizer_1', 22)->nullable();
+            $table->decimal('totalizer_2', 22)->nullable();
+            $table->decimal('totalizer_3', 22)->nullable();
 
-            $table->decimal('flowrate')->nullable();
-            $table->decimal('pressure')->nullable();
+            $table->decimal('flowrate', 22)->nullable();
+            $table->decimal('pressure', 22)->nullable();
 
             $table->string('unit_flowrate')->nullable();
             $table->string('unit_totalizer')->nullable();
 
-            $table->decimal('analog_1')->nullable();
+            $table->decimal('analog_1', 22)->nullable();
             $table->integer('status_battery')->nullable();
             $table->integer('alarm')->nullable();
 
-            $table->string('ph')->nullable();
-            $table->string('cod')->nullable();
-            $table->string('cond')->nullable();
-            $table->string('level')->nullable();
-            $table->string('do')->nullable();
+            $table->decimal('ph', 22)->nullable();
+            $table->decimal('cod', 22)->nullable();
+            $table->decimal('cond', 22)->nullable();
+            $table->decimal('level', 22)->nullable();
+            $table->decimal('do', 22)->nullable();
 
             $table->string('bin_alarm', 15)->nullable();
 
@@ -55,7 +55,9 @@ return new class extends Migration
             $table->boolean('pln_stat')->default(1);
             $table->boolean('panel_stat')->default(1);
 
-            $table->string('file_name');
+            $table->string('file_name')->nullable();
+
+            $table->json('log_data')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

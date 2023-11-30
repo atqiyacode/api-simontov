@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             RangeCostSeeder::class,
             FlowrateSeeder::class,
             DashboardChartSeeder::class,
+            TopicSeeder::class,
 
             UserSeeder::class,
         ]);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Filters\UserFilters;
+use App\Notifications\ResetPasswordNotification;
 use Essa\APIToolKit\Filters\Filterable;
 use Essa\APIToolKit\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,6 +57,24 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    /**
+     * Send a password reset notification to the user.
+     *
+     * @param  string  $token
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        // $url = 'https://example.com/reset-password?token=' . $token;
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
+    /**
+     * Send a email verification notification to the user.
+     */
+    // public function sendEmailVerificationNotification()
+    // {
+    //     $this->notify(new EmailVerificationNotification);
+    // }
 
     /**
      * The locations that belong to the Location

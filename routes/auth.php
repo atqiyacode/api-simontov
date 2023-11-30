@@ -10,7 +10,7 @@ use App\Http\Resources\Location\LocationUserResource;
 use App\Http\Resources\User\CurrentUserResource;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('auth')->group(function () {
+Route::prefix('auth')->middleware(['multilang'])->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'store'])
         ->middleware('guest')
         ->name('register');

@@ -25,7 +25,7 @@ class FlowrateSeeder extends Seeder
             $locationId = 1;
             // $locationId = Location::pluck('id')->random();
 
-            $list[] = [
+            $dummy = [
                 'created_at' => Carbon::now()->subDay()->addMinutes(-1 * $i)->format('Y-m-d H:i'),
                 'mag_date' => Carbon::now()->subDay()->addMinutes(-1 * $i)->format('Y-m-d H:i'),
                 // 'mag_date_time' => Carbon::now()->subDay()->addMinutes(-1 * $i)->timestamp,
@@ -66,6 +66,8 @@ class FlowrateSeeder extends Seeder
 
                 'location_id' => $locationId,
             ];
+            $dummy['log_data'] = json_encode($dummy);
+            $list[] = $dummy;
         }
         $chunks = array_chunk($list, 500);
         foreach ($chunks as $chunk) {

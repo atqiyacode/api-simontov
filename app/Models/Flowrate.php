@@ -63,7 +63,9 @@ class Flowrate extends Model
         'panel_stat',
 
         'created_at',
-        'updated_at'
+        'updated_at',
+
+        'log_data'
     ];
 
     protected $casts = [

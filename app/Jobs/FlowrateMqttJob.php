@@ -64,6 +64,9 @@ class FlowrateMqttJob implements ShouldQueue
             'panel_stat' => $this->data['panel_stat'] ?? null,
 
             'location_id' => $this->data['loc_id'] ?? null,
+
+            'log_data' => json_encode($this->data) ?? null,
+
             'created_at' => now(),
             'updated_at' => now(),
         ]);
