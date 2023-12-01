@@ -24,8 +24,7 @@ class UserResource extends JsonResource
             'locations_name' => $this->locations->pluck('name'),
             'dashboardCharts_name' => $this->dashboardCharts->pluck('name'),
 
-            'created_at' => dateTimeFormat($this->created_at),
-            'updated_at' => dateTimeFormat($this->updated_at),
+
             'trashed' => $this->when(auth()->user(), function () {
                 if (auth()->user()->hasAnyRole(['superman'])) {
                     return (bool) $this->deleted_at;

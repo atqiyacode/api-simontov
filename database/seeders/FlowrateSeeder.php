@@ -22,8 +22,7 @@ class FlowrateSeeder extends Seeder
             while (strlen($randpattern) < fake()->numberBetween($min = 0, $max = 14))
                 $randpattern .= rand(0, 1);
 
-            $locationId = 1;
-            // $locationId = Location::pluck('id')->random();
+            $locationId = Location::pluck('id')->random();
 
             $dummy = [
                 'created_at' => Carbon::now()->subDay()->addMinutes(-1 * $i)->format('Y-m-d H:i'),
@@ -31,7 +30,8 @@ class FlowrateSeeder extends Seeder
                 // 'mag_date_time' => Carbon::now()->subDay()->addMinutes(-1 * $i)->timestamp,
                 'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'unit_flowrate' => 'm3/h',
-                'totalizer_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+                'totalizer_1' => $i * 3,
+                // 'totalizer_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'totalizer_2' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'totalizer_3' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                 'unit_totalizer' => 'm3',

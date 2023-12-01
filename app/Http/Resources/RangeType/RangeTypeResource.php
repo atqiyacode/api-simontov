@@ -15,8 +15,7 @@ class RangeTypeResource extends JsonResource
             'lower_limit' => $this->lower_limit,
             'upper_limit' => $this->upper_limit,
             'description' => $this->description,
-            'created_at' => dateTimeFormat($this->created_at),
-            'updated_at' => dateTimeFormat($this->updated_at),
+
             'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),

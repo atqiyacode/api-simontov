@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('label');
-            $table->string('lower_limit');
-            $table->string('upper_limit');
+            $table->bigInteger('lower_limit');
+            $table->bigInteger('upper_limit');
             $table->longText('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

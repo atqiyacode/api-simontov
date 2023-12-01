@@ -229,6 +229,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('export/pdf', [FlowrateController::class, 'exportPdf']);
         Route::get('export/excel', [FlowrateController::class, 'exportExcel']);
         Route::get('{id}/range', [FlowrateController::class, 'range']);
+        Route::get('{id}/billing', [FlowrateController::class, 'billing']);
     });
     /*=====  End of flowrates   ======*/
 

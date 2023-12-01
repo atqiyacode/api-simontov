@@ -7,6 +7,9 @@ use App\Exports\FlowrateExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Flowrate\CreateFlowrateRequest;
 use App\Http\Requests\Flowrate\UpdateFlowrateRequest;
+use App\Http\Resources\RangeCost\RangeCostResource;
+use App\Models\RangeCost;
+use App\Models\RangeType;
 use App\Services\Flowrate\FlowrateService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -128,5 +131,28 @@ class FlowrateController extends Controller
             'result' => $response->getResult(),
             'total' => $response->getResult()->count(),
         ];
+    }
+
+    public function billing($id)
+    {
+        $total = request()->total;
+        $maxLimit = RangeType::orderBy('upper_limit', 'desc')->first();
+        if ($total >= $maxLimit->upper_limit) {
+            $type = $maxLimit;
+        } else {
+            $type = RangeType::where('lower_limit', '<=', $total)
+                ->where('upper_limit', '<=', $total)
+                ->orderBy('upper_limit', 'desc')
+                ->firstOrFail();
+        }
+
+        $data = RangeCost::with(['rangeType'])->where('range_type_id', $type->id)->first();
+
+        return response()->json(
+            [
+                'data' => new RangeCostResource($data),
+                'total' => floatval($data->value) * $total
+            ]
+        );
     }
 }

@@ -16,8 +16,7 @@ class LocationResource extends JsonResource
             'longitude' => floatval($this->longitude),
             'lattitude' => floatval($this->lattitude),
             'description' => $this->description,
-            'created_at' => dateTimeFormat($this->created_at),
-            'updated_at' => dateTimeFormat($this->updated_at),
+
             'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),
