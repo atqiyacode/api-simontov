@@ -1,0 +1,30 @@
+version: "3"
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/var/www/html
+        ports:
+            - 8000:8000
+            - 6001:6001
+        depends_on:
+            - mysql
+            - redis
+
+    mysql:
+        image: mysql:latest
+        ports:
+            - "3306:3306" # Adjust as needed
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: simontov_app
+            MYSQL_USER: secret
+            MYSQL_PASSWORD: secret
+
+    redis:
+        image: "redis:alpine"
+        ports:
+            - "6379:6379" # Adjust as needed
+

@@ -22,6 +22,7 @@ class LocationUserResource extends JsonResource
             'longitude' => floatval($this->longitude),
             'lattitude' => floatval($this->lattitude),
             'description' => $this->description,
+            'flowrates' => new LocationFlowrateResource($this->flowrates),
         ];
     }
 }

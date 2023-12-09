@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\CanDeleteScope;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Location extends Model
 {
@@ -39,5 +40,15 @@ class Location extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Get all of the flowartes for the Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function flowrates(): HasOne
+    {
+        return $this->hasOne(Flowrate::class)->orderBy('id', 'desc');
     }
 }

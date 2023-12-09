@@ -140,8 +140,8 @@ class FlowrateController extends Controller
         if ($total >= $maxLimit->upper_limit) {
             $type = $maxLimit;
         } else {
-            $type = RangeType::where('lower_limit', '<=', $total)
-                ->where('upper_limit', '<=', $total)
+            $type = RangeType::where('upper_limit', '>', $total)
+                ->where('lower_limit', '<', $total)
                 ->orderBy('upper_limit', 'desc')
                 ->firstOrFail();
         }
@@ -151,7 +151,8 @@ class FlowrateController extends Controller
         return response()->json(
             [
                 'data' => new RangeCostResource($data),
-                'total' => floatval($data->value) * $total
+                'total' => floatval($data->value) * $total,
+                'price' => $data->value
             ]
         );
     }

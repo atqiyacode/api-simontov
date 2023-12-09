@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version(), Lang::get('Reset Password Notification')];
+    return [
+        'Laravel' => app()->version(),
+    ];
 });
 
 require __DIR__ . '/auth.php';

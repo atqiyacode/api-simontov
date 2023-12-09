@@ -71,7 +71,7 @@ class Flowrate extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'mag_date' => 'datetime',
+        'mag_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function getBin()

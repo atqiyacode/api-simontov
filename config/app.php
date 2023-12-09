@@ -220,6 +220,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Indonesia' => Laravolt\Indonesia\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
 
 ];
