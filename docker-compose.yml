@@ -14,12 +14,12 @@ services:
             - redis
 
     mysql:
-        image: mysql:latest
+        image: mysql:8.2
         ports:
             - "3306:3306" # Adjust as needed
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: simontov_app
+            MYSQL_DATABASE: simontov
             MYSQL_USER: secret
             MYSQL_PASSWORD: secret
 

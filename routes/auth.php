@@ -28,22 +28,22 @@ Route::prefix('auth')->middleware(['multilang'])->group(function () {
         ->name('password.store');
 
     Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['auth:sanctum', 'signed', 'throttle:6,1'])
+        ->middleware(['auth:api', 'signed', 'throttle:6,1'])
         ->name('verification.verify');
 
     Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware(['auth:sanctum', 'throttle:6,1'])
+        ->middleware(['auth:api', 'throttle:6,1'])
         ->name('verification.send');
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->middleware('auth:sanctum')
+        ->middleware('auth:api')
         ->name('logout');
 
     Route::get('/session', function () {
         return new CurrentUserResource(auth()->user());
-    })->middleware(['auth:sanctum', 'verified']);
+    })->middleware(['auth:api', 'verified']);
 
     Route::get('/session-location', function () {
         return LocationUserResource::collection(auth()->user()->locations);
-    })->middleware(['auth:sanctum', 'verified']);
+    })->middleware(['auth:api', 'verified']);
 });
