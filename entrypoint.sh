@@ -11,14 +11,14 @@ chown -R $USER:www-data bootstrap/cache
 chmod -R 777 .
 chmod -R 777 storage
 chmod -R 777 bootstrap/cache
-php artisan key:generate
+# php artisan key:generate
 # sleep 5s
-php artisan migrate:fresh --seed --force
+# php artisan migrate:fresh --seed --force
 # sleep 15s
 php artisan octane:start --host=0.0.0.0 &
 php artisan websocket:serve --port=6001 &
 # php artisan generate:dummy-data &
-php artisan mqtt:subscribe &
 php artisan queue:work --tries=3 --timeout=300 --sleep=1 --daemon &
+php artisan mqtt:subscribe &
 exec "$@"
 
