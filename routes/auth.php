@@ -40,8 +40,8 @@ Route::prefix('auth')->middleware(['multilang'])->group(function () {
 
     Route::get('/session', function () {
         return new CurrentUserResource(auth()->user());
-    })->middleware(['auth:api', 'verified']);
+    })->middleware(['auth:api']);
 
     Route::get('/session-location', [AuthenticatedSessionController::class, 'sessionLocation'])
-        ->middleware('auth:api', 'verified');
+        ->middleware('auth:api');
 });
