@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\Location\LocationUserResource;
 use App\Http\Resources\User\CurrentUserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cookie;
 
@@ -60,5 +62,12 @@ class AuthenticatedSessionController extends Controller
             'httponly' => true,
             'samesite' => true,
         ];
+    }
+
+    public function sessionLocation(): JsonResponse
+    {
+        // $user = User::with('locations')->whereId(auth()->user()->id)->firstOrFail();
+        $data = LocationUserResource::collection(auth()->user()->locations);
+        return response()->json($data, 200);
     }
 }

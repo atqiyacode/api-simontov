@@ -22,24 +22,32 @@ class FlowrateRepositoryImplement extends Eloquent implements FlowrateRepository
 
     public function getAll()
     {
-        return $this->model->canDelete()->useFilters()->get();
+        return $this->model->canDelete()
+            ->with('location')
+            ->useFilters()->get();
     }
 
     public function getPaginate()
     {
-        return $this->model->canDelete()->useFilters()->dynamicPaginate();
+        return $this->model->canDelete()
+            ->with('location')
+            ->useFilters()->dynamicPaginate();
     }
 
     public function findByLocation($locationId, $start, $end)
     {
-        return $this->model->canDelete()->where('location_id', $locationId)
+        return $this->model->canDelete()
+            ->with('location')
+            ->where('location_id', $locationId)
             ->whereBetween('mag_date', [$start, $end])
             ->get();
     }
 
     public function findById($id)
     {
-        return $this->model->canDelete()->findOrFail($id);
+        return $this->model->canDelete()
+            ->with('location')
+            ->findOrFail($id);
     }
 
     public function create($data)

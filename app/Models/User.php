@@ -84,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function locations(): BelongsToMany
     {
-        return $this->belongsToMany(Location::class);
+        return $this->belongsToMany(Location::class)->with(['flowrates']);
     }
 
     /**

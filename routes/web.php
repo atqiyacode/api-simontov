@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DownloadController;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,12 @@ Route::get('/', function () {
         'Laravel' => app()->version(),
     ];
 });
+
+
+// Route::get('/hello', function () {
+//     return view('exports.invoice-pdf');
+// });
+
+Route::get('/invoice/{id}/range', [DownloadController::class, 'invoice']);
 
 require __DIR__ . '/auth.php';

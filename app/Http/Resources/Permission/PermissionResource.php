@@ -13,7 +13,7 @@ class PermissionResource extends JsonResource
             'name' => $this->name,
             'guard_name' => $this->guard_name,
 
-            'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {
+            'trashed' => $this->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),
         ];

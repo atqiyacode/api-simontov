@@ -22,17 +22,17 @@ class LocationRepositoryImplement extends Eloquent implements LocationRepository
 
     public function getAll()
     {
-        return $this->model->canDelete()->useFilters()->get();
+        return $this->model->canDelete()->with(['flowrates'])->useFilters()->get();
     }
 
     public function getPaginate()
     {
-        return $this->model->canDelete()->useFilters()->dynamicPaginate();
+        return $this->model->canDelete()->with(['flowrates'])->useFilters()->dynamicPaginate();
     }
 
     public function findById($id)
     {
-        return $this->model->canDelete()->findOrFail($id);
+        return $this->model->canDelete()->with(['flowrates'])->findOrFail($id);
     }
 
     public function create($data)

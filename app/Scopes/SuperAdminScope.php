@@ -8,7 +8,7 @@ trait SuperAdminScope
 {
     public function scopeSuperAdmin(Builder $query)
     {
-        $query->when(auth()->user()->hasAnyRole('superadmin'), function ($q) {
+        $query->when(auth()->check() && auth()->user()->hasAnyRole('superadmin'), function ($q) {
             return $q->withTrashed();
         });
     }
