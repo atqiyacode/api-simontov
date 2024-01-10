@@ -15,12 +15,12 @@ class AddAuthHeader
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->bearerToken()) {
-            if ($request->hasCookie(config('app.token_cookie'))) {
-                $token = $request->cookie(config('app.token_cookie'));
-                $request->headers->add(['Authorization' => 'Bearer ' . $token]);
-            }
+        // if (!$request->bearerToken()) {
+        if ($request->hasCookie(config('app.token_cookie'))) {
+            $token = $request->cookie(config('app.token_cookie'));
+            $request->headers->add(['Authorization' => 'Bearer ' . $token]);
         }
+        // }
         return $next($request);
     }
 }
