@@ -49,7 +49,7 @@ class FlowrateResource extends JsonResource
 
             'created_at' => Carbon::parse($this->created_at)->format('m/d/Y, g:i:s A'),
             'updated_at' => dateTimeFormat($this->updated_at),
-            'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {
+            'trashed' => $this->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),
         ];

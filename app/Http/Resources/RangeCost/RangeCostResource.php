@@ -14,7 +14,7 @@ class RangeCostResource extends JsonResource
             'range_type_id' => $this->range_type_id,
             'value' => $this->value,
             'range_type' => new RangeTypeResource($this->rangeType),
-            'trashed' => $this->when(auth()->user()->hasAnyRole(['superman']), function () {
+            'trashed' => $this->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),
         ];

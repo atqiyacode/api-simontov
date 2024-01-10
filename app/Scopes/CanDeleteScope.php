@@ -8,7 +8,7 @@ trait CanDeleteScope
 {
     public function scopeCanDelete(Builder $query)
     {
-        $query->when(auth()->user()->hasAnyRole(['superman']), function ($q) {
+        $query->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function ($q) {
             return $q->withTrashed();
         });
     }

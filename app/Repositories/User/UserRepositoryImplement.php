@@ -23,17 +23,23 @@ class UserRepositoryImplement extends Eloquent implements UserRepository
 
     public function getAll()
     {
-        return $this->model->canDelete()->useFilters()->get();
+        return $this->model->canDelete()
+            ->with(['dashboardCharts', 'locations'])
+            ->useFilters()->get();
     }
 
     public function getPaginate()
     {
-        return $this->model->canDelete()->useFilters()->dynamicPaginate();
+        return $this->model->canDelete()
+            ->with(['dashboardCharts', 'locations'])
+            ->useFilters()->dynamicPaginate();
     }
 
     public function findById($id)
     {
-        return $this->model->canDelete()->findOrFail($id);
+        return $this->model->canDelete()
+            ->with(['dashboardCharts', 'locations'])
+            ->findOrFail($id);
     }
 
     public function create($data)

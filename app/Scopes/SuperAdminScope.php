@@ -4,11 +4,11 @@ namespace App\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
 
-trait SuperAdminScope
+trait CanDeleteScope
 {
-    public function scopeSuperAdmin(Builder $query)
+    public function scopeCanDelete(Builder $query)
     {
-        $query->when(auth()->user()->hasAnyRole('superadmin'), function ($q) {
+        $query->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function ($q) {
             return $q->withTrashed();
         });
     }
