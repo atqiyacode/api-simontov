@@ -27,8 +27,8 @@ class AuthenticatedSessionController extends Controller
             $user->email_verified_at = now();
             $user->update();
         }
-        $token = $tokenData->accessToken;
-        // $token = $tokenData->plainTextToken;
+        // $token = $tokenData->accessToken;
+        $token = $tokenData->plainTextToken;
         $cookie = $this->getCookieDetails($token);
         return response()
             ->json([
@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(): JsonResponse
     {
         auth()->user()->tokens()->delete();
-        $cookie = Cookie::forget('_token');
+        $cookie = Cookie::forget(config('app.token_cookie'));
         return response()->json([
             'message' => trans('alert.success-logout')
         ])->withCookie($cookie);
