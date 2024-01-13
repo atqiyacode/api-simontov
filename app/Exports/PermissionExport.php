@@ -3,15 +3,18 @@
 namespace App\Exports;
 
 use App\Models\Permission;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class PermissionExport implements FromCollection
+class PermissionExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Permission::all();
+        $data = Permission::select([
+            'id', 'name', 'guard_name'
+        ])->get();
+        return view('exports.permissions', [
+            'data' => $data
+        ]);
     }
 }

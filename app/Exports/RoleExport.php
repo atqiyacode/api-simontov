@@ -3,15 +3,18 @@
 namespace App\Exports;
 
 use App\Models\Role;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class RoleExport implements FromCollection
+class RoleExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    public function view(): View
     {
-        return Role::all();
+        $data = Role::select([
+            'id', 'name', 'guard_name'
+        ])->get();
+        return view('exports.roles', [
+            'data' => $data
+        ]);
     }
 }

@@ -200,6 +200,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
 
+        App\Providers\ResponseMacroServiceProvider::class,
         // role-permission
         Spatie\Permission\PermissionServiceProvider::class,
 

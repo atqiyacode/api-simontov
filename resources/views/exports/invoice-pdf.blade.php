@@ -118,6 +118,15 @@
 
 <body>
 
+    <pre>
+        {{ $data['title'] }}
+    </pre>
+    <pre>
+        {{ $result }}
+    </pre>
+    <pre>
+        {{ $data['total'] }}
+    </pre>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td class="m-0 p-0 w-10" align="center">

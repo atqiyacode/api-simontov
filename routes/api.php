@@ -41,14 +41,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'roles',
     ], function () {
-        Route::post('{id}/restore', [RoleController::class, 'restore']);
+        Route::get('{id}/restore', [RoleController::class, 'restore']);
         Route::delete('{id}/force-delete', [RoleController::class, 'forceDelete']);
         Route::post('destroy-multiple', [RoleController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [RoleController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [RoleController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [RoleController::class, 'exportCsv']);
-        Route::get('export/pdf', [RoleController::class, 'exportPdf']);
-        Route::get('export/excel', [RoleController::class, 'exportExcel']);
+        Route::get('export/{format}', [RoleController::class, 'export']);
     });
     /*=====  End of roles   ======*/
 
@@ -63,14 +61,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'permissions',
     ], function () {
-        Route::post('{id}/restore', [PermissionController::class, 'restore']);
+        Route::get('{id}/restore', [PermissionController::class, 'restore']);
         Route::delete('{id}/force-delete', [PermissionController::class, 'forceDelete']);
         Route::post('destroy-multiple', [PermissionController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [PermissionController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [PermissionController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [PermissionController::class, 'exportCsv']);
-        Route::get('export/pdf', [PermissionController::class, 'exportPdf']);
-        Route::get('export/excel', [PermissionController::class, 'exportExcel']);
+        Route::get('export/{format}', [PermissionController::class, 'export']);
     });
     /*=====  End of permissions   ======*/
 

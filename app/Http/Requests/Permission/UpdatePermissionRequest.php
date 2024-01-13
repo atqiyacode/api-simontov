@@ -10,7 +10,6 @@ class UpdatePermissionRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'unique:permissions,name,' . $this->id],
-            'guard_name' => ['sometimes', 'string'],
         ];
     }
 }

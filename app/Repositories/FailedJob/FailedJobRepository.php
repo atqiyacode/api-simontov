@@ -15,4 +15,5 @@ interface FailedJobRepository extends Repository
     public function destroyMultiple($ids);
     public function restoreMultiple($ids);
     public function forceDeleteMultiple($ids);
+    public function export($format);
 }

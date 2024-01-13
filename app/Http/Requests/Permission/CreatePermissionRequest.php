@@ -10,7 +10,6 @@ class CreatePermissionRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'unique:permissions,name'],
-            'guard_name' => ['required', 'string'],
         ];
     }
 }
