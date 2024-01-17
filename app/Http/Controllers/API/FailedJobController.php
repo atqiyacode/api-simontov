@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\FailedJobEvent;
-use App\Exports\FailedJobExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FailedJob\CreateFailedJobRequest;
 use App\Http\Requests\FailedJob\UpdateFailedJobRequest;
 use App\Services\FailedJob\FailedJobService;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class FailedJobController extends Controller
 {
@@ -51,7 +48,6 @@ class FailedJobController extends Controller
     public function update(UpdateFailedJobRequest $request, $id)
     {
         $query = $this->service->update($id, $request->all());
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
@@ -61,57 +57,41 @@ class FailedJobController extends Controller
     public function destroy($id)
     {
         $query = $this->service->delete($id);
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restore($id)
     {
         $query = $this->service->restore($id);
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDelete($id)
     {
         $query = $this->service->forceDelete($id);
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function destroyMultiple(Request $request)
     {
         $query = $this->service->destroyMultiple($request->ids);
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restoreMultiple(Request $request)
     {
         $query = $this->service->restoreMultiple($request->ids);
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDeleteMultiple(Request $request)
     {
         $query = $this->service->forceDeleteMultiple($request->ids);
-        FailedJobEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
-    public function exportCsv()
+    public function export($format)
     {
-        return Excel::download(new FailedJobExport, 'FailedJob.csv', \Maatwebsite\Excel\Excel::CSV);
-    }
-
-    public function exportPdf()
-    {
-        return Excel::download(new FailedJobExport, 'FailedJob.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-    }
-
-    public function exportExcel()
-    {
-        return Excel::download(new FailedJobExport, 'FailedJob.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return $this->service->export($format);
     }
 }

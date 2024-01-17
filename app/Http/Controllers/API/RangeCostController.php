@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\RangeCostEvent;
-use App\Exports\RangeCostExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RangeCost\CreateRangeCostRequest;
 use App\Http\Requests\RangeCost\UpdateRangeCostRequest;
 use App\Services\RangeCost\RangeCostService;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class RangeCostController extends Controller
 {
@@ -51,7 +48,6 @@ class RangeCostController extends Controller
     public function update(UpdateRangeCostRequest $request, $id)
     {
         $query = $this->service->update($id, $request->all());
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
@@ -61,57 +57,41 @@ class RangeCostController extends Controller
     public function destroy($id)
     {
         $query = $this->service->delete($id);
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restore($id)
     {
         $query = $this->service->restore($id);
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDelete($id)
     {
         $query = $this->service->forceDelete($id);
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function destroyMultiple(Request $request)
     {
         $query = $this->service->destroyMultiple($request->ids);
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restoreMultiple(Request $request)
     {
         $query = $this->service->restoreMultiple($request->ids);
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDeleteMultiple(Request $request)
     {
         $query = $this->service->forceDeleteMultiple($request->ids);
-        RangeCostEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
-    public function exportCsv()
+    public function export($format)
     {
-        return Excel::download(new RangeCostExport, 'RangeCost.csv', \Maatwebsite\Excel\Excel::CSV);
-    }
-
-    public function exportPdf()
-    {
-        return Excel::download(new RangeCostExport, 'RangeCost.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-    }
-
-    public function exportExcel()
-    {
-        return Excel::download(new RangeCostExport, 'RangeCost.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return $this->service->export($format);
     }
 }

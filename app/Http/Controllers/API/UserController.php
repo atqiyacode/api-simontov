@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\UserDetailEvent;
-use App\Events\UserEvent;
-use App\Events\UserLocationEvent;
-use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Services\User\UserService;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -36,9 +31,6 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $query = $this->service->create($request->all());
-        UserEvent::dispatch($query->getResult());
-        UserDetailEvent::dispatch($query->getResult());
-        UserLocationEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
@@ -56,9 +48,6 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $query = $this->service->update($id, $request->all());
-        UserEvent::dispatch($query->getResult());
-        UserDetailEvent::dispatch($query->getResult());
-        UserLocationEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
@@ -68,57 +57,41 @@ class UserController extends Controller
     public function destroy($id)
     {
         $query = $this->service->delete($id);
-        UserEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restore($id)
     {
         $query = $this->service->restore($id);
-        UserEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDelete($id)
     {
         $query = $this->service->forceDelete($id);
-        UserEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function destroyMultiple(Request $request)
     {
         $query = $this->service->destroyMultiple($request->ids);
-        UserEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restoreMultiple(Request $request)
     {
         $query = $this->service->restoreMultiple($request->ids);
-        UserEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDeleteMultiple(Request $request)
     {
         $query = $this->service->forceDeleteMultiple($request->ids);
-        UserEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
-    public function exportCsv()
+    public function export($format)
     {
-        return Excel::download(new UserExport, 'User.csv', \Maatwebsite\Excel\Excel::CSV);
-    }
-
-    public function exportPdf()
-    {
-        return Excel::download(new UserExport, 'User.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-    }
-
-    public function exportExcel()
-    {
-        return Excel::download(new UserExport, 'User.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return $this->service->export($format);
     }
 }

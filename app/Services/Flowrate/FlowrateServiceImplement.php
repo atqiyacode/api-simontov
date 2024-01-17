@@ -38,18 +38,12 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
     public function __construct(FlowrateRepository $mainRepository)
     {
         $this->mainRepository = $mainRepository;
-        $this->create_message = trans('alert.success-save');
-        $this->update_message = trans('alert.success-update');
-        $this->delete_message = trans('alert.success-delete');
-        $this->restore_message = trans('alert.success-restored');
-        $this->destroy_message = trans('alert.success-deleted-permanent');
-        $this->found_message = trans('alert.success-found');
     }
 
     public function getPaginate()
     {
         $response = $this->mainRepository->getPaginate();
-        return $this->setMessage($this->found_message)
+        return $this->setMessage(__('alert.success-found'))
             ->setStatus(true)
             ->setCode(200)
             ->setResult(FlowrateResource::collection($response));
@@ -58,7 +52,7 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
     public function getAll()
     {
         $response = $this->mainRepository->getAll();
-        return $this->setMessage($this->found_message)
+        return $this->setMessage(__('alert.success-found'))
             ->setStatus(true)
             ->setCode(200)
             ->setResult(FlowrateResource::collection($response));
@@ -67,7 +61,16 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
     public function getDataRange($locationId, $start, $end)
     {
         $response = $this->mainRepository->findByLocation($locationId, $start, $end);
-        return $this->setMessage($this->found_message)
+        return $this->setMessage(__('alert.success-found'))
+            ->setStatus(true)
+            ->setCode(200)
+            ->setResult(FlowrateResource::collection($response));
+    }
+
+    public function getDataRangePaginate($locationId, $start, $end)
+    {
+        $response = $this->mainRepository->findByLocationPaginate($locationId, $start, $end);
+        return $this->setMessage(__('alert.success-found'))
             ->setStatus(true)
             ->setCode(200)
             ->setResult(FlowrateResource::collection($response));
@@ -76,7 +79,7 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
     public function findById($id)
     {
         $response = $this->mainRepository->findById($id);
-        return $this->setMessage($this->found_message)
+        return $this->setMessage(__('alert.success-found'))
             ->setStatus(true)
             ->setCode(200)
             ->setResult(new FlowrateResource($response));
@@ -87,7 +90,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($data) {
             return $this->mainRepository->create($data);
         });
-        return $this->setMessage($this->create_message)
+        $count = $response ? 1 : 0;
+        $message = trans_choice('alert.success-save', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(201)
             ->setResult(new FlowrateResource($response));
@@ -98,7 +103,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($id, $data) {
             return $this->mainRepository->update($id, $data);
         });
-        return $this->setMessage($this->update_message)
+        $count = $response ? 1 : 0;
+        $message = trans_choice('alert.success-update', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult(new FlowrateResource($response));
@@ -109,7 +116,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($id) {
             return $this->mainRepository->delete($id);
         });
-        return $this->setMessage($this->delete_message)
+        $count = $response;
+        $message = trans_choice('alert.success-delete', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult($response);
@@ -120,7 +129,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($id) {
             return $this->mainRepository->restore($id);
         });
-        return $this->setMessage($this->restore_message)
+        $count = $response;
+        $message = trans_choice('alert.success-restored', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult($response);
@@ -131,7 +142,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($id) {
             return $this->mainRepository->forceDelete($id);
         });
-        return $this->setMessage($this->destroy_message)
+        $count = $response;
+        $message = trans_choice('alert.success-deleted-permanent', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult($response);
@@ -142,7 +155,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($ids) {
             return $this->mainRepository->destroyMultiple($ids);
         });
-        return $this->setMessage($this->destroy_message)
+        $count = $response;
+        $message = trans_choice('alert.success-delete', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult($response);
@@ -153,7 +168,9 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($ids) {
             return $this->mainRepository->restoreMultiple($ids);
         });
-        return $this->setMessage($this->restore_message)
+        $count = $response;
+        $message = trans_choice('alert.success-restored', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult($response);
@@ -164,9 +181,21 @@ class FlowrateServiceImplement extends ServiceApi implements FlowrateService
         $response = DB::transaction(function () use ($ids) {
             return $this->mainRepository->forceDeleteMultiple($ids);
         });
-        return $this->setMessage($this->destroy_message)
+        $count = $response;
+        $message = trans_choice('alert.success-deleted-permanent', $count, ['count' => $count]);
+        return $this->setMessage($message)
             ->setStatus(true)
             ->setCode(200)
             ->setResult($response);
+    }
+
+    public function export($format)
+    {
+        return $this->mainRepository->export($format);
+    }
+
+    public function exportFilterDate($format)
+    {
+        return $this->mainRepository->exportFilterDate($format);
     }
 }

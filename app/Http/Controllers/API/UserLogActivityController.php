@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\UserLogActivityEvent;
-use App\Exports\UserLogActivityExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserLogActivity\CreateUserLogActivityRequest;
 use App\Http\Requests\UserLogActivity\UpdateUserLogActivityRequest;
 use App\Services\UserLogActivity\UserLogActivityService;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class UserLogActivityController extends Controller
 {
@@ -51,7 +48,6 @@ class UserLogActivityController extends Controller
     public function update(UpdateUserLogActivityRequest $request, $id)
     {
         $query = $this->service->update($id, $request->all());
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
@@ -61,57 +57,41 @@ class UserLogActivityController extends Controller
     public function destroy($id)
     {
         $query = $this->service->delete($id);
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restore($id)
     {
         $query = $this->service->restore($id);
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDelete($id)
     {
         $query = $this->service->forceDelete($id);
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function destroyMultiple(Request $request)
     {
         $query = $this->service->destroyMultiple($request->ids);
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restoreMultiple(Request $request)
     {
         $query = $this->service->restoreMultiple($request->ids);
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDeleteMultiple(Request $request)
     {
         $query = $this->service->forceDeleteMultiple($request->ids);
-        UserLogActivityEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
-    public function exportCsv()
+    public function export($format)
     {
-        return Excel::download(new UserLogActivityExport, 'UserLogActivity.csv', \Maatwebsite\Excel\Excel::CSV);
-    }
-
-    public function exportPdf()
-    {
-        return Excel::download(new UserLogActivityExport, 'UserLogActivity.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-    }
-
-    public function exportExcel()
-    {
-        return Excel::download(new UserLogActivityExport, 'UserLogActivity.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return $this->service->export($format);
     }
 }

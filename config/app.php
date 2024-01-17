@@ -89,6 +89,9 @@ return [
 
     'mqtt_topic' => env('MQTT_TOPIC', 'laravel'),
 
+    'flat_price' => env('FLAT_PRICE', 400000),
+    'main_price' => env('MAIN_PRICE', 8000),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -117,20 +117,10 @@
 </style>
 
 <body>
-
-    <pre>
-        {{ $data['title'] }}
-    </pre>
-    <pre>
-        {{ $result }}
-    </pre>
-    <pre>
-        {{ $data['total'] }}
-    </pre>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td class="m-0 p-0 w-10" align="center">
-                <img src="{{ asset('logo/simontov-logo-horizontal.png') }}" alt="" style="width: 120px;">
+                <img src="{{ asset('logo/logo-kim.png') }}" alt="" style="width: 120px;">
             </td>
             <td class="m-0 p-0 w-80" align="center">
                 <h4 style="margin-top: 1rem; margin-bottom: 0">
@@ -213,11 +203,11 @@
                     </td>
                     <td class="text-bold m-0 p-0" align="center"
                         style="font-size:16px;padding-bottom:0.5rem;border-bottom:2px outset rgb(0, 0, 0);border-top:none;">
-                        Quantity
+                        Quantity (m<sup>3</sup>)
                     </td>
                     <td class="text-bold m-0 p-0" align="center"
                         style="font-size:16px;padding-bottom:0.5rem;border-bottom:2px outset rgb(0, 0, 0);border-top:none;">
-                        Price
+                        Price (Rp)
                     </td>
                     <td class="text-bold m-0 p-0" align="right"
                         style="font-size:16px;padding-bottom:0.5rem;border-bottom:2px outset rgb(0, 0, 0);border-top:none;">
@@ -233,13 +223,13 @@
                         </small>
                     </td>
                     <td class="m-0 p-0" align="center" style="padding-bottom:0.5rem;padding-top:0.5rem;">
-                        Qty m3
+                        {{ number_format($data['last']->totalizer_1 - $data['first']->totalizer_1) }} m<sup>3</sup>
                     </td>
                     <td class="m-0 p-0" align="center" style="padding-bottom:0.5rem;padding-top:0.5rem;">
-                        Price number
+                        {{ number_format($price) }}
                     </td>
                     <td class="m-0 p-0" align="right" style="padding-bottom:0.5rem;padding-top:0.5rem;">
-                        50000
+                        {{ number_format($billing) }}
                     </td>
                 </tr>
 
@@ -252,7 +242,7 @@
                         Sub total
                     </td>
                     <td class="m-0 p-0" align="right" style="font-size:15px;border-top:2px outset rgb(0, 0, 0);">
-                        50000
+                        {{ number_format($billing) }}
                     </td>
                 </tr>
                 <tr>
@@ -263,7 +253,7 @@
                         Add. Cost/Discount*
                     </td>
                     <td class="m-0 p-0" align="right" style="font-size:15px;">
-                        50000
+                        {{ number_format($tax->value) }}
                     </td>
                 </tr>
                 <tr>
@@ -274,7 +264,7 @@
                         Grand Total
                     </td>
                     <td class="text-bold m-0 p-0" align="right" style="font-size:18px; padding-top:1rem;">
-                        500000000
+                        {{ number_format($billing + $tax->value) }}
                     </td>
                 </tr>
             </table>

@@ -16,4 +16,8 @@ interface FlowrateRepository extends Repository
     public function restoreMultiple($ids);
     public function forceDeleteMultiple($ids);
     public function findByLocation($locationId, $start, $end);
+    public function findByLocationPaginate($locationId, $start, $end);
+
+    public function export($format);
+    public function exportFilterDate($format);
 }

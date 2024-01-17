@@ -3,6 +3,8 @@
 namespace App\Repositories\FailedJob;
 
 use LaravelEasyRepository\Implementations\Eloquent;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\App;
 use App\Models\FailedJob;
 
 class FailedJobRepositoryImplement extends Eloquent implements FailedJobRepository
@@ -67,7 +69,7 @@ class FailedJobRepositoryImplement extends Eloquent implements FailedJobReposito
 
     public function destroyMultiple($ids)
     {
-        $query = $this->model->destroy($ids);
+        $query = $this->model->whereIn('id', $ids)->delete();
         return $query;
     }
 
@@ -79,7 +81,41 @@ class FailedJobRepositoryImplement extends Eloquent implements FailedJobReposito
 
     public function forceDeleteMultiple($ids)
     {
-        $query = $this->model->onlyTrashed()->whereIn('id', $ids)->forceDelete();
+        $query = $this->model->whereIn('id', $ids)->forceDelete();
         return $query;
+    }
+
+    public function export($format)
+    {
+        if ($format === 'json') {
+            $jsonData = $this->model->canDelete()->get();
+            return response()->jsonDownload($jsonData, 'data.json');
+        } elseif ($format === 'csv') {
+            return $this->downloadExcel('CSV');
+        } elseif ($format === 'xlsx') {
+            return $this->downloadExcel('XLSX');
+        } elseif ($format === 'xls') {
+            return $this->downloadExcel('XLS');
+        } else {
+            return response()->json(['errors' => __('validation.regex', ['attribute' => 'File'])], 400);
+        }
+    }
+
+    private function downloadExcel($format)
+    {
+        $modelName = class_basename($this->model);
+        $exportClassName = "App\\Exports\\{$modelName}Export";
+        $export = App::make($exportClassName);
+
+        switch (strtolower($format)) {
+            case 'csv':
+                return Excel::download($export, 'Data.csv', \Maatwebsite\Excel\Excel::CSV);
+            case 'xlsx':
+                return Excel::download($export, 'Data.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+            case 'xls':
+                return Excel::download($export, 'Data.xls', \Maatwebsite\Excel\Excel::XLS);
+            default:
+                // Handle unsupported format or throw an exception
+        }
     }
 }

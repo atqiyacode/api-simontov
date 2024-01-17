@@ -71,10 +71,10 @@ class FlowrateMqttJob implements ShouldQueue
             'updated_at' => now(),
         ]);
 
-        $data = new FlowrateMqttResource($query);
-        FlowrateEvent::dispatch([
-            "message" => 'New Data',
-            "data" => $data,
-        ]);
+        // $data = new FlowrateMqttResource($query);
+        // FlowrateEvent::dispatch([
+        //     "message" => 'New Data',
+        //     "data" => $data,
+        // ]);
     }
 }

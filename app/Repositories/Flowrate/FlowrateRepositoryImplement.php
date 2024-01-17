@@ -3,6 +3,8 @@
 namespace App\Repositories\Flowrate;
 
 use LaravelEasyRepository\Implementations\Eloquent;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\App;
 use App\Models\Flowrate;
 
 class FlowrateRepositoryImplement extends Eloquent implements FlowrateRepository
@@ -41,6 +43,16 @@ class FlowrateRepositoryImplement extends Eloquent implements FlowrateRepository
             ->where('location_id', $locationId)
             ->whereBetween('mag_date', [$start, $end])
             ->get();
+    }
+
+    public function findByLocationPaginate($locationId, $start, $end)
+    {
+        return $this->model->canDelete()
+            ->with('location')
+            ->where('location_id', $locationId)
+            ->whereBetween('mag_date', [$start, $end])
+            ->useFilters()
+            ->dynamicPaginate();
     }
 
     public function findById($id)
@@ -82,7 +94,7 @@ class FlowrateRepositoryImplement extends Eloquent implements FlowrateRepository
 
     public function destroyMultiple($ids)
     {
-        $query = $this->model->destroy($ids);
+        $query = $this->model->whereIn('id', $ids)->delete();
         return $query;
     }
 
@@ -94,7 +106,57 @@ class FlowrateRepositoryImplement extends Eloquent implements FlowrateRepository
 
     public function forceDeleteMultiple($ids)
     {
-        $query = $this->model->onlyTrashed()->whereIn('id', $ids)->forceDelete();
+        $query = $this->model->whereIn('id', $ids)->forceDelete();
         return $query;
+    }
+
+    public function export($format)
+    {
+        if ($format === 'json') {
+            $jsonData = $this->model->canDelete()->get();
+            return response()->jsonDownload($jsonData, 'data.json');
+        } elseif ($format === 'csv') {
+            return $this->downloadExcel('CSV');
+        } elseif ($format === 'xlsx') {
+            return $this->downloadExcel('XLSX');
+        } elseif ($format === 'xls') {
+            return $this->downloadExcel('XLS');
+        } else {
+            return response()->json(['errors' => __('validation.regex', ['attribute' => 'File'])], 400);
+        }
+    }
+
+    public function exportFilterDate($format)
+    {
+        if ($format === 'json') {
+            $jsonData = $this->model->canDelete()->get();
+            return response()->jsonDownload($jsonData, 'data.json');
+        } elseif ($format === 'csv') {
+            return $this->downloadExcel('CSV');
+        } elseif ($format === 'xlsx') {
+            return $this->downloadExcel('XLSX');
+        } elseif ($format === 'xls') {
+            return $this->downloadExcel('XLS');
+        } else {
+            return response()->json(['errors' => __('validation.regex', ['attribute' => 'File'])], 400);
+        }
+    }
+
+    private function downloadExcel($format)
+    {
+        $modelName = class_basename($this->model);
+        $exportClassName = "App\\Exports\\{$modelName}Export";
+        $export = App::make($exportClassName);
+
+        switch (strtolower($format)) {
+            case 'csv':
+                return Excel::download($export, 'Data.csv', \Maatwebsite\Excel\Excel::CSV);
+            case 'xlsx':
+                return Excel::download($export, 'Data.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+            case 'xls':
+                return Excel::download($export, 'Data.xls', \Maatwebsite\Excel\Excel::XLS);
+            default:
+                // Handle unsupported format or throw an exception
+        }
     }
 }

@@ -20,7 +20,7 @@ class FlowrateEvent implements ShouldBroadcast
      */
     public function __construct($data)
     {
-        $this->dontBroadcastToCurrentUser();
+        // $this->dontBroadcastToCurrentUser();
         $this->data = $data;
     }
 
@@ -32,7 +32,7 @@ class FlowrateEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('flowrate-channel-' . $this->data['data']['location_id']),
+            new Channel('flowrate-channel-' . $this->data['location_id']),
         ];
     }
 

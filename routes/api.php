@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\DashboardChartController;
+use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\FailedJobController;
 use App\Http\Controllers\API\FlowrateController;
 use App\Http\Controllers\API\LocationController;
@@ -81,14 +82,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'users',
     ], function () {
-        Route::post('{id}/restore', [UserController::class, 'restore']);
+        Route::get('{id}/restore', [UserController::class, 'restore']);
         Route::delete('{id}/force-delete', [UserController::class, 'forceDelete']);
         Route::post('destroy-multiple', [UserController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [UserController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [UserController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [UserController::class, 'exportCsv']);
-        Route::get('export/pdf', [UserController::class, 'exportPdf']);
-        Route::get('export/excel', [UserController::class, 'exportExcel']);
+        Route::get('export/{format}', [UserController::class, 'export']);
     });
 
     /*=====  End of users   ======*/
@@ -104,14 +103,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'locations',
     ], function () {
-        Route::post('{id}/restore', [LocationController::class, 'restore']);
+        Route::get('{id}/restore', [LocationController::class, 'restore']);
         Route::delete('{id}/force-delete', [LocationController::class, 'forceDelete']);
         Route::post('destroy-multiple', [LocationController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [LocationController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [LocationController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [LocationController::class, 'exportCsv']);
-        Route::get('export/pdf', [LocationController::class, 'exportPdf']);
-        Route::get('export/excel', [LocationController::class, 'exportExcel']);
+        Route::get('export/{format}', [LocationController::class, 'export']);
 
         Route::get('myLocations', [LocationController::class, 'myLocations']);
     });
@@ -128,14 +125,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'statusAlarms',
     ], function () {
-        Route::post('{id}/restore', [StatusAlarmController::class, 'restore']);
+        Route::get('{id}/restore', [StatusAlarmController::class, 'restore']);
         Route::delete('{id}/force-delete', [StatusAlarmController::class, 'forceDelete']);
         Route::post('destroy-multiple', [StatusAlarmController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [StatusAlarmController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [StatusAlarmController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [StatusAlarmController::class, 'exportCsv']);
-        Route::get('export/pdf', [StatusAlarmController::class, 'exportPdf']);
-        Route::get('export/excel', [StatusAlarmController::class, 'exportExcel']);
+        Route::get('export/{format}', [StatusAlarmController::class, 'export']);
     });
     /*=====  End of statusAlarms   ======*/
 
@@ -150,14 +145,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'taxes',
     ], function () {
-        Route::post('{id}/restore', [TaxController::class, 'restore']);
+        Route::get('{id}/restore', [TaxController::class, 'restore']);
         Route::delete('{id}/force-delete', [TaxController::class, 'forceDelete']);
         Route::post('destroy-multiple', [TaxController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [TaxController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [TaxController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [TaxController::class, 'exportCsv']);
-        Route::get('export/pdf', [TaxController::class, 'exportPdf']);
-        Route::get('export/excel', [TaxController::class, 'exportExcel']);
+        Route::get('export/{format}', [TaxController::class, 'export']);
     });
     /*=====  End of taxes   ======*/
 
@@ -172,14 +165,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'rangeTypes',
     ], function () {
-        Route::post('{id}/restore', [RangeTypeController::class, 'restore']);
+        Route::get('{id}/restore', [RangeTypeController::class, 'restore']);
         Route::delete('{id}/force-delete', [RangeTypeController::class, 'forceDelete']);
         Route::post('destroy-multiple', [RangeTypeController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [RangeTypeController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [RangeTypeController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [RangeTypeController::class, 'exportCsv']);
-        Route::get('export/pdf', [RangeTypeController::class, 'exportPdf']);
-        Route::get('export/excel', [RangeTypeController::class, 'exportExcel']);
+        Route::get('export/{format}', [RangeTypeController::class, 'export']);
     });
     /*=====  End of rangeTypes   ======*/
 
@@ -194,14 +185,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'rangeCosts',
     ], function () {
-        Route::post('{id}/restore', [RangeCostController::class, 'restore']);
+        Route::get('{id}/restore', [RangeCostController::class, 'restore']);
         Route::delete('{id}/force-delete', [RangeCostController::class, 'forceDelete']);
         Route::post('destroy-multiple', [RangeCostController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [RangeCostController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [RangeCostController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [RangeCostController::class, 'exportCsv']);
-        Route::get('export/pdf', [RangeCostController::class, 'exportPdf']);
-        Route::get('export/excel', [RangeCostController::class, 'exportExcel']);
+        Route::get('export/{format}', [RangeCostController::class, 'export']);
     });
     /*=====  End of rangeCosts   ======*/
 
@@ -216,16 +205,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'flowrates',
     ], function () {
-        Route::post('{id}/restore', [FlowrateController::class, 'restore']);
+        Route::get('{id}/restore', [FlowrateController::class, 'restore']);
         Route::delete('{id}/force-delete', [FlowrateController::class, 'forceDelete']);
         Route::post('destroy-multiple', [FlowrateController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [FlowrateController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [FlowrateController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [FlowrateController::class, 'exportCsv']);
-        Route::get('export/pdf', [FlowrateController::class, 'exportPdf']);
-        Route::get('export/excel', [FlowrateController::class, 'exportExcel']);
+        Route::get('export/{format}', [FlowrateController::class, 'export']);
+        // others
         Route::get('{id}/range', [FlowrateController::class, 'range']);
         Route::get('{id}/billing', [FlowrateController::class, 'billing']);
+        Route::get('{id}/filterDate', [FlowrateController::class, 'filterDate']);
+        Route::get('{id}/filterDate/export/{format}', [FlowrateController::class, 'exportFilterDate']);
     });
     /*=====  End of flowrates   ======*/
 
@@ -259,14 +249,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'dashboardCharts',
     ], function () {
-        Route::post('{id}/restore', [DashboardChartController::class, 'restore']);
+        Route::get('{id}/restore', [DashboardChartController::class, 'restore']);
         Route::delete('{id}/force-delete', [DashboardChartController::class, 'forceDelete']);
         Route::post('destroy-multiple', [DashboardChartController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [DashboardChartController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [DashboardChartController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [DashboardChartController::class, 'exportCsv']);
-        Route::get('export/pdf', [DashboardChartController::class, 'exportPdf']);
-        Route::get('export/excel', [DashboardChartController::class, 'exportExcel']);
+        Route::get('export/{format}', [DashboardChartController::class, 'export']);
     });
 
     /*=====  End of dashboardCharts   ======*/
@@ -281,15 +269,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([
         'prefix' => 'topics',
     ], function () {
-        Route::post('{id}/restore', [TopicController::class, 'restore']);
+        Route::get('{id}/restore', [TopicController::class, 'restore']);
         Route::delete('{id}/force-delete', [TopicController::class, 'forceDelete']);
         Route::post('destroy-multiple', [TopicController::class, 'destroyMultiple']);
         Route::post('restore-multiple', [TopicController::class, 'restoreMultiple']);
         Route::post('force-delete-multiple', [TopicController::class, 'forceDeleteMultiple']);
-        Route::get('export/csv', [TopicController::class, 'exportCsv']);
-        Route::get('export/pdf', [TopicController::class, 'exportPdf']);
-        Route::get('export/excel', [TopicController::class, 'exportExcel']);
+        Route::get('export/{format}', [TopicController::class, 'export']);
     });
 
     /*=====  End of topics   ======*/
+
+    Route::get('/invoice/{id}/range', [DownloadController::class, 'invoice']);
 });

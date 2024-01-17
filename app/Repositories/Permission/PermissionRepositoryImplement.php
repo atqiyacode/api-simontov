@@ -69,7 +69,7 @@ class PermissionRepositoryImplement extends Eloquent implements PermissionReposi
 
     public function destroyMultiple($ids)
     {
-        $query = $this->model->destroy($ids);
+        $query = $this->model->whereIn('id', $ids)->delete();
         return $query;
     }
 
@@ -88,7 +88,7 @@ class PermissionRepositoryImplement extends Eloquent implements PermissionReposi
     public function export($format)
     {
         if ($format === 'json') {
-            $jsonData = $this->model->select(['id', 'name', 'guard_name'])->get();
+            $jsonData = $this->model->canDelete()->get();
             return response()->jsonDownload($jsonData, 'data.json');
         } elseif ($format === 'csv') {
             return $this->downloadExcel('CSV');

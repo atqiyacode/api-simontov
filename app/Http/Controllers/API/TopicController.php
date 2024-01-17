@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\TopicEvent;
-use App\Exports\TopicExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Topic\CreateTopicRequest;
 use App\Http\Requests\Topic\UpdateTopicRequest;
 use App\Services\Topic\TopicService;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class TopicController extends Controller
 {
@@ -51,7 +48,6 @@ class TopicController extends Controller
     public function update(UpdateTopicRequest $request, $id)
     {
         $query = $this->service->update($id, $request->all());
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
@@ -61,57 +57,41 @@ class TopicController extends Controller
     public function destroy($id)
     {
         $query = $this->service->delete($id);
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restore($id)
     {
         $query = $this->service->restore($id);
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDelete($id)
     {
         $query = $this->service->forceDelete($id);
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function destroyMultiple(Request $request)
     {
         $query = $this->service->destroyMultiple($request->ids);
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function restoreMultiple(Request $request)
     {
         $query = $this->service->restoreMultiple($request->ids);
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
     public function forceDeleteMultiple(Request $request)
     {
         $query = $this->service->forceDeleteMultiple($request->ids);
-        TopicEvent::dispatch($query->getResult());
         return $query->toJson();
     }
 
-    public function exportCsv()
+    public function export($format)
     {
-        return Excel::download(new TopicExport, 'Topic.csv', \Maatwebsite\Excel\Excel::CSV);
-    }
-
-    public function exportPdf()
-    {
-        return Excel::download(new TopicExport, 'Topic.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-    }
-
-    public function exportExcel()
-    {
-        return Excel::download(new TopicExport, 'Topic.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        return $this->service->export($format);
     }
 }

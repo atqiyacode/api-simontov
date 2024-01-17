@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\CanDeleteScope;
+use Essa\APIToolKit\Traits\DateFilter;
+use Essa\APIToolKit\Traits\TimeFilter;
 
 class Flowrate extends Model
 {
     use HasFactory, Filterable, SoftDeletes, CanDeleteScope;
+
+    use DateFilter;
+    use TimeFilter;
 
     protected string $default_filters = FlowrateFilters::class;
 
@@ -72,6 +77,17 @@ class Flowrate extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'mag_date' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     public function getBin()
