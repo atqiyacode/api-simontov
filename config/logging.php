@@ -55,8 +55,7 @@ return [
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
-            'level' => 'info',
-            // 'ignore_exceptions' => false,
+            'ignore_exceptions' => false,
         ],
 
         'single' => [
