@@ -18,7 +18,8 @@ use Laravel\Sanctum\HasApiTokens;
 use ProtoneMedia\LaravelVerifyNewEmail\MustVerifyNewEmail;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
+// class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasRoles, HasPermissions, MustVerifyNewEmail, HasFactory, Notifiable, Filterable, SoftDeletes, CanDeleteScope;
 
