@@ -69,7 +69,8 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'days' => 14,
+            'days' => 14, // Retain logs for 14 days
+            'max_files' => 30, // Keep up to 30 log files
             'replace_placeholders' => true,
         ],
 
