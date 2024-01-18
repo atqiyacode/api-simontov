@@ -17,11 +17,11 @@ class MqttSubscriber extends Command
     {
         $topics = Topic::all();
         while (true) {
-            $this->info('Subscribing to MQTT topic...');
+            // $this->info('Subscribing to MQTT topic...');
             $mqtt = MQTT::connection();
             foreach ($topics as $topic) {
                 $mqtt->subscribe($topic->name, function ($topic, $data) {
-                    $this->info('Received MQTT topic : ' . $topic);
+                    // $this->info('Received MQTT topic : ' . $topic);
                     $value = json_decode($data, true);
                     // $this->info('Received MQTT message data:' . $data);
                     dispatch(new FlowrateMqttJob($value));
