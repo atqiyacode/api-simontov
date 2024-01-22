@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             TaxSeeder::class,
             RangeTypeSeeder::class,
             RangeCostSeeder::class,
-            FlowrateSeeder::class,
+            // FlowrateSeeder::class,
             DashboardChartSeeder::class,
             TopicSeeder::class,
 
