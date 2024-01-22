@@ -545,7 +545,7 @@ class FlowrateController extends Controller
                 )
                 ->where('row_num', 1)
                 ->whereBetween('mag_date', [$start, $end])
-                ->orderBy('interval', 'DESC');
+                ->orderBy('interval', 'ASC');
         }
 
         return $results;

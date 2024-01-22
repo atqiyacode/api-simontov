@@ -19,12 +19,14 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => config('app.disable_cors') ? ['*'] : [
-        env('FRONTEND_URL', 'http://localhost:3000'),
-        env('MOBILE_APP_URL', 'http://localhost:4000'),
-        env('DEV_FRONTEND_URL', 'http://localhost:3000'),
-        env('DEV_MOBILE_APP_URL', 'http://localhost:4000'),
-    ],
+    'allowed_origins' => ['*'],
+
+    // 'allowed_origins' => config('app.disable_cors') ? ['*'] : [
+    //     env('FRONTEND_URL', 'http://localhost:3000'),
+    //     env('MOBILE_APP_URL', 'http://localhost:4000'),
+    //     env('DEV_FRONTEND_URL', 'http://localhost:3000'),
+    //     env('DEV_MOBILE_APP_URL', 'http://localhost:4000'),
+    // ],
 
     'allowed_origins_patterns' => [],
 

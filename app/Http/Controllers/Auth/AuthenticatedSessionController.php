@@ -8,6 +8,7 @@ use App\Http\Resources\Location\LocationUserResource;
 use App\Http\Resources\User\CurrentUserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
 class AuthenticatedSessionController extends Controller
@@ -27,8 +28,8 @@ class AuthenticatedSessionController extends Controller
             $user->email_verified_at = now();
             $user->update();
         }
-        // $token = $tokenData->accessToken;
-        $token = $tokenData->plainTextToken;
+        $token = $tokenData->accessToken;
+        // $token = $tokenData->plainTextToken;
         $cookie = $this->getCookieDetails($token);
         return response()
             ->json([

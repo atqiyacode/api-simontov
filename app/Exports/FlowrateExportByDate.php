@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Flowrate;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromView;
