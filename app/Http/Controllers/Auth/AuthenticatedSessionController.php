@@ -28,8 +28,8 @@ class AuthenticatedSessionController extends Controller
             $user->email_verified_at = now();
             $user->update();
         }
-        $token = $tokenData->accessToken;
-        // $token = $tokenData->plainTextToken;
+        // $token = $tokenData->accessToken;
+        $token = $tokenData->plainTextToken;
         $cookie = $this->getCookieDetails($token);
         return response()
             ->json([
