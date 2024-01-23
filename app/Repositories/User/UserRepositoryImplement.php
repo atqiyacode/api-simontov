@@ -46,6 +46,7 @@ class UserRepositoryImplement extends Eloquent implements UserRepository
 
     public function create($data)
     {
+        $data['email_verified_at'] = now();
         $query =  $this->model->create($data);
         $query->roles()->attach($data['roles']);
         $query->permissions()->attach($data['permissions']);
