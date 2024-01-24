@@ -30,7 +30,7 @@ class FlowrateMqttJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $query = Flowrate::create([
+        Flowrate::create([
             'mag_date' => $this->data['mag_date'] ?? null,
             'flowrate' => $this->data['flowrate'] ?? null,
             'unit_flowrate' => $this->data['unit_flowrate'] ?? null,
@@ -50,22 +50,22 @@ class FlowrateMqttJob implements ShouldQueue
             'level' => $this->data['level'] ?? null,
             'do' => $this->data['do'] ?? null,
 
-            'do_alarm_hi' => $this->data['do_alarm_hi'] ?? null,
-            'do_alarm_lo' => $this->data['do_alarm_lo'] ?? null,
-            'pres_alarm_hi' => $this->data['pres_alarm_hi'] ?? null,
-            'pres_alarm_lo' => $this->data['pres_alarm_lo'] ?? null,
-            'ph_alarm_hi' => $this->data['ph_alarm_hi'] ?? null,
-            'ph_alarm_lo' => $this->data['ph_alarm_lo'] ?? null,
+            'do_alarm_hi' => (bool) $this->data['do_alarm_hi'],
+            'do_alarm_lo' => (bool) $this->data['do_alarm_lo'],
+            'pres_alarm_hi' => (bool) $this->data['pres_alarm_hi'],
+            'pres_alarm_lo' => (bool) $this->data['pres_alarm_lo'],
+            'ph_alarm_hi' => (bool) $this->data['ph_alarm_hi'],
+            'ph_alarm_lo' => (bool) $this->data['ph_alarm_lo'],
 
             'fm_status' => $this->data['fm_status'] ?? null,
             'fm_err_code' => $this->data['fm_err_code'] ?? null,
 
-            'pln_stat' => $this->data['pln_stat'] ?? null,
-            'panel_stat' => $this->data['panel_stat'] ?? null,
+            'pln_stat' => (bool) $this->data['pln_stat'],
+            'panel_stat' => (bool) $this->data['panel_stat'],
 
-            'location_id' => $this->data['loc_id'] ?? null,
+            'location_id' => $this->data['loc_id'],
 
-            'log_data' => json_encode($this->data) ?? null,
+            'log_data' => json_encode($this->data),
 
             'created_at' => now(),
             'updated_at' => now(),

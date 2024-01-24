@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Events\FlowrateEvent;
 use App\Events\UserLogActivityEvent;
 use App\Http\Resources\Flowrate\FlowrateResource;
+use App\Jobs\CodCheckJob;
+use App\Jobs\ElectricityCheckJob;
 use App\Models\Flowrate;
 
 class FlowrateObserver
@@ -17,7 +19,7 @@ class FlowrateObserver
     protected function handleEventAndLogActivity(Flowrate $data): void
     {
         FlowrateEvent::dispatch(new FlowrateResource($data));
-        // UserLogActivityEvent::dispatch('new update');
+        dispatch(new ElectricityCheckJob($data));
     }
     /**
      * Handle the Flowrate "created" event.

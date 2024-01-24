@@ -16,7 +16,7 @@ chmod -R 777 bootstrap/cache
 # php artisan migrate:fresh --seed --force
 # sleep 15s
 php artisan octane:start --host=0.0.0.0 &
-php artisan websocket:serve --port=6001 &
+php artisan websocket:serve --host=0.0.0.0 --port=6001 &
 # php artisan generate:dummy-data &
 php artisan queue:work --tries=3 --timeout=300 --sleep=1 --daemon &
 php artisan mqtt:subscribe &
