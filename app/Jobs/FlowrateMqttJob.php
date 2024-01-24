@@ -50,18 +50,18 @@ class FlowrateMqttJob implements ShouldQueue
             'level' => $this->data['level'] ?? null,
             'do' => $this->data['do'] ?? null,
 
-            'do_alarm_hi' => (bool) $this->data['do_alarm_hi'],
-            'do_alarm_lo' => (bool) $this->data['do_alarm_lo'],
-            'pres_alarm_hi' => (bool) $this->data['pres_alarm_hi'],
-            'pres_alarm_lo' => (bool) $this->data['pres_alarm_lo'],
-            'ph_alarm_hi' => (bool) $this->data['ph_alarm_hi'],
-            'ph_alarm_lo' => (bool) $this->data['ph_alarm_lo'],
+            'do_alarm_hi' => (bool) ($this->data['do_alarm_hi'] ?? false),
+            'do_alarm_lo' => (bool) ($this->data['do_alarm_lo'] ?? false),
+            'pres_alarm_hi' => (bool) ($this->data['pres_alarm_hi'] ?? false),
+            'pres_alarm_lo' => (bool) ($this->data['pres_alarm_lo'] ?? false),
+            'ph_alarm_hi' => (bool) ($this->data['ph_alarm_hi'] ?? false),
+            'ph_alarm_lo' => (bool) ($this->data['ph_alarm_lo'] ?? false),
 
             'fm_status' => $this->data['fm_status'] ?? null,
             'fm_err_code' => $this->data['fm_err_code'] ?? null,
 
-            'pln_stat' => (bool) $this->data['pln_stat'],
-            'panel_stat' => (bool) $this->data['panel_stat'],
+            'pln_stat' => (bool) ($this->data['pln_stat'] ?? false),
+            'panel_stat' => (bool) ($this->data['panel_stat'] ?? false),
 
             'location_id' => $this->data['loc_id'],
 
