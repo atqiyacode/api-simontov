@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AlertNotificationTypeController;
 use App\Http\Controllers\API\DashboardChartController;
 use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\FailedJobController;
@@ -113,6 +114,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('myLocations', [LocationController::class, 'myLocations']);
     });
     /*=====  End of locations   ======*/
+
+    /*===========================
+    =           alertNotificationTypes           =
+    =============================*/
+
+    Route::apiResource('/alertNotificationTypes', AlertNotificationTypeController::class);
+    Route::group([
+        'prefix' => 'alertNotificationTypes',
+    ], function () {
+        Route::get('{id}/restore', [AlertNotificationTypeController::class, 'restore']);
+        Route::delete('{id}/force-delete', [AlertNotificationTypeController::class, 'forceDelete']);
+        Route::post('destroy-multiple', [AlertNotificationTypeController::class, 'destroyMultiple']);
+        Route::post('restore-multiple', [AlertNotificationTypeController::class, 'restoreMultiple']);
+        Route::post('force-delete-multiple', [AlertNotificationTypeController::class, 'forceDeleteMultiple']);
+        Route::get('export/{format}', [AlertNotificationTypeController::class, 'export']);
+    });
+    /*=====  End of alertNotificationTypes   ======*/
 
     /*===========================
     =           statusAlarms           =

@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             // FlowrateSeeder::class,
             DashboardChartSeeder::class,
             TopicSeeder::class,
+            AlertNotificationTypeSeeder::class,
 
             UserSeeder::class,
         ]);
