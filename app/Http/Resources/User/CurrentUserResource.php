@@ -26,7 +26,7 @@ class CurrentUserResource extends JsonResource
 
             'locations' => $this->locations->pluck('id'),
             'dashboardCharts' => $this->dashboardCharts->pluck('code'),
-            // 'permissions' => $this->permissions->pluck('name'),
+            'permissions' => $this->permissions->pluck('name'),
             'newEmail' => (bool) $this->getPendingEmail(),
             'pendingEmail' => $this->getPendingEmail(),
             'issuperadmin' => auth()->user()->hasAnyRole(['superadmin']),
