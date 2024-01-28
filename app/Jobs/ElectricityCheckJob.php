@@ -32,7 +32,7 @@ class ElectricityCheckJob implements ShouldQueue
             'location_id' => $this->data['location_id'],
             'alert_notification_type_id' => 5
         ];
-        if ($this->data['panel_stat']) {
+        if ($this->data['panel_stat'] && !$this->data['pln_stat']) {
             $query = LocationNotification::updateOrCreate($params, $params);
             $query->message = 'Electricity uses UPS';
             $query->update();
