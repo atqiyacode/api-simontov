@@ -6,6 +6,7 @@ use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\FailedJobController;
 use App\Http\Controllers\API\FlowrateController;
 use App\Http\Controllers\API\LocationController;
+use App\Http\Controllers\API\LocationNotificationController;
 use App\Http\Controllers\API\PermissionController;
 use App\Http\Controllers\API\RangeCostController;
 use App\Http\Controllers\API\RangeTypeController;
@@ -119,7 +120,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           alertNotificationTypes           =
     =============================*/
 
-    Route::apiResource('/alertNotificationTypes', AlertNotificationTypeController::class);
+    Route::apiResource('/alertNotificationTypes', AlertNotificationTypeController::class)->parameters([
+        'alertNotificationTypes' => 'id'
+    ]);
     Route::group([
         'prefix' => 'alertNotificationTypes',
     ], function () {
@@ -131,6 +134,28 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('export/{format}', [AlertNotificationTypeController::class, 'export']);
     });
     /*=====  End of alertNotificationTypes   ======*/
+
+    /*===========================
+    =           locationNotifications           =
+    =============================*/
+
+    Route::apiResource('/locationNotifications', LocationNotificationController::class)->parameters([
+        'locationNotifications' => 'id'
+    ]);
+    Route::group([
+        'prefix' => 'locationNotifications',
+    ], function () {
+        Route::get('{id}/restore', [LocationNotificationController::class, 'restore']);
+        Route::delete('{id}/force-delete', [LocationNotificationController::class, 'forceDelete']);
+        Route::post('destroy-multiple', [LocationNotificationController::class, 'destroyMultiple']);
+        Route::post('restore-multiple', [LocationNotificationController::class, 'restoreMultiple']);
+        Route::post('force-delete-multiple', [LocationNotificationController::class, 'forceDeleteMultiple']);
+        Route::get('export/{format}', [LocationNotificationController::class, 'export']);
+
+        Route::get('count/{locationId}', [LocationNotificationController::class, 'count']);
+    });
+
+    /*=====  End of locationNotifications   ======*/
 
     /*===========================
     =           statusAlarms           =

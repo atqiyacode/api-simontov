@@ -17,6 +17,8 @@ class LocationResource extends JsonResource
             'lattitude' => floatval($this->lattitude),
             'description' => $this->description,
 
+            'notifications' => $this->notifications,
+
             'trashed' => $this->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),

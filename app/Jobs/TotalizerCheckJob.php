@@ -2,6 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Models\Flowrate;
+use App\Models\LocationNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,6 +29,18 @@ class TotalizerCheckJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // logic
+        $lastFlowrate = Flowrate::where('location_id', $this->data['location_id'])->orderBy('mag_date', 'desc')->first();
+        $timeDifference = $lastFlowrate->mag_date->diffInHours(now());
+        $params = [
+            'location_id' => $this->data['location_id'],
+            'alert_notification_type_id' => 2
+        ];
+        if ($timeDifference >= 12 && $this->data['totalizer_1'] === $lastFlowrate->totalizer_1) {
+            $query = LocationNotification::updateOrCreate($params, $params);
+            $query->message = 'The totalizer value does not change within 12 hours';
+            $query->update();
+        } else {
+            LocationNotification::where($params)->delete();
+        }
     }
 }

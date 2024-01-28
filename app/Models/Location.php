@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\CanDeleteScope;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Location extends Model
@@ -61,5 +62,15 @@ class Location extends Model
     public function flowrates(): HasOne
     {
         return $this->hasOne(Flowrate::class)->orderBy('id', 'desc');
+    }
+
+    /**
+     * Get all of the notifications for the Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(LocationNotification::class);
     }
 }

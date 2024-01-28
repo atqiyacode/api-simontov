@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Events\AlertCodEvent;
+use App\Models\LocationNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,8 +28,16 @@ class CodCheckJob implements ShouldQueue
      */
     public function handle(): void
     {
+        $params = [
+            'location_id' => $this->data['location_id'],
+            'alert_notification_type_id' => 3
+        ];
         if ($this->data['cod'] > 90) {
-            AlertCodEvent::dispatch($this->data);
+            $query = LocationNotification::updateOrCreate($params, $params);
+            $query->message = 'COD value over 90 mg/l';
+            $query->update();
+        } else {
+            LocationNotification::where($params)->delete();
         }
     }
 }

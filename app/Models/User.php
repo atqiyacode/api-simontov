@@ -89,7 +89,7 @@ class User extends Authenticatable
      */
     public function locations(): BelongsToMany
     {
-        return $this->belongsToMany(Location::class)->with(['flowrates']);
+        return $this->belongsToMany(Location::class)->with(['flowrates', 'notifications']);
     }
 
     /**

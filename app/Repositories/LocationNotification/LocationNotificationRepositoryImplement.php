@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Location;
+namespace App\Repositories\LocationNotification;
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\App;
-use App\Models\Location;
+use App\Models\LocationNotification;
 
-class LocationRepositoryImplement extends Eloquent implements LocationRepository
+class LocationNotificationRepositoryImplement extends Eloquent implements LocationNotificationRepository
 {
 
     /**
@@ -17,24 +17,29 @@ class LocationRepositoryImplement extends Eloquent implements LocationRepository
      */
     protected $model;
 
-    public function __construct(Location $model)
+    public function __construct(LocationNotification $model)
     {
         $this->model = $model;
     }
 
     public function getAll()
     {
-        return $this->model->canDelete()->with(['flowrates', 'notifications'])->useFilters()->get();
+        return $this->model->with(['location', 'alertNotificationType'])->useFilters()->get();
     }
 
     public function getPaginate()
     {
-        return $this->model->canDelete()->with(['flowrates', 'notifications'])->useFilters()->dynamicPaginate();
+        return $this->model->with(['location', 'alertNotificationType'])->useFilters()->dynamicPaginate();
     }
 
     public function findById($id)
     {
-        return $this->model->canDelete()->with(['flowrates', 'notifications'])->findOrFail($id);
+        return $this->model->with(['location', 'alertNotificationType'])->findOrFail($id);
+    }
+
+    public function countByLocation($locationId)
+    {
+        return $this->model->with(['location', 'alertNotificationType'])->where('location_id', $locationId)->get()->count();
     }
 
     public function create($data)
@@ -88,7 +93,7 @@ class LocationRepositoryImplement extends Eloquent implements LocationRepository
     public function export($format)
     {
         if ($format === 'json') {
-            $jsonData = $this->model->canDelete()->get();
+            $jsonData = $this->model->get();
             return response()->jsonDownload($jsonData, 'data.json');
         } elseif ($format === 'csv') {
             return $this->downloadExcel('CSV');

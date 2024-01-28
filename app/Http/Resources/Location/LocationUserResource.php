@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Location;
 
+use App\Http\Resources\LocationNotification\LocationNotificationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +24,7 @@ class LocationUserResource extends JsonResource
             'lattitude' => floatval($this->lattitude),
             'description' => $this->description,
             'flowrates' => new LocationFlowrateResource($this->flowrates),
+            'notifications' => $this->notifications,
         ];
     }
 }

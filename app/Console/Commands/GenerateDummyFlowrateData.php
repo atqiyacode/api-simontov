@@ -31,14 +31,16 @@ class GenerateDummyFlowrateData extends Command
                 while (strlen($randpattern) < fake()->numberBetween($min = 0, $max = 14))
                     $randpattern .= rand(0, 1);
 
-                // $locationId = 5;
+                // $locationId = 1;
                 $locationId = Location::pluck('id')->random();
                 // Generate dummy data and dispatch it as a job with a 5-second delay
                 dispatch(new FlowrateMqttJob([
                     'mag_date' => now(),
+                    // 'mag_date' => now()->addHours(-12),
                     'flowrate' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'unit_flowrate' => 'm3/h',
                     'totalizer_1' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
+                    // 'totalizer_1' => 90,
                     'totalizer_2' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'totalizer_3' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'unit_totalizer' => 'm3',
@@ -54,7 +56,7 @@ class GenerateDummyFlowrateData extends Command
 
                     'loc_id' => $locationId,
 
-                    'ph' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 6, $max = 8),
+                    'ph' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 1, $max = 12),
                     'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 85, $max = 95),
                     'cond' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'level' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
@@ -79,7 +81,7 @@ class GenerateDummyFlowrateData extends Command
             $this->info("Dispatched $batchCount - $locationId dummy data sets.");
 
             // Sleep for 5 seconds
-            sleep(5);
+            sleep(1);
         }
     }
 }

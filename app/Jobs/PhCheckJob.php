@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\LocationNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,6 +28,16 @@ class PhCheckJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // logic
+        $params = [
+            'location_id' => $this->data['location_id'],
+            'alert_notification_type_id' => 4
+        ];
+        if ($this->data['ph'] > 9 || $this->data['ph'] < 6) {
+            $query = LocationNotification::updateOrCreate($params, $params);
+            $query->message = 'PH value is ' . $this->data['ph'];
+            $query->update();
+        } else {
+            LocationNotification::where($params)->delete();
+        }
     }
 }

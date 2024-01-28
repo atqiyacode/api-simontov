@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Events\AlertElectricityEvent;
+use App\Models\LocationNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,11 +28,16 @@ class ElectricityCheckJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // if ($this->data['pln_stat']) {
-        //     //
-        // }
+        $params = [
+            'location_id' => $this->data['location_id'],
+            'alert_notification_type_id' => 5
+        ];
         if ($this->data['panel_stat']) {
-            AlertElectricityEvent::dispatch($this->data);
+            $query = LocationNotification::updateOrCreate($params, $params);
+            $query->message = 'Electricity uses UPS';
+            $query->update();
+        } else {
+            LocationNotification::where($params)->delete();
         }
     }
 }

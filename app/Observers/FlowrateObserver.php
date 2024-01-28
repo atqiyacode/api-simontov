@@ -5,6 +5,11 @@ namespace App\Observers;
 use App\Events\AlertElectricityEvent;
 use App\Events\FlowrateEvent;
 use App\Http\Resources\Flowrate\FlowrateResource;
+use App\Jobs\CodCheckJob;
+use App\Jobs\DataNotEnteredCheckJob;
+use App\Jobs\ElectricityCheckJob;
+use App\Jobs\PhCheckJob;
+use App\Jobs\TotalizerCheckJob;
 use App\Models\Flowrate;
 
 class FlowrateObserver
@@ -17,9 +22,16 @@ class FlowrateObserver
     protected function handleEventAndLogActivity(Flowrate $data): void
     {
         FlowrateEvent::dispatch(new FlowrateResource($data));
-        if ($data->panel_stat) {
-            AlertElectricityEvent::dispatch($data);
-        }
+
+        CodCheckJob::dispatch($data);
+        PhCheckJob::dispatch($data);
+        ElectricityCheckJob::dispatch($data);
+        TotalizerCheckJob::dispatch($data);
+
+        // Calculate the delay (e.g., delay the job by 3 minutes)
+        $delay = now()->addMinutes(3);
+        // Dispatch the job with a delay
+        DataNotEnteredCheckJob::dispatch($data)->delay($delay);
     }
     /**
      * Handle the Flowrate "created" event.
