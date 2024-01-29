@@ -8,5 +8,47 @@ services:
         volumes:
             - .:/var/www/html
         ports:
-            - 8100:8100
-            - 6100:6100
+            - 8000:8000
+            - 6001:6001
+        depends_on:
+            - mysql
+            - redis
+            - emqx
+
+    mysql:
+        image: mysql:8.2
+        restart: always
+        ports:
+            - "3366:3306" # Adjust as needed
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: simontov
+            MYSQL_USER: secret
+            MYSQL_PASSWORD: secret
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_USER: root
+            PMA_PASSWORD: root
+        ports:
+            - 8888:80
+        depends_on:
+            - mysql
+
+    redis:
+        image: "redis:alpine"
+        restart: always
+        ports:
+            - "6379:6379" # Adjust as needed
+
+    emqx:
+        image: emqx/emqx:latest
+        restart: always
+        ports:
+            - "1883:1883"
+            - "8083:8083"
+            - "8883:8883"
+            - "18083:18083"
