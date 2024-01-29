@@ -23,15 +23,15 @@ class FlowrateObserver
     {
         FlowrateEvent::dispatch(new FlowrateResource($data));
 
-        CodCheckJob::dispatch($data);
-        PhCheckJob::dispatch($data);
-        ElectricityCheckJob::dispatch($data);
-        TotalizerCheckJob::dispatch($data);
+        // CodCheckJob::dispatch($data);
+        // PhCheckJob::dispatch($data);
+        // ElectricityCheckJob::dispatch($data);
+        // TotalizerCheckJob::dispatch($data);
 
-        // Calculate the delay (e.g., delay the job by 3 minutes)
-        $delay = now()->addMinutes(3);
-        // Dispatch the job with a delay
-        DataNotEnteredCheckJob::dispatch($data)->delay($delay);
+        // // Calculate the delay (e.g., delay the job by 3 minutes)
+        // $delay = now()->addMinutes(3);
+        // // Dispatch the job with a delay
+        // DataNotEnteredCheckJob::dispatch($data)->delay($delay);
     }
     /**
      * Handle the Flowrate "created" event.

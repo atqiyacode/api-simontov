@@ -15,6 +15,13 @@ chmod -R 777 bootstrap/cache
 # sleep 5s
 # php artisan migrate:fresh --seed --force
 # sleep 15s
+
+# Add the following lines to set up cron for Laravel scheduler
+echo "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/laravel-scheduler
+chmod 0644 /etc/cron.d/laravel-scheduler
+crontab /etc/cron.d/laravel-scheduler
+
+
 php artisan octane:start --host=0.0.0.0 &
 php artisan websocket:serve --host=0.0.0.0 --port=6001 &
 # php artisan generate:dummy-data &
