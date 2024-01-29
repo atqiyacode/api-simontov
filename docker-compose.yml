@@ -8,25 +8,5 @@ services:
         volumes:
             - .:/var/www/html
         ports:
-            - 8000:8000
-            - 6001:6001
-        depends_on:
-            - mysql
-            - redis
-
-    mysql:
-        image: mysql:8.2
-        restart: always
-        ports:
-            - "3366:3306" # Adjust as needed
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: simontov
-            MYSQL_USER: secret
-            MYSQL_PASSWORD: secret
-
-    redis:
-        image: "redis:alpine"
-        restart: always
-        ports:
-            - "6379:6379" # Adjust as needed
+            - 8100:8100
+            - 6100:6100

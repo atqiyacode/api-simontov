@@ -52,7 +52,7 @@ RUN chown -R www-data:www-data /var/www/html \
 # RUN php artisan vendor:publish --tag=telescope-migrations
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8100
 
 # Run entrypoint
 COPY entrypoint.sh /usr/local/bin/
