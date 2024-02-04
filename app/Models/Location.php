@@ -30,6 +30,11 @@ class Location extends Model
         'longitude',
         'lattitude',
         'description',
+
+        'npwp',
+        'email',
+        'pic',
+        'address',
     ];
 
     /**

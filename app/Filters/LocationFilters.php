@@ -36,6 +36,10 @@ class LocationFilters extends QueryFilters
         'longitude',
         'lattitude',
         'description',
+        'npwp',
+        'email',
+        'pic',
+        'address',
     ];
 
     protected array $columnSearch = [
@@ -45,6 +49,10 @@ class LocationFilters extends QueryFilters
         'longitude',
         'lattitude',
         'description',
+        'npwp',
+        'email',
+        'pic',
+        'address',
     ];
 
     protected array $allowedSorts = [
@@ -55,6 +63,10 @@ class LocationFilters extends QueryFilters
         'longitude',
         'lattitude',
         'description',
+        'npwp',
+        'email',
+        'pic',
+        'address',
         'created_at',
         'updated_at',
         'deleted_at',

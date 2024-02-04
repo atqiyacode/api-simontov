@@ -19,6 +19,11 @@ class LocationResource extends JsonResource
 
             'notifications' => $this->notifications,
 
+            'npwp' => $this->npwp,
+            'email' => $this->email,
+            'pic' => $this->pic,
+            'address' => $this->address,
+
             'trashed' => $this->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
             }),
