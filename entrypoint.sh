@@ -8,9 +8,9 @@ composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-p
 # sed -i -e 's/DB_DATABASE=/DB_DATABASE=api_hris/g' .env
 chown -R $USER:www-data storage
 chown -R $USER:www-data bootstrap/cache
-chmod -R 777 .
-chmod -R 777 storage
-chmod -R 777 bootstrap/cache
+chmod -R 775 .
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
 # php artisan key:generate
 # sleep 5s
 # php artisan migrate:fresh --seed --force
