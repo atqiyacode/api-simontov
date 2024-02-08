@@ -28,6 +28,13 @@ class FlowrateResource extends JsonResource
             'alarm' => $this->alarm,
             'bin_alarm' => $this->bin_alarm,
             'file_name' => $this->file_name,
+
+            'main_ph' => ($this->ph),
+            'main_cod' => ($this->cod),
+            'main_cond' => ($this->cond),
+            'main_level' => ($this->level),
+            'main_do' => ($this->do),
+
             'ph' => floatval($this->ph),
             'cod' => floatval($this->cod),
             'cond' => floatval($this->cond),

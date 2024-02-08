@@ -1,7 +1,9 @@
 apps:
   - name: simontov-app-schedule
-    interpreter: php
     script: artisan
-    exec_mode: fork
-    args:
-      - schedule:run
+    args: schedule:run
+    interpreter: php
+    interpreter_args: "-d memory_limit=512M" # Adjust the memory limit as needed
+    watch: true
+    autorestart: true
+    cron_restart: "0 0 * * *" # Restart every day at midnight (adjust as needed)

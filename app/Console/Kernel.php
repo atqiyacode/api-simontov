@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('mqtt:subscribe')->everyMinute();
+        $schedule->command('check:flowrate')->everyMinute();
+        $schedule->command('check:totalizer')->everyTwoHours();
     }
 
     /**

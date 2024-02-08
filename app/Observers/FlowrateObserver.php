@@ -11,6 +11,7 @@ use App\Jobs\ElectricityCheckJob;
 use App\Jobs\PhCheckJob;
 use App\Jobs\TotalizerCheckJob;
 use App\Models\Flowrate;
+use App\Models\LocationNotification;
 
 class FlowrateObserver
 {
@@ -22,16 +23,9 @@ class FlowrateObserver
     protected function handleEventAndLogActivity(Flowrate $data): void
     {
         FlowrateEvent::dispatch(new FlowrateResource($data));
-
         CodCheckJob::dispatch($data);
         PhCheckJob::dispatch($data);
         ElectricityCheckJob::dispatch($data);
-        TotalizerCheckJob::dispatch($data);
-
-        // // Calculate the delay (e.g., delay the job by 3 minutes)
-        // $delay = now()->addMinutes(3);
-        // // Dispatch the job with a delay
-        // DataNotEnteredCheckJob::dispatch($data)->delay($delay);
     }
     /**
      * Handle the Flowrate "created" event.

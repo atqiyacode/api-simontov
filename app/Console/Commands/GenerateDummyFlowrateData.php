@@ -31,8 +31,8 @@ class GenerateDummyFlowrateData extends Command
                 while (strlen($randpattern) < fake()->numberBetween($min = 0, $max = 14))
                     $randpattern .= rand(0, 1);
 
-                // $locationId = 1;
-                $locationId = Location::pluck('id')->random();
+                $locationId = 1;
+                // $locationId = Location::pluck('id')->random();
                 // Generate dummy data and dispatch it as a job with a 5-second delay
                 dispatch(new FlowrateMqttJob([
                     'mag_date' => now(),
@@ -81,7 +81,7 @@ class GenerateDummyFlowrateData extends Command
             $this->info("Dispatched $batchCount - $locationId dummy data sets.");
 
             // Sleep for 5 seconds
-            sleep(1);
+            sleep(5);
         }
     }
 }

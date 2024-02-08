@@ -33,9 +33,7 @@ class ElectricityCheckJob implements ShouldQueue
             'alert_notification_type_id' => 5
         ];
         if (!$this->data['pln_stat']) {
-            $query = LocationNotification::updateOrCreate($params, $params);
-            $query->message = 'Electricity uses UPS';
-            $query->update();
+            LocationNotification::updateOrCreate($params, ['message' => 'Electricity uses UPS']);
         } else {
             LocationNotification::where($params)->delete();
         }
