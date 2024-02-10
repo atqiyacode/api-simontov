@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InvoiceTemplate\UpdateInvoiceTemplateRequest;
-use App\Http\Requests\InvoiceTemplate\CreateInvoiceTemplateRequest;
 use App\Http\Resources\InvoiceTemplate\InvoiceTemplateResource;
 use App\Models\InvoiceTemplate;
 use Illuminate\Http\JsonResponse;
@@ -14,25 +13,11 @@ class InvoiceTemplateController extends Controller
 {
     public function __construct()
     {
-
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(): JsonResponse
     {
-        $invoiceTemplates = InvoiceTemplate::useFilters()->dynamicPaginate();
-
-        return InvoiceTemplateResource::collection($invoiceTemplates);
-    }
-
-    public function store(CreateInvoiceTemplateRequest $request): JsonResponse
-    {
-        $invoiceTemplate = InvoiceTemplate::create($request->validated());
-
-        return $this->responseCreated('InvoiceTemplate created successfully', new InvoiceTemplateResource($invoiceTemplate));
-    }
-
-    public function show(InvoiceTemplate $invoiceTemplate): JsonResponse
-    {
+        $invoiceTemplate = InvoiceTemplate::firstOrFail();
         return $this->responseSuccess(null, new InvoiceTemplateResource($invoiceTemplate));
     }
 
@@ -42,13 +27,4 @@ class InvoiceTemplateController extends Controller
 
         return $this->responseSuccess('InvoiceTemplate updated Successfully', new InvoiceTemplateResource($invoiceTemplate));
     }
-
-    public function destroy(InvoiceTemplate $invoiceTemplate): JsonResponse
-    {
-        $invoiceTemplate->delete();
-
-        return $this->responseDeleted();
-    }
-
-   
 }

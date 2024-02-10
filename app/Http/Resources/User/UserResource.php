@@ -22,7 +22,8 @@ class UserResource extends JsonResource
             'roles_name' => $this->roles->pluck('name'),
             'permissions_name' => $this->permissions->pluck('name'),
             'locations_name' => $this->locations->pluck('name'),
-            'dashboardCharts_name' => $this->dashboardCharts->pluck('name'),
+
+            // 'dashboardCharts_name' => $this->dashboardCharts->pluck('name'),
 
 
             'trashed' => $this->when(auth()->user(), function () {

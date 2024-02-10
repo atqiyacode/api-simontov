@@ -11,6 +11,8 @@ use App\Models\RangeType;
 use App\Models\Tax;
 use App\Services\Flowrate\FlowrateService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PDF;
@@ -30,19 +32,24 @@ class DownloadController extends Controller
     public function invoice($id)
     {
         $token = Str::uuid();
+        $invoiceNumber = request()->invoiceNumber;
         $start = request()->start . ' 00:00:00';
         $end = request()->end . ' 23:59:59';
 
-        $response = $this->filterQuery($id, $start, $end);
+        $cacheKey = 'invoice_' . $id . '_' . $start . '_' . $end;
 
-        $data = [
-            'title' => Carbon::parse($start)->isoFormat('LL') . ' - ' . Carbon::parse($end)->isoFormat('LL'),
-            'start_date' => $start,
-            'end_date' => $end,
-            'total' => $response->get()->count(),
-            'first' => $response->get()->first(),
-            'last' => $response->get()->last(),
-        ];
+        $data = Cache::rememberForever($cacheKey, function () use ($id, $start, $end) {
+            $response =  $this->filterQuery($id, $start, $end);
+            return [
+                'title' => Carbon::parse($start)->isoFormat('LL') . ' - ' . Carbon::parse($end)->isoFormat('LL'),
+                'start_date' => Carbon::parse($start)->format('d-m-Y'),
+                'end_date' => Carbon::parse($end)->format('d-m-Y'),
+                'total' => $response->get()->count(),
+                'first' => $response->get()->first(),
+                'last' => $response->get()->last(),
+            ];
+        });
+
 
         // download
         $pdf = PDF::loadView('exports.invoice-pdf', [

@@ -25,6 +25,8 @@ class LocationUserResource extends JsonResource
             'description' => $this->description,
             'flowrates' => new LocationFlowrateResource($this->flowrates),
             'notifications' => $this->notifications,
+
+            'charts' => $this->charts->pluck('code'),
         ];
     }
 }

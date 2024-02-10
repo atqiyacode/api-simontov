@@ -1,12 +1,12 @@
-name: Deploy Development Server
+name: Deploy _Development Server
 
 # Trigger the workflow on push and
-# pull request events on the development branch
+# pull request events on the _development branch
 on:
   push:
-    branches: ["development"]
+    branches: ["_development"]
   pull_request:
-    branches: ["development"]
+    branches: ["_development"]
 
 # Authenticate to the the server via ssh
 # and run our deployment script
@@ -22,4 +22,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/simontov/api && ./.scripts/development-deploy.sh"
+          script: "cd /var/www/simontov/api && ./.scripts/_development-deploy.sh"

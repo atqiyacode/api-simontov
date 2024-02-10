@@ -329,7 +329,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     =           invoiceTemplates           =
     =============================*/
 
-    Route::apiResource('/invoiceTemplates', InvoiceTemplateController::class)->only(['show', 'update']);
+    Route::apiResource('/invoiceTemplates', InvoiceTemplateController::class)->only(['index', 'update']);
 
     /*=====  End of invoiceTemplates   ======*/
 });

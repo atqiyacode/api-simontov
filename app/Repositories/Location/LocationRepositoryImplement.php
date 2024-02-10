@@ -24,17 +24,17 @@ class LocationRepositoryImplement extends Eloquent implements LocationRepository
 
     public function getAll()
     {
-        return $this->model->canDelete()->with(['flowrates', 'notifications'])->useFilters()->get();
+        return $this->model->canDelete()->with(['charts', 'notifications'])->useFilters()->get();
     }
 
     public function getPaginate()
     {
-        return $this->model->canDelete()->with(['flowrates', 'notifications'])->useFilters()->dynamicPaginate();
+        return $this->model->canDelete()->with(['charts', 'notifications'])->useFilters()->dynamicPaginate();
     }
 
     public function findById($id)
     {
-        return $this->model->canDelete()->with(['flowrates', 'notifications'])->findOrFail($id);
+        return $this->model->canDelete()->with(['charts', 'notifications'])->findOrFail($id);
     }
 
     public function create($data)
@@ -46,6 +46,7 @@ class LocationRepositoryImplement extends Eloquent implements LocationRepository
     {
         $query = $this->model->findOrFail($id);
         $query->update($data);
+        $query->charts()->sync($data['charts']);
         return $query;
     }
 

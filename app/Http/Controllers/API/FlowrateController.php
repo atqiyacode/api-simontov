@@ -13,6 +13,7 @@ use App\Repositories\Flowrate\FlowrateRepository;
 use App\Services\Flowrate\FlowrateService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -123,20 +124,26 @@ class FlowrateController extends Controller
 
     public function range(Request $request, $id)
     {
-        $start = $request->start . ' 00:00:00';
-        $end = $request->end . ' 23:59:59';
-        // $response = $this->service->getDataRange($id, $start, $end);
-        $response = $this->filterQuery($request, $id)->get();
-        $avg = $this->findByLocation($id, $start, $end);
-        return [
-            'title' => Carbon::parse($start)->isoFormat('LL') . ' - ' . Carbon::parse($end)->isoFormat('LL'),
-            'start_date' => $start,
-            'end_date' => $end,
-            'result' => FlowrateDataResource::collection($response),
-            'avg_ph' => $avg->avg_ph,
-            'avg_cod' => $avg->avg_cod,
-        ];
+        $cacheKey = 'range_' . $id . '_' . $request->start . '_' . $request->end;
+
+        return Cache::rememberForever($cacheKey, function () use ($request, $id) {
+            $start = $request->start . ' 00:00:00';
+            $end = $request->end . ' 23:59:59';
+
+            $response = $this->filterQuery($request, $id)->get();
+            $avg = $this->findByLocation($id, $start, $end);
+
+            return [
+                'title' => Carbon::parse($start)->isoFormat('LL') . ' - ' . Carbon::parse($end)->isoFormat('LL'),
+                'start_date' => $start,
+                'end_date' => $end,
+                'result' => FlowrateDataResource::collection($response),
+                'avg_ph' => $avg->avg_ph,
+                'avg_cod' => $avg->avg_cod,
+            ];
+        });
     }
+
 
     public function billing(Request $request)
     {
@@ -155,34 +162,13 @@ class FlowrateController extends Controller
         return response()->json(floatval($shippingCost));
     }
 
-    // public function backup_billing()
-    // {
-    //     $total = request()->total;
-    //     $maxLimit = RangeType::orderBy('upper_limit', 'desc')->first();
-    //     if ($total >= $maxLimit->upper_limit) {
-    //         $type = $maxLimit;
-    //     } else {
-    //         $type = RangeType::where('upper_limit', '>', $total)
-    //             ->where('lower_limit', '<', $total)
-    //             ->orderBy('upper_limit', 'desc')
-    //             ->firstOrFail();
-    //     }
-
-    //     $data = RangeCost::with(['rangeType'])->where('range_type_id', $type->id)->first();
-
-    //     return response()->json(
-    //         [
-    //             'data' => new RangeCostResource($data),
-    //             'total' => floatval($data->value) * $total,
-    //             'price' => $data->value
-    //         ]
-    //     );
-    // }
-
-
     public function filterDate(Request $request, $id)
     {
-        return FlowrateDataResource::collection($this->filterQuery($request, $id)->get());
+        $cacheKey = 'filterDate_' . $id . '_' . $request->start . '_' . $request->end . '_' . $request->interval . '_' . $request->month_start . '_' . $request->month_end;
+
+        return Cache::rememberForever($cacheKey, function () use ($request, $id) {
+            return FlowrateDataResource::collection($this->filterQuery($request, $id)->get());
+        });
     }
 
 
@@ -198,12 +184,8 @@ class FlowrateController extends Controller
         if ($format === 'json') {
             $jsonData = $this->filterQuery($request, $id)->get();
             return response()->jsonDownload($jsonData, 'data.json');
-        } elseif ($format === 'csv') {
-            return $this->downloadExcel('CSV', $id, $start, $end, $month_start, $month_end, $interval);
-        } elseif ($format === 'xlsx') {
-            return $this->downloadExcel('XLSX', $id, $start, $end, $month_start, $month_end, $interval);
-        } elseif ($format === 'xls') {
-            return $this->downloadExcel('XLS', $id, $start, $end, $month_start, $month_end, $interval);
+        } elseif (in_array($format, ['csv', 'xlsx', 'xls'])) {
+            return $this->downloadExcel($format, $id, $start, $end, $month_start, $month_end, $interval);
         } else {
             return response()->json(['errors' => __('validation.regex', ['attribute' => 'File'])], 400);
         }
@@ -211,6 +193,7 @@ class FlowrateController extends Controller
 
     private function downloadExcel($format, $locationId, $start, $end, $month_start, $month_end, $interval)
     {
+
         switch (strtolower($format)) {
             case 'csv':
                 return Excel::download(new FlowrateExportByDate($locationId, $start, $end, $month_start, $month_end, $interval), 'Data.csv', \Maatwebsite\Excel\Excel::CSV);
@@ -222,6 +205,7 @@ class FlowrateController extends Controller
                 // Handle unsupported format or throw an exception
         }
     }
+
 
     public function filterQuery(Request $request, $id)
     {

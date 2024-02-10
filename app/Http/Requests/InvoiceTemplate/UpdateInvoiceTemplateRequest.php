@@ -9,14 +9,14 @@ class UpdateInvoiceTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_name' => ['sometimes', 'string'],
-			'company_address' => ['sometimes'],
-			'phone' => ['sometimes', 'string'],
-			'fax' => ['sometimes', 'string'],
-			'npwp' => ['sometimes', 'string'],
-			'additional_section' => ['sometimes'],
-			'manager_name' => ['sometimes', 'string'],
-			'note' => ['sometimes'],
+            'company_name' => ['required', 'string'],
+            'company_address' => ['required'],
+            'phone' => ['required', 'string'],
+            'fax' => ['required', 'string'],
+            'npwp' => ['required', 'string'],
+            'additional_section' => ['nullable'],
+            'manager_name' => ['required', 'string'],
+            'note' => ['nullbale'],
         ];
     }
 }

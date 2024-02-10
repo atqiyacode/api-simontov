@@ -78,4 +78,14 @@ class Location extends Model
     {
         return $this->hasMany(LocationNotification::class);
     }
+
+    /**
+     * The charts that belong to the Location
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function charts(): BelongsToMany
+    {
+        return $this->belongsToMany(DashboardChart::class, 'location_dashboard_chart', 'location_id', 'dashboard_chart_id');
+    }
 }

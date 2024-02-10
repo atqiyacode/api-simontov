@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Location;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Route;
 
 class LocationResource extends JsonResource
 {
@@ -23,6 +24,11 @@ class LocationResource extends JsonResource
             'email' => $this->email,
             'pic' => $this->pic,
             'address' => $this->address,
+
+            'charts' => (Route::is('locations.show'))
+                ? $this->charts->pluck('code')
+                : (Route::is('locations.index') ? $this->charts->pluck('id') : null),
+
 
             'trashed' => $this->when(auth()->check() && auth()->user()->hasAnyRole(['superman']), function () {
                 return (bool) $this->deleted_at;
