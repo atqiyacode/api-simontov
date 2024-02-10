@@ -28,5 +28,7 @@
         "titleBar.border": "#ff3d00",
         "titleBar.inactiveBackground": "#ff3d0099",
         "titleBar.inactiveForeground": "#e7e7e799"
-    }
+    },
+    "intelephense.diagnostics.typeErrors": true,
+    "intelephense.diagnostics.undefinedTypes": false
 }

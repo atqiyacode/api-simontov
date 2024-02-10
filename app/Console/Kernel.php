@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('check:flowrate')->everyMinute();
         $schedule->command('check:totalizer')->everyTwoHours();
+        $schedule->command('backup:run --only-db')->dailyAt('00:00:01');
     }
 
     /**

@@ -27,12 +27,14 @@ class GenerateApiModel extends Command
     public function handle()
     {
         $commands = [
-            // auth user
-            'api:generate Role "name:string|guard_name:string" --all --routes --soft-delete',
-            'api:generate Permission "name:string|guard_name:string" --all --routes --soft-delete',
-            // queue job
-            'api:generate FailedJob --all --routes',
-            'api:generate UserLogActivity --all --routes',
+            // // auth user
+            // 'api:generate Role "name:string|guard_name:string" --all --routes --soft-delete',
+            // 'api:generate Permission "name:string|guard_name:string" --all --routes --soft-delete',
+            // // queue job
+            // 'api:generate FailedJob --all --routes',
+            // 'api:generate UserLogActivity --all --routes',
+
+            'api:generate InvoiceTemplate "company_name:string|company_address:longText|phone:string:nullable|fax:string:nullable|npwp:string:nullable|additional_section:longText:nullable|manager_name:string|note:longText:nullbale" --all --routes',
 
         ];
         foreach ($commands as $command) {

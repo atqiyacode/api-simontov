@@ -22,9 +22,6 @@ Route::get('/', function () {
 });
 
 
-// Route::get('/hello', function () {
-//     return view('exports.invoice-pdf');
-// });
 
 Route::get('/invoice/{id}/range', [DownloadController::class, 'invoice']);
 

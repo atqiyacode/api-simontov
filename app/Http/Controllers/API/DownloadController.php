@@ -4,11 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RangeCost\RangeCostResource;
+use App\Models\InvoiceTemplate;
+use App\Models\Location;
 use App\Models\RangeCost;
 use App\Models\RangeType;
 use App\Models\Tax;
 use App\Services\Flowrate\FlowrateService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -38,9 +39,9 @@ class DownloadController extends Controller
             'title' => Carbon::parse($start)->isoFormat('LL') . ' - ' . Carbon::parse($end)->isoFormat('LL'),
             'start_date' => $start,
             'end_date' => $end,
-            'total' => $response->getResult()->count(),
-            'first' => $response->getResult()->first(),
-            'last' => $response->getResult()->last(),
+            'total' => $response->get()->count(),
+            'first' => $response->get()->first(),
+            'last' => $response->get()->last(),
         ];
 
         // download
@@ -48,19 +49,23 @@ class DownloadController extends Controller
             'data' => $data,
             'billing' => $this->billing($data['last']->totalizer_1 - $data['first']->totalizer_1),
             'tax' => Tax::first(),
-            'price' => config('app.main_price')
+            'price' => config('app.main_price'),
+            'tenant' => Location::where('id', $id)->first(),
+            'template' => InvoiceTemplate::first(),
         ])->setPaper('A4', 'potrait');
 
-        $fileName = $token . '.pdf';
+        $fileName = $data['title'] . '.pdf';
         return $pdf->download($fileName);
 
         // preview
-        // return view('exports.invoice-pdf', [
-        //     'data' => $data,
-        //     'billing' => $this->billing($data['last']->totalizer_1 - $data['first']->totalizer_1),
-        //     'tax' => Tax::first(),
-        //     'price' => config('app.main_price')
-        // ]);
+        return view('exports.invoice-pdf', [
+            'template' => InvoiceTemplate::first(),
+            'data' => $data,
+            'billing' => $this->billing($data['last']->totalizer_1 - $data['first']->totalizer_1),
+            'tax' => Tax::first(),
+            'price' => config('app.main_price'),
+            'tenant' => Location::where('id', $id)->first()
+        ]);
     }
 
     public function billing($total)

@@ -5,6 +5,7 @@ use App\Http\Controllers\API\DashboardChartController;
 use App\Http\Controllers\API\DownloadController;
 use App\Http\Controllers\API\FailedJobController;
 use App\Http\Controllers\API\FlowrateController;
+use App\Http\Controllers\API\InvoiceTemplateController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\LocationNotificationController;
 use App\Http\Controllers\API\PermissionController;
@@ -323,4 +324,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     /*=====  End of topics   ======*/
 
     Route::get('/invoice/{id}/range', [DownloadController::class, 'invoice']);
+
+    /*===========================
+    =           invoiceTemplates           =
+    =============================*/
+
+    Route::apiResource('/invoiceTemplates', InvoiceTemplateController::class)->only(['show', 'update']);
+
+    /*=====  End of invoiceTemplates   ======*/
 });

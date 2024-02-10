@@ -24,12 +24,16 @@ class DatabaseSeeder extends Seeder
             TaxSeeder::class,
             RangeTypeSeeder::class,
             RangeCostSeeder::class,
+
             // FlowrateSeeder::class,
+
             DashboardChartSeeder::class,
             TopicSeeder::class,
             AlertNotificationTypeSeeder::class,
 
             UserSeeder::class,
+
+            InvoiceTemplateSeeder::class,
         ]);
     }
 }
