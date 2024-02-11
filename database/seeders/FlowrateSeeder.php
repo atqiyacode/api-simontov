@@ -14,7 +14,7 @@ class FlowrateSeeder extends Seeder
      */
     public function run(): void
     {
-        $files = glob(public_path('flowrates-backup/flowrates_*.json'));
+        $files = glob(public_path('flowrates_backup/flowrates_*.json'));
 
         foreach ($files as $file) {
             $data = json_decode(file_get_contents($file), true);
