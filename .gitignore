@@ -4,7 +4,7 @@
 /public/hot
 /public/storage
 /public/backup-flowrates
-/public/flowrates-backup
+/public/flowrates_backup
 /storage/*.key
 /vendor
 .env
