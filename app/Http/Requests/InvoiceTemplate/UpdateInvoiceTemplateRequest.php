@@ -16,7 +16,7 @@ class UpdateInvoiceTemplateRequest extends FormRequest
             'npwp' => ['required', 'string'],
             'additional_section' => ['nullable'],
             'manager_name' => ['required', 'string'],
-            'note' => ['nullbale'],
+            'note' => ['nullable'],
         ];
     }
 }
