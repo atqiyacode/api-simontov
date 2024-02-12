@@ -14,6 +14,6 @@ class TopicSeeder extends Seeder
      */
     public function run(): void
     {
-        Topic::create(['name' => 'plc/kim/21']);
+        Topic::create(['name' => 'plc/kim/#']);
     }
 }
