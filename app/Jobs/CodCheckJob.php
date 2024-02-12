@@ -30,10 +30,12 @@ class CodCheckJob implements ShouldQueue
     {
         $params = [
             'location_id' => $this->data['location_id'],
-            'alert_notification_type_id' => 3
+            'alert_notification_type_id' => 3,
+            'message' => 'COD value over 90 mg/l'
         ];
         if (!empty($this->data['cod']) && $this->data['cod'] != 'N/A' && $this->data['cod'] > 90) {
-            LocationNotification::updateOrCreate($params, ['message' => 'COD value over 90 mg/l']);
+            LocationNotification::create($params);
+            // LocationNotification::updateOrCreate($params, ['message' => 'COD value over 90 mg/l']);
         }
     }
 }
