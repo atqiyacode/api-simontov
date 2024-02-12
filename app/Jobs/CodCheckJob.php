@@ -34,8 +34,6 @@ class CodCheckJob implements ShouldQueue
         ];
         if (!empty($this->data['cod']) && $this->data['cod'] != 'N/A' && $this->data['cod'] > 90) {
             LocationNotification::updateOrCreate($params, ['message' => 'COD value over 90 mg/l']);
-        } else {
-            LocationNotification::where($params)->delete();
         }
     }
 }

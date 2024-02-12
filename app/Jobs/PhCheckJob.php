@@ -36,8 +36,6 @@ class PhCheckJob implements ShouldQueue
             $phValue = floatval($this->data['ph']);
             $formattedPh = number_format($phValue, 2);
             LocationNotification::updateOrCreate($params, ['message' => 'PH value is ' . $formattedPh]);
-        } else {
-            LocationNotification::where($params)->delete();
         }
     }
 }

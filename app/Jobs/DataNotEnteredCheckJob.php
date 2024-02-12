@@ -43,8 +43,6 @@ class DataNotEnteredCheckJob implements ShouldQueue
             $query = LocationNotification::updateOrCreate($params, $params);
             $query->message = 'Data Not in 3 minutes';
             $query->update();
-        } else {
-            LocationNotification::where($params)->delete();
         }
     }
 }

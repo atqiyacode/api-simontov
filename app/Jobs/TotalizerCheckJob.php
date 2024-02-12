@@ -39,8 +39,6 @@ class TotalizerCheckJob implements ShouldQueue
             $query = LocationNotification::updateOrCreate($params, $params);
             $query->message = 'The totalizer value does not change within 12 hours';
             $query->update();
-        } else {
-            LocationNotification::where($params)->delete();
         }
     }
 }
