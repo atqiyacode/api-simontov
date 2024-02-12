@@ -16,23 +16,11 @@ class RangeCostSeeder extends Seeder
     {
         RangeCost::create([
             'range_type_id' => 1,
-            'value' => 100000,
-        ]);
-        RangeCost::create([
-            'range_type_id' => 2,
-            'value' => 200000,
-        ]);
-        RangeCost::create([
-            'range_type_id' => 3,
-            'value' => 300000,
-        ]);
-        RangeCost::create([
-            'range_type_id' => 4,
             'value' => 400000,
         ]);
         RangeCost::create([
-            'range_type_id' => 5,
-            'value' => 500000,
+            'range_type_id' => 2,
+            'value' => 8000,
         ]);
     }
 }

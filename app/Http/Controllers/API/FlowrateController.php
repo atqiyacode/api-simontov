@@ -9,6 +9,8 @@ use App\Http\Requests\Flowrate\CreateFlowrateRequest;
 use App\Http\Requests\Flowrate\UpdateFlowrateRequest;
 use App\Http\Resources\Flowrate\FlowrateDataResource;
 use App\Models\Flowrate;
+use App\Models\RangeCost;
+use App\Models\RangeType;
 use App\Repositories\Flowrate\FlowrateRepository;
 use App\Services\Flowrate\FlowrateService;
 use Carbon\Carbon;
@@ -149,15 +151,17 @@ class FlowrateController extends Controller
     {
         $total = $request->total;
         $shippingCost = 0;
-        if ($total >= 0 && $total <= 50) {
-            $shippingCost = config('app.flat_price');
-        }
-        // > 50: calculate based on a rate of 8.000 per unit
-        else {
-            $additionalUnits = $total - 50;
-            $shippingCost = config('app.flat_price') + ($additionalUnits * config('app.main_price'));
-        }
 
+        $rangeFlat = RangeType::first();
+        if ($total > $rangeFlat->upper_limit) {
+            $rangeCost = RangeType::whereNotIn('id', [$rangeFlat->id])->first();
+            $cost = RangeCost::where('range_type_id', $rangeCost->id)->first();
+            // find another range type
+            $shippingCost = $total * $cost->value;
+        } else {
+            $cost = RangeCost::where('range_type_id', $rangeFlat->id)->first();
+            $shippingCost = $cost->value;
+        }
 
         return response()->json(floatval($shippingCost));
     }

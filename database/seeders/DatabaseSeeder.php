@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             LocationSeeder::class,
             StatusAlarmSeeder::class,
             TaxSeeder::class,
+
             RangeTypeSeeder::class,
             RangeCostSeeder::class,
 
