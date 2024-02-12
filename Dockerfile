@@ -42,7 +42,8 @@ COPY . /var/www/html
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage
 
-
+# Set the memory limit
+RUN echo "memory_limit=2048M" > /usr/local/etc/php/conf.d/docker-php-memory-limit.ini
 
 # Install dependencies
 # RUN composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
