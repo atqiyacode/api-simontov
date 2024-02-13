@@ -31,8 +31,8 @@ class GenerateDummyFlowrateData extends Command
                 while (strlen($randpattern) < fake()->numberBetween($min = 0, $max = 14))
                     $randpattern .= rand(0, 1);
 
-                // $locationId = 1;
-                $locationId = Location::pluck('id')->random();
+                $locationId = 1;
+                // $locationId = Location::pluck('id')->random();
                 // Generate dummy data and dispatch it as a job with a 5-second delay
                 dispatch(new FlowrateMqttJob([
                     'mag_date' => now(),
@@ -57,7 +57,7 @@ class GenerateDummyFlowrateData extends Command
                     'loc_id' => $locationId,
 
                     'ph' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 1, $max = 12),
-                    'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 85, $max = 95),
+                    'cod' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 950, $max = 1000),
                     'cond' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'level' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
                     'do' => fake()->randomFloat($nbMaxDecimals = NULL, $min = 0, $max = 100),
