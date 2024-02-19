@@ -27,7 +27,7 @@ services:
             MYSQL_PASSWORD: secret
 
     phpmyadmin:
-        image: phpmyadmin/phpmyadmin
+        image: phpmyadmin
         restart: always
         environment:
             PMA_HOST: mysql
