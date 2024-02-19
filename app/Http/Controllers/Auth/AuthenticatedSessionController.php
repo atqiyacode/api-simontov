@@ -20,22 +20,38 @@ class AuthenticatedSessionController extends Controller
 
         $user = auth()->user();
 
-        $tokenData = $user->createToken($user->email);
-
         if (!$user->email_verified_at) {
             $user->email_verified_at = now();
             $user->update();
         }
-        // $token = $tokenData->accessToken;
-        $token = $tokenData->plainTextToken;
-        $cookie = $this->getCookieDetails($token);
         return response()
             ->json([
                 'user' => new CurrentUserResource($user),
-                'token' => $token,
-            ], 200)
-            ->cookie($cookie['name'], $cookie['value'], $cookie['minutes'], $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly'], $cookie['samesite']);
+            ], 200);
     }
+
+    // public function store(LoginRequest $request)
+    // {
+    //     $request->authenticate();
+
+    //     $user = auth()->user();
+
+    //     $tokenData = $user->createToken($user->email);
+
+    //     if (!$user->email_verified_at) {
+    //         $user->email_verified_at = now();
+    //         $user->update();
+    //     }
+    //     // $token = $tokenData->accessToken;
+    //     $token = $tokenData->plainTextToken;
+    //     $cookie = $this->getCookieDetails($token);
+    //     return response()
+    //         ->json([
+    //             'user' => new CurrentUserResource($user),
+    //             'token' => $token,
+    //         ], 200)
+    //         ->cookie($cookie['name'], $cookie['value'], $cookie['minutes'], $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly'], $cookie['samesite']);
+    // }
 
     /**
      * Destroy an authenticated session.
