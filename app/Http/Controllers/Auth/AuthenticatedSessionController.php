@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Location\LocationUserResource;
 use App\Http\Resources\User\CurrentUserResource;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
 class AuthenticatedSessionController extends Controller
@@ -44,7 +42,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(): JsonResponse
     {
-        auth()->user()->currentAccessToken()->delete();
+        auth('web')->logout();
+        // auth()->user()->currentAccessToken()->delete();
         $cookie = Cookie::forget(config('app.token_cookie'));
         return response()->json([
             'message' => trans('alert.success-logout')
