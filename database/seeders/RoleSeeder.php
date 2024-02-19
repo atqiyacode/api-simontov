@@ -21,32 +21,32 @@ class RoleSeeder extends Seeder
         // Prepare the role data
         $roleData = [
             [
-                'guard_name' => 'api',
+                'guard_name' => 'sanctum',
                 'name' => 'superman',
                 'permission_ids' => $allPermissionIds,
             ],
             [
-                'guard_name' => 'api',
+                'guard_name' => 'sanctum',
                 'name' => 'superadmin',
                 'permission_ids' => $allPermissionIds,
             ],
             [
-                'guard_name' => 'api',
+                'guard_name' => 'sanctum',
                 'name' => 'developer',
                 'permission_ids' => [],
             ],
             [
-                'guard_name' => 'api',
+                'guard_name' => 'sanctum',
                 'name' => 'demo',
                 'permission_ids' => [],
             ],
             [
-                'guard_name' => 'api',
+                'guard_name' => 'sanctum',
                 'name' => 'admin',
                 'permission_ids' => [],
             ],
             [
-                'guard_name' => 'api',
+                'guard_name' => 'sanctum',
                 'name' => 'client',
                 'permission_ids' => [],
             ],
@@ -55,7 +55,7 @@ class RoleSeeder extends Seeder
         // Create or update roles along with syncing permissions
         foreach ($roleData as $roleItem) {
             $role = Role::updateOrCreate(
-                ['guard_name' => 'api', 'name' => $roleItem['name']]
+                ['guard_name' => 'sanctum', 'name' => $roleItem['name']]
             );
 
             // Sync permissions

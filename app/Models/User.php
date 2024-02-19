@@ -25,7 +25,7 @@ class User extends Authenticatable
 
     protected string $default_filters = UserFilters::class;
 
-    protected $guard_name  = 'api';
+    protected $guard_name  = 'sanctum';
 
     /**
      * The attributes that are mass assignable.
